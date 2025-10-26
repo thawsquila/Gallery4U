@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMK Negeri 4 Bogor- Terampil Dan Teruji</title>
+    <title>Gallery4U- Platform Galeri Digital SMKN 4 Bogor</title>
     <link rel="icon" href="{{ asset('images/favicon.svg') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -1595,13 +1595,6 @@
                                     {{ Str::limit($t->bio ?? 'Tenaga pendidik profesional SMKN 4 Bogor yang berpengalaman dalam bidangnya', 100) }}
                                 </p>
                                 
-                                <!-- Action footer -->
-                                <div class="flex items-center justify-between pt-3 border-t border-white/10">
-                                    <div class="flex items-center space-x-2">
-                                        <div class="w-2 h-2 bg-[#66B1F2] rounded-full animate-pulse"></div>
-                                        <span class="text-gray-600 text-[11px]">Available</span>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     @endforeach
@@ -2022,7 +2015,7 @@
                                                     <p class="text-gray-600 text-sm mb-3 line-clamp-2">{{ Str::limit(strip_tags($item->deskripsi), 70) }}</p>
                                                     @endif
                                                     <div class="flex items-center justify-between text-xs text-gray-500">
-                                                        <span class="inline-flex items-center gap-1"><i class="fas fa-clock text-[#66B1F2]"></i>{{ $item->created_at->diffForHumans() }}</span>
+                                                        <span class="inline-flex items-center gap-1"><i class="fas fa-clock text-[#66B1F2]"></i>{{ $item->created_at->diffForHumans(\Carbon\Carbon::now(), true) }} yang lalu</span>
                                                         <span class="inline-flex items-center gap-2">
                                                             <span class="w-1.5 h-1.5 bg-[#66B1F2] rounded-full"></span>
                                                             <span class="w-1.5 h-1.5 bg-[#FAB82F] rounded-full"></span>

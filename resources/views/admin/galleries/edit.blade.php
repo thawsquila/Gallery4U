@@ -1,4 +1,4 @@
-@extends('admin.dashboard')
+@extends('admin.layout')
 
 @section('title', 'Edit Galeri')
 
@@ -68,11 +68,6 @@
             <p class="text-gray-500 text-xs mt-1">Masukkan deskripsi untuk galeri ini (opsional)</p>
         </div>
         
-        <div class="mb-4">
-            <label for="position" class="block text-gray-700 text-sm font-bold mb-2">Posisi</label>
-            <input type="number" name="position" id="position" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{ old('position', $gallery->position) }}" required>
-            <p class="text-gray-500 text-xs mt-1">Urutan posisi galeri (angka yang lebih kecil akan ditampilkan lebih dulu)</p>
-        </div>
         
         <div class="mb-4">
             <label for="status" class="block text-gray-700 text-sm font-bold mb-2">Status</label>

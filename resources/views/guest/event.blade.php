@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMK Negeri 4 - Event</title>
+    <title>Gallery4U - Event</title>
     <link rel="icon" href="{{ asset('images/favicon.svg') }}" type="image/svg">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -177,7 +177,7 @@
             </h1>
             <!-- Line below title removed as requested -->
             <p class="text-xl lg:text-2xl text-white/90 leading-relaxed mb-10 max-w-3xl mx-auto animate-fade-in-up delay-400 drop-shadow-lg font-medium">
-                Ikuti kegiatan dan acara terbaru dari SMK Negeri 4 Bogor
+                Ikuti kegiatan dan acara terbaru dari SMKN 4 Bogor
             </p>
             
             <!-- Search Bar -->
@@ -377,7 +377,7 @@
                 
                 <div>
                     <h3 class="text-xl font-bold mb-6">Ikuti Kami</h3>
-                    <p class="text-gray-300 mb-4">Dapatkan update terbaru dari SMK Negeri 4</p>
+                    <p class="text-gray-300 mb-4">Dapatkan update terbaru dari SMKN 4 Bogor</p>
                     <div class="space-y-3">
                         <a href="https://www.facebook.com/p/SMK-NEGERI-4-KOTA-BOGOR-100054636630766/?locale=id_ID" class="flex items-center text-gray-300 hover:text-primary transition-colors">
                             <i class="fab fa-facebook-f mr-3"></i>
@@ -538,8 +538,8 @@ function addEventToCalendar(eventId, title, description, location, startDate, st
             action: 'TEMPLATE',
             text: title,
             dates: startDateTime + '/' + endDateTime,
-            details: (description || 'Event dari SMK Negeri 4 Bogor') + '\n\nInfo lebih lanjut: ' + eventUrl,
-            location: location || 'SMK Negeri 4 Bogor'
+            details: (description || 'Event dari SMKN 4 Bogor') + '\n\nInfo lebih lanjut: ' + eventUrl,
+            location: location || 'SMKN 4 Bogor'
         });
         
         const googleUrl = 'https://calendar.google.com/calendar/render?' + params.toString();

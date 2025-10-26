@@ -18,7 +18,7 @@
     <div class="px-6 pt-6">
       <div class="text-center mb-4">
         <h2 class="text-2xl font-bold">Laporan Performa Website</h2>
-        <div class="text-sm text-gray-600">SMK Negeri 4 Bogor</div>
+        <div class="text-sm text-gray-600">Gallery4U</div>
         <div class="text-sm text-gray-600">Tanggal Cetak: <span id="printDate"></span></div>
       </div>
       <hr>
@@ -102,6 +102,93 @@
             <p class="text-sm font-medium text-gray-600">Total Pengunjung</p>
             <h3 class="text-2xl font-bold text-gray-900">{{ $totalVisitors }}</h3>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gallery Statistics Section -->
+    <div class="glass-effect rounded-2xl p-6 shadow-lg card mb-8 relative z-0">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-xl font-bold text-gray-800 flex items-center">
+          <div class="p-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-500 text-white mr-3">
+            <i class="fas fa-heart"></i>
+          </div>
+          Statistik Galeri Terpopuler
+        </h3>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Chart Section -->
+        <div class="bg-white rounded-xl p-6 border border-gray-100">
+          <h4 class="text-lg font-semibold text-gray-800 mb-4">Top 5 Galeri Terpopuler</h4>
+          <div class="relative h-80">
+            <canvas id="mostLikedChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Detailed List -->
+        <div class="bg-white rounded-xl p-6 border border-gray-100">
+          <h4 class="text-lg font-semibold text-gray-800 mb-4">Detail Galeri Terpopuler</h4>
+          <div class="space-y-3 max-h-80 overflow-y-auto">
+            @forelse($mostLikedGalleries ?? [] as $index => $gallery)
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                <div class="flex items-center space-x-3">
+                  <div class="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                    {{ $index + 1 }}
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <h5 class="text-sm font-medium text-gray-800 truncate">{{ $gallery->judul }}</h5>
+                    <div class="flex items-center space-x-2 mt-1">
+                      <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700">
+                        Galeri
+                      </span>
+                      <span class="text-xs text-gray-500">{{ $gallery->created_at->format('d M Y') }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <div class="text-right">
+                    <div class="text-lg font-bold text-blue-600">{{ number_format($gallery->likes_count) }}</div>
+                    <div class="text-xs text-gray-500">likes</div>
+                  </div>
+                  <div class="w-12 bg-gray-200 rounded-full h-2">
+                    <div class="bg-gradient-to-r from-blue-500 to-indigo-500 h-2 rounded-full" style="width: {{ $mostLikedGalleries->count() > 0 ? ($gallery->likes_count / $mostLikedGalleries->first()->likes_count) * 100 : 0 }}%"></div>
+                  </div>
+                </div>
+              </div>
+            @empty
+              <div class="text-center py-8">
+                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-heart text-2xl text-gray-400"></i>
+                </div>
+                <p class="text-gray-500">Belum ada data statistik galeri</p>
+              </div>
+            @endforelse
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mt-6 pt-6 border-t border-gray-200">
+        <div class="text-center p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg">
+          <div class="text-2xl font-bold text-blue-600">{{ $mostLikedGalleries->count() ?? 0 }}</div>
+          <div class="text-sm text-blue-700">Galeri Populer</div>
+        </div>
+        <div class="text-center p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-lg">
+          <div class="text-2xl font-bold text-green-600">{{ $totalGalleryLikes ?? 0 }}</div>
+          <div class="text-sm text-green-700">Total Likes</div>
+        </div>
+        <div class="text-center p-4 bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg">
+          <div class="text-2xl font-bold text-purple-600">{{ $mostLikedGalleries->max('likes_count') ?? 0 }}</div>
+          <div class="text-sm text-purple-700">Likes Tertinggi</div>
+        </div>
+        <div class="text-center p-4 bg-gradient-to-r from-orange-50 to-orange-100 rounded-lg">
+          <div class="text-2xl font-bold text-orange-600">{{ number_format($totalGalleryViews ?? 0) }}</div>
+          <div class="text-sm text-orange-700">Total Views</div>
+        </div>
+        <div class="text-center p-4 bg-gradient-to-r from-indigo-50 to-indigo-100 rounded-lg">
+          <div class="text-2xl font-bold text-indigo-600">{{ number_format($totalGalleries ?? 0) }}</div>
+          <div class="text-sm text-indigo-700">Total Galeri</div>
         </div>
       </div>
     </div>
@@ -314,9 +401,37 @@
             @endforelse
           </div>
         </div>
+
+        <!-- Most Viewed Galleries -->
+        <div class="glass-effect rounded-2xl p-6 shadow-lg card">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-bold text-gray-800">Galeri Terpopuler (Views)</h3>
+            <a href="{{ route('admin.galleries') }}" class="text-blue-600 hover:text-blue-800 font-medium transition-colors">Lihat Semua</a>
+          </div>
+          <div class="space-y-4">
+            @forelse($mostViewedGalleries ?? [] as $gallery)
+              <div class="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors">
+                <div class="flex items-center space-x-3">
+                  <div class="p-2 rounded-lg bg-blue-100 text-blue-600">
+                    <i class="fas fa-eye"></i>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <span class="text-sm font-medium text-gray-800 block truncate">{{ $gallery->judul }}</span>
+                    <span class="text-xs text-gray-500">Galeri • {{ $gallery->created_at->format('d M Y') }}</span>
+                  </div>
+                </div>
+                <div class="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">
+                  {{ number_format($gallery->views) }} views
+                </div>
+              </div>
+            @empty
+              <p class="text-sm text-gray-500 text-center py-4">Belum ada galeri dengan views.</p>
+            @endforelse
+          </div>
+        </div>
       </div>
 
-      <!-- Recent Content -->
+      <!-- Recent Content Section -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Recent Posts -->
         <div class="glass-effect rounded-2xl p-6 shadow-lg card">
@@ -385,6 +500,91 @@
 @endsection
 
 @push('scripts')
+@isset($mostLikedGalleries)
+<script>
+// Most Liked Galleries Chart
+document.addEventListener('DOMContentLoaded', function() {
+  const canvas = document.getElementById('mostLikedChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  const mostLikedData = @json($mostLikedGalleries ?? []);
+  const labels = mostLikedData.map(item => item.judul.length > 20 ? item.judul.substring(0, 20) + '...' : item.judul);
+  const likes = mostLikedData.map(item => item.likes_count || 0);
+
+  const backgroundColors = [
+    'rgba(59, 130, 246, 0.8)',
+    'rgba(34, 197, 94, 0.8)',
+    'rgba(59, 130, 246, 0.8)',
+    'rgba(34, 197, 94, 0.8)',
+    'rgba(59, 130, 246, 0.8)'
+  ];
+  
+  const borderColors = [
+    'rgba(59, 130, 246, 1)',
+    'rgba(34, 197, 94, 1)',
+    'rgba(59, 130, 246, 1)',
+    'rgba(34, 197, 94, 1)',
+    'rgba(59, 130, 246, 1)'
+  ];
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Likes',
+        data: likes,
+        backgroundColor: backgroundColors,
+        borderColor: borderColors,
+        borderWidth: 2,
+        borderRadius: 8,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: 'rgba(255, 255, 255, 0.95)',
+          titleColor: '#1f2937',
+          bodyColor: '#4b5563',
+          borderColor: '#e5e7eb',
+          borderWidth: 1,
+          padding: 12,
+          boxPadding: 6,
+          usePointStyle: true,
+          callbacks: {
+            title: function(context) {
+              const fullTitle = mostLikedData[context[0].dataIndex].judul;
+              return fullTitle.length > 40 ? fullTitle.substring(0, 40) + '...' : fullTitle;
+            },
+            label: function(context) {
+              return `Galeri: ${context.parsed.y.toLocaleString()} likes`;
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { precision: 0, callback: function(value){ return value.toLocaleString(); } },
+          grid: { color: 'rgba(0, 0, 0, 0.05)' }
+        },
+        x: {
+          ticks: { maxRotation: 45, minRotation: 0 },
+          grid: { display: false }
+        }
+      },
+      animation: { duration: 1000, easing: 'easeOutQuart' }
+    }
+  });
+});
+</script>
+@endisset
+
 @isset($mostViewedPosts)
 <script>
 // Most Read Articles Chart

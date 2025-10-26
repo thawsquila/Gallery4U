@@ -84,6 +84,24 @@ class GuestController extends Controller
         return back()->with('success', 'Komentar berhasil dihapus.');
     }
 
+    public function incrementGaleriView($id)
+    {
+        try {
+            $galeri = Galery::findOrFail($id);
+            $galeri->increment('views');
+            
+            return response()->json([
+                'success' => true,
+                'views' => $galeri->views
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error incrementing views'
+            ], 500);
+        }
+    }
+
     public function home() {
         try {
             // Track home page visit
@@ -369,6 +387,9 @@ class GuestController extends Controller
             }
 
             $galeri = $query->findOrFail($id);
+
+            // Increment views
+            $galeri->increment('views');
 
             $liked = (Schema::hasTable('galery_likes') && auth()->check())
                 ? $galeri->isLikedBy(auth()->id())

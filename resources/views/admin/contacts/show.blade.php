@@ -1,70 +1,362 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Detail Pesan - Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Gallery4U - Detail Pesan</title>
+    <link rel="icon" href="{{ asset('images/favicon.svg') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e3c72',
+                        'primary-dark': '#2a5298',
+                        'primary-light': '#4b6cb7',
+                        'text-dark': '#1f2937',
+                        'text-light': '#6b7280'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(203, 213, 225, 0.3);
+            box-shadow: 0 4px 20px 0 rgba(31, 38, 135, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-effect:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.15);
+        }
+        
+        .card {
+            transition: all 0.3s ease;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-50">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="flex items-center justify-between mb-6">
-            <h1 class="text-2xl font-bold text-gray-900">Detail Pesan</h1>
-            <div class="flex gap-2">
-                <a href="{{ route('admin.contacts.index') }}" class="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800">
-                    <i class="fas fa-arrow-left"></i> Kembali
-                </a>
-                <form method="POST" action="{{ route('admin.contacts.destroy', $message->id) }}" onsubmit="return confirm('Hapus pesan ini?');">
-                    @csrf
-                    @method('DELETE')
-                    <button class="inline-flex items-center gap-2 text-sm text-red-600 hover:text-red-800">
-                        <i class="fas fa-trash"></i> Hapus
-                    </button>
-                </form>
-            </div>
-        </div>
-
-        @if(session('success'))
-            <div class="mb-4 p-3 rounded-lg bg-blue-50 border border-blue-200 text-blue-700">{{ session('success') }}</div>
-        @endif
-
-        <div class="bg-white rounded-xl shadow border p-6">
-            <div class="grid sm:grid-cols-2 gap-4 mb-6">
-                <div>
-                    <div class="text-xs text-gray-500">Nama</div>
-                    <div class="font-semibold text-gray-900">{{ $message->name }}</div>
-                </div>
-                <div>
-                    <div class="text-xs text-gray-500">Email</div>
-                    <div class="font-semibold text-gray-900">{{ $message->email }}</div>
-                </div>
-                <div>
-                    <div class="text-xs text-gray-500">Tanggal</div>
-                    <div class="text-gray-700">{{ $message->created_at->format('d M Y H:i') }}</div>
-                </div>
-                <div>
-                    <div class="text-xs text-gray-500">Status</div>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <div class="min-h-screen flex">
+        <!-- Sidebar -->
+        <div class="w-64 min-h-screen shadow-xl bg-gradient-to-br from-black/70 via-[#254C6B]/60 to-black/80 py-8 px-4 relative overflow-hidden">
+            <!-- Background Pattern -->
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-transparent to-indigo-600/10"></div>
+            <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-blue-500/20 to-transparent"></div>
+            
+            <!-- Logo Section -->
+            <div class="relative pb-6 mb-6 border-b border-white/10">
+                <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0 bg-white/10 backdrop-blur-sm rounded-xl p-2.5 border border-white/10 shadow-lg">
+                        <img src="/images/favicon.svg" alt="Logo SMK" class="w-10 h-10 object-contain">
+                    </div>
                     <div>
-                        @if($message->is_read)
-                            <span class="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-700">Dibaca</span>
-                        @else
-                            <form method="POST" action="{{ route('admin.contacts.read', $message->id) }}">
-                                @csrf
-                                <button class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-700">Tandai Dibaca</button>
-                            </form>
-                        @endif
+                        <h2 class="text-xl font-bold text-white">Admin Panel</h2>
+                        <p class="text-sm text-white/80 font-medium">Gallery4U</p>
                     </div>
                 </div>
             </div>
+            
+            <!-- Navigation -->
+            <nav class="relative mt-6 px-4">
+                <!-- Main Menu Items -->
+                <div class="space-y-2">
+                    <a href="{{ route('admin.dashboard') }}" class="group relative flex items-center px-4 py-3 rounded-xl transition-all duration-300 text-slate-300 hover:text-white hover:bg-slate-700/50">
+                        <div class="relative">
+                            <div class="p-2 rounded-lg mr-3 bg-blue-500/20 text-blue-400 group-hover:bg-blue-500/30 group-hover:text-blue-300">
+                                <i class="fas fa-tachometer-alt text-sm"></i>
+                            </div>
+                        </div>
+                        <span class="font-medium">Dashboard</span>
+                    </a>
+                    
+                    <a href="{{ route('admin.contacts.index') }}" class="group relative flex items-center px-4 py-3 rounded-xl transition-all duration-300 bg-white text-[#1F2937] shadow-md">
+                        <div class="relative">
+                            <div class="p-2 rounded-lg mr-3 bg-white ring-1 ring-blue-100 text-blue-600">
+                                <i class="fas fa-envelope text-sm"></i>
+                            </div>
+                        </div>
+                        <span class="font-medium">Kontak Masuk</span>
+                        <div class="absolute right-2 w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                    </a>
+                    
+                    <a href="{{ route('admin.posts') }}" class="group relative flex items-center px-4 py-3 rounded-xl transition-all duration-300 text-slate-300 hover:text-white hover:bg-slate-700/50">
+                        <div class="relative">
+                            <div class="p-2 rounded-lg mr-3 bg-blue-500/20 text-blue-400 group-hover:bg-blue-500/30 group-hover:text-blue-300">
+                                <i class="fas fa-newspaper text-sm"></i>
+                            </div>
+                        </div>
+                        <span class="font-medium">Berita & Event</span>
+                    </a>
+                    
+                    <a href="{{ route('admin.teachers') }}" class="group relative flex items-center px-4 py-3 rounded-xl transition-all duration-300 text-slate-300 hover:text-white hover:bg-slate-700/50">
+                        <div class="relative">
+                            <div class="p-2 rounded-lg mr-3 bg-blue-500/20 text-blue-400 group-hover:bg-blue-500/30 group-hover:text-blue-300">
+                                <i class="fas fa-chalkboard-teacher text-sm"></i>
+                            </div>
+                        </div>
+                        <span class="font-medium">Tenaga Pendidik</span>
+                    </a>
+                    
+                    <a href="{{ route('admin.galleries') }}" class="group relative flex items-center px-4 py-3 rounded-xl transition-all duration-300 text-slate-300 hover:text-white hover:bg-slate-700/50">
+                        <div class="relative">
+                            <div class="p-2 rounded-lg mr-3 bg-blue-500/20 text-blue-400 group-hover:bg-blue-500/30 group-hover:text-blue-300">
+                                <i class="fas fa-images text-sm"></i>
+                            </div>
+                        </div>
+                        <span class="font-medium">Galeri</span>
+                    </a>
+
+                    <a href="{{ route('admin.comments') }}" class="group relative flex items-center px-4 py-3 rounded-xl transition-all duration-300 text-slate-300 hover:text-white hover:bg-slate-700/50">
+                        <div class="relative">
+                            <div class="p-2 rounded-lg mr-3 bg-blue-500/20 text-blue-400 group-hover:bg-blue-500/30 group-hover:text-blue-300">
+                                <i class="fas fa-comments text-sm"></i>
+                            </div>
+                        </div>
+                        <span class="font-medium">Kelola Komentar</span>
+                    </a>
+
+                    <a href="{{ route('admin.users') }}" class="group relative flex items-center px-4 py-3 rounded-xl transition-all duration-300 text-slate-300 hover:text-white hover:bg-slate-700/50">
+                        <div class="relative">
+                            <div class="p-2 rounded-lg mr-3 bg-blue-500/20 text-blue-400 group-hover:bg-blue-500/30 group-hover:text-blue-300">
+                                <i class="fas fa-users text-sm"></i>
+                            </div>
+                        </div>
+                        <span class="font-medium">Pengguna</span>
+                    </a>
+
+                    <a href="{{ route('admin.visitors') }}" class="group relative flex items-center px-4 py-3 rounded-xl transition-all duration-300 text-slate-300 hover:text-white hover:bg-slate-700/50">
+                        <div class="relative">
+                            <div class="p-2 rounded-lg mr-3 bg-blue-500/20 text-blue-400 group-hover:bg-blue-500/30 group-hover:text-blue-300">
+                                <i class="fas fa-user-clock text-sm"></i>
+                            </div>
+                        </div>
+                        <span class="font-medium">Pengunjung</span>
+                    </a>
+                </div>
+
+                <!-- Divider -->
+                <div class="my-6 border-t border-white/10"></div>
+
+                <!-- Action Items -->
+                <div class="space-y-2">
+                    <a href="{{ route('guest.home') }}" target="_blank" class="group flex items-center px-4 py-3 text-slate-300 hover:text-white hover:bg-emerald-500/20 rounded-xl transition-all duration-300">
+                        <div class="p-2 rounded-lg mr-3 bg-emerald-500/20 text-emerald-400 group-hover:bg-emerald-500/30 group-hover:text-emerald-300">
+                            <i class="fas fa-external-link-alt text-sm"></i>
+                        </div>
+                        <span class="font-medium">Lihat Website</span>
+                        <i class="fas fa-arrow-up-right-from-square ml-auto text-xs opacity-60"></i>
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col">
+            <!-- Header -->
+            <header class="glass-effect shadow-lg relative z-40">
+                <div class="px-6 py-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="text-2xl font-bold text-gray-900">Detail Pesan</h1>
+                            <p class="text-sm text-gray-600 mt-1">Informasi lengkap pesan dari pengunjung</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <a href="{{ route('admin.contacts.index') }}" class="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors">
+                                <i class="fas fa-arrow-left"></i> Kembali
+                            </a>
+                            <form method="POST" action="{{ route('admin.contacts.destroy', $message->id) }}" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pesan ini?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="inline-flex items-center gap-2 bg-red-100 hover:bg-red-200 text-red-700 px-4 py-2 rounded-lg font-medium transition-colors">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
+                            </form>
+                            <div class="relative" x-data="{ open: false }" x-init="open = false" @click.away="open = false">
+                                <button @click="open = !open" class="flex items-center space-x-3 focus:outline-none group">
+                                    <div class="text-right">
+                                        <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900">{{ Auth::user()->name }}</p>
+                                        <p class="text-xs text-gray-500">Admin</p>
+                                    </div>
+                                    @php $avHead = Auth::user()->avatar ? asset('images/avatars/'.Auth::user()->avatar).'?v='.time() : null; @endphp
+                                    <div class="w-10 h-10 rounded-full overflow-hidden ring-2 ring-blue-100 bg-white shadow-lg group-hover:shadow-xl transition-shadow">
+                                        @if($avHead)
+                                            <img src="{{ $avHead }}" alt="Avatar" class="w-full h-full object-cover">
+                                        @else
+                                            <div class="w-full h-full bg-gradient-to-r from-primary to-primary-dark flex items-center justify-center">
+                                                <i class="fas fa-user text-white"></i>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </button>
+                                
+                                <div x-show="open" 
+                                     x-cloak
+                                     x-transition:enter="transition ease-out duration-100"
+                                     x-transition:enter-start="transform opacity-0 scale-95"
+                                     x-transition:enter-end="transform opacity-100 scale-100"
+                                     x-transition:leave="transition ease-in duration-75"
+                                     x-transition:leave-start="transform opacity-100 scale-100"
+                                     x-transition:leave-end="transform opacity-0 scale-95"
+                                     class="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl py-2 z-[100] border border-gray-100"
+                                     style="display: none;">
+                                    <div class="px-4 py-3 border-b border-gray-100">
+                                        <p class="text-sm font-medium text-gray-900">{{ Auth::user()->name }}</p>
+                                        <p class="text-xs text-gray-500 truncate">{{ Auth::user()->email }}</p>
+                                    </div>
+                                    <div class="py-1">
+                                        <a href="{{ route('admin.profile') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                            <i class="fas fa-user-cog mr-2 text-gray-500"></i> Profile
+                                        </a>
+                                        <a href="{{ route('admin.settings') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                            <i class="fas fa-cog mr-2 text-gray-500"></i> Settings
+                                        </a>
+                                    </div>
+                                    <div class="border-t border-gray-100"></div>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+                                            <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="flex-1 p-6 relative z-10">
+
+                @if(session('success'))
+                    <div class="mb-6 glass-effect border border-green-400/50 text-white px-6 py-4 rounded-xl shadow-lg animate-fade-in-up" role="alert">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-3 text-xl"></i>
+                            <div>
+                                <p class="font-bold text-gray-900">Success!</p>
+                                <p class="text-sm text-gray-700">{{ session('success') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                <!-- Contact Info Card -->
+                <div class="glass-effect rounded-2xl p-8 mb-6 animate-fade-in-up card">
+            <div class="flex items-start gap-6 mb-8">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center text-white font-bold text-xl">
+                    {{ strtoupper(substr($message->name, 0, 1)) }}
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900 mb-1">{{ $message->name }}</h2>
+                            <p class="text-gray-600 flex items-center gap-2">
+                                <i class="fas fa-envelope text-sm"></i>
+                                <a href="mailto:{{ $message->email }}" class="hover:text-blue-600 transition-colors">{{ $message->email }}</a>
+                            </p>
+                        </div>
+                        <div class="text-right">
+                            @if($message->is_read)
+                                <span class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full bg-gray-100 text-gray-600 border border-gray-200">
+                                    <i class="fas fa-check text-gray-500"></i>
+                                    Sudah Dibaca
+                                </span>
+                            @else
+                                <form method="POST" action="{{ route('admin.contacts.read', $message->id) }}" class="inline">
+                                    @csrf
+                                    <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full bg-blue-100 text-blue-700 border border-blue-200 hover:bg-blue-200 transition-colors">
+                                        <i class="fas fa-circle text-blue-500" style="font-size: 6px;"></i>
+                                        Tandai Dibaca
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 rounded-xl p-4">
+                            <div class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Tanggal Dikirim</div>
+                            <div class="text-gray-900 font-medium flex items-center gap-2">
+                                <i class="far fa-calendar-alt text-blue-500"></i>
+                                {{ $message->created_at->format('d M Y') }}
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl p-4">
+                            <div class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Waktu</div>
+                            <div class="text-gray-900 font-medium flex items-center gap-2">
+                                <i class="far fa-clock text-blue-500"></i>
+                                {{ $message->created_at->format('H:i') }} WIB
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                <!-- Subject Card -->
+                <div class="glass-effect rounded-2xl p-8 mb-6 animate-fade-in-up card">
             <div class="mb-4">
-                <div class="text-xs text-gray-500 mb-1">Subjek</div>
-                <div class="text-lg font-semibold text-gray-900">{{ $message->subject }}</div>
+                <div class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">Subjek Pesan</div>
+                <h3 class="text-xl font-bold text-gray-900">{{ $message->subject }}</h3>
             </div>
-            <div>
-                <div class="text-xs text-gray-500 mb-1">Pesan</div>
-                <div class="whitespace-pre-line text-gray-800 leading-relaxed">{{ $message->message }}</div>
+        </div>
+
+                <!-- Message Card -->
+                <div class="glass-effect rounded-2xl p-8 animate-fade-in-up card">
+            <div class="mb-4">
+                <div class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-4">Isi Pesan</div>
+                <div class="prose prose-lg max-w-none">
+                    <div class="whitespace-pre-line text-gray-800 leading-relaxed text-base">{{ $message->message }}</div>
+                </div>
             </div>
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <div class="flex items-center justify-between text-sm text-gray-500">
+                    <div class="flex items-center gap-4">
+                        <span class="flex items-center gap-1">
+                            <i class="far fa-calendar-alt"></i>
+                            Diterima {{ $message->created_at->diffForHumans() }}
+                        </span>
+                        <span class="flex items-center gap-1">
+                            <i class="fas fa-eye"></i>
+                            {{ $message->is_read ? 'Sudah dibaca' : 'Belum dibaca' }}
+                        </span>
+                    </div>
+                    <a href="mailto:{{ $message->email }}?subject=Re: {{ $message->subject }}" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                        <i class="fas fa-reply"></i>
+                        Balas Email
+                    </a>
+                </div>
+            </div>
+                </div>
+            </main>
         </div>
     </div>
 </body>

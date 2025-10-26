@@ -1,4 +1,4 @@
-@extends('admin.dashboard')
+@extends('admin.layout')
 
 @section('title', 'Tambah Tenaga Pendidik')
 @section('page-title', 'Tambah Tenaga Pendidik')

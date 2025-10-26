@@ -24,9 +24,22 @@ class AdminReportController extends Controller
 
         // Basic totals
         $totalPosts = Post::count();
+        $totalBerita = Post::where('kategori_id', 1)->count();
+        $totalEvent = Post::where('kategori_id', 2)->count();
         $totalGalleries = Galery::count();
         $totalPhotos = Foto::count();
         $totalComments = Comment::count();
+        
+        // Post views statistics
+        $totalBeritaViews = Post::where('kategori_id', 1)->sum('views') ?? 0;
+        $totalEventViews = Post::where('kategori_id', 2)->sum('views') ?? 0;
+        $totalPostViews = Post::sum('views') ?? 0;
+        
+        // Gallery statistics
+        $totalGalleryViews = Galery::sum('views') ?? 0;
+        $totalGalleryLikes = \App\Models\GaleryLike::count();
+        $activeGalleries = Galery::where('status', 'aktif')->count();
+        $inactiveGalleries = Galery::where('status', '!=', 'aktif')->count();
 
         // Visitors range
         $totalVisitorsRange = Visitor::whereBetween('visit_date', [$fromDate, $toDate])->count();
@@ -110,7 +123,9 @@ class AdminReportController extends Controller
 
         return compact(
             'fromDate','toDate',
-            'totalPosts','totalGalleries','totalPhotos','totalComments','totalVisitorsRange',
+            'totalPosts','totalBerita','totalEvent','totalGalleries','totalPhotos','totalComments','totalVisitorsRange',
+            'totalBeritaViews','totalEventViews','totalPostViews',
+            'totalGalleryViews','totalGalleryLikes','activeGalleries','inactiveGalleries',
             'mostVisitedPages','mostViewedPosts','visitorChart','visitorChartData','perPage'
         );
     }

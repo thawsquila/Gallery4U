@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Laporan Website - SMKN 4 Bogor</title>
+  <title>Gallery4U - Laporan Website</title>
   <link rel="icon" href="{{ asset('images/favicon.svg') }}" type="image/png">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
@@ -36,22 +36,63 @@
       <div class="muted">Periode: {{ $fromDate }} — {{ $toDate }} | Dicetak: {{ now()->format('d M Y H:i') }}</div>
     </div>
 
+    <!-- Content Statistics -->
     <div class="grid grid-4">
       <div class="card">
-        <div class="muted">Total Berita & Event</div>
-        <div style="font-size:22px; font-weight:700">{{ $totalPosts }}</div>
+        <div class="muted">Total Berita</div>
+        <div style="font-size:22px; font-weight:700; color:#2563eb">{{ number_format($totalBerita) }}</div>
+      </div>
+      <div class="card">
+        <div class="muted">Total Event</div>
+        <div style="font-size:22px; font-weight:700; color:#16a34a">{{ number_format($totalEvent) }}</div>
       </div>
       <div class="card">
         <div class="muted">Total Galeri</div>
-        <div style="font-size:22px; font-weight:700">{{ $totalGalleries }}</div>
+        <div style="font-size:22px; font-weight:700; color:#9333ea">{{ number_format($totalGalleries) }}</div>
       </div>
       <div class="card">
         <div class="muted">Total Foto</div>
-        <div style="font-size:22px; font-weight:700">{{ $totalPhotos }}</div>
+        <div style="font-size:22px; font-weight:700; color:#ea580c">{{ number_format($totalPhotos) }}</div>
+      </div>
+    </div>
+
+    <!-- Views Statistics -->
+    <div class="grid grid-4" style="margin-top:16px">
+      <div class="card">
+        <div class="muted">Views Berita</div>
+        <div style="font-size:22px; font-weight:700; color:#2563eb">{{ number_format($totalBeritaViews) }}</div>
+      </div>
+      <div class="card">
+        <div class="muted">Views Event</div>
+        <div style="font-size:22px; font-weight:700; color:#16a34a">{{ number_format($totalEventViews) }}</div>
+      </div>
+      <div class="card">
+        <div class="muted">Views Galeri</div>
+        <div style="font-size:22px; font-weight:700; color:#9333ea">{{ number_format($totalGalleryViews) }}</div>
       </div>
       <div class="card">
         <div class="muted">Total Kunjungan (Periode)</div>
-        <div style="font-size:22px; font-weight:700">{{ $totalVisitorsRange }}</div>
+        <div style="font-size:22px; font-weight:700; color:#4f46e5">{{ number_format($totalVisitorsRange) }}</div>
+      </div>
+    </div>
+
+    <!-- Engagement Statistics -->
+    <div class="grid grid-4" style="margin-top:16px">
+      <div class="card">
+        <div class="muted">Total Suka</div>
+        <div style="font-size:22px; font-weight:700; color:#dc2626">{{ number_format($totalGalleryLikes) }}</div>
+      </div>
+      <div class="card">
+        <div class="muted">Total Komentar</div>
+        <div style="font-size:22px; font-weight:700; color:#eab308">{{ number_format($totalComments) }}</div>
+      </div>
+      <div class="card">
+        <div class="muted">Galeri Aktif</div>
+        <div style="font-size:22px; font-weight:700; color:#16a34a">{{ number_format($activeGalleries) }}</div>
+      </div>
+      <div class="card">
+        <div class="muted">Galeri Tidak Aktif</div>
+        <div style="font-size:22px; font-weight:700; color:#6b7280">{{ number_format($inactiveGalleries) }}</div>
       </div>
     </div>
 

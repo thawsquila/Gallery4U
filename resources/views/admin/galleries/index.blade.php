@@ -5,7 +5,7 @@
 @section('content')
 <div class="animate-fade-in-up text-sm">
     <!-- Statistics Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 mb-6">
         <!-- Total Galleries Card -->
         <div class="glass-effect rounded-xl p-4 shadow-md transition-all duration-300 card">
             <div class="flex items-center">
@@ -27,7 +27,7 @@
                 </div>
                 <div>
                     <p class="text-xs font-medium text-gray-600">Galeri Aktif</p>
-                    <h3 class="text-xl font-bold text-gray-900">{{ $activeGalleries ?? $galleries->where('is_active', true)->count() }}</h3>
+                    <h3 class="text-xl font-bold text-gray-900">{{ $activeGalleries ?? $galleries->where('status', 'aktif')->count() }}</h3>
                 </div>
             </div>
         </div>
@@ -67,6 +67,19 @@
                 <div>
                     <p class="text-xs font-medium text-gray-600">Total Suka</p>
                     <h3 class="text-xl font-bold text-gray-900">{{ number_format($totalLikes ?? 0) }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Views Card -->
+        <div class="glass-effect rounded-xl p-4 shadow-md transition-all duration-300 card">
+            <div class="flex items-center">
+                <div class="p-2 rounded-lg bg-orange-100 text-orange-600 mr-3">
+                    <i class="fas fa-eye text-lg"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-medium text-gray-600">Total Views</p>
+                    <h3 class="text-xl font-bold text-gray-900">{{ number_format($totalViews ?? 0) }}</h3>
                 </div>
             </div>
         </div>
@@ -136,14 +149,13 @@
     <div class="overflow-x-auto">
         <table class="min-w-full table-fixed text-xs">
             <colgroup>
-                <col class="w-10">
-                <col class="w-64">
-                <col class="w-16">
+                <col class="w-8">
+                <col class="w-72">
+                <col class="w-20">
                 <col class="w-20">
                 <col class="w-24">
-                <col class="w-28">
-                <col class="w-28">
-                <col class="w-32">
+                <col class="w-24">
+                <col class="w-20">
             </colgroup>
             <thead>
                 <tr class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 text-[11px] text-gray-600">
@@ -156,12 +168,6 @@
                         <div class="flex items-center">
                             <i class="fas fa-images mr-2 text-purple-500 text-xs"></i>
                             Galeri
-                        </div>
-                    </th>
-                    <th class="px-3 py-2 text-left font-semibold uppercase tracking-wider">
-                        <div class="flex items-center">
-                            <i class="fas fa-sort-numeric-down mr-2 text-green-500 text-xs"></i>
-                            Posisi
                         </div>
                     </th>
                     <th class="px-3 py-2 text-left font-semibold uppercase tracking-wider">
@@ -229,11 +235,8 @@
                             </div>
                         </div>
                     </td>
-                    <td class="px-3 py-2 whitespace-nowrap text-gray-600">
-                        {{ $gallery->position }}
-                    </td>
                     <td class="px-3 py-2 whitespace-nowrap">
-                        @if($gallery->is_active)
+                        @if($gallery->status === 'aktif')
                             <span class="px-2 py-0.5 inline-flex items-center text-[11px] font-medium rounded-full bg-green-100 text-green-800">
                                 <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-green-400" fill="currentColor" viewBox="0 0 8 8">
                                     <circle cx="4" cy="4" r="3" />
@@ -245,7 +248,7 @@
                                 <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-red-400" fill="currentColor" viewBox="0 0 8 8">
                                     <circle cx="4" cy="4" r="3" />
                                 </svg>
-                                Nonaktif
+                                Tidak Aktif
                             </span>
                         @endif
                     </td>
@@ -277,7 +280,7 @@
                     </td>
                     <td class="px-3 py-2 whitespace-nowrap text-gray-600">
                         <div class="font-medium">{{ $gallery->created_at->format('d M Y') }}</div>
-                        <div class="text-[11px] text-gray-400">{{ $gallery->created_at->diffForHumans() }}</div>
+                        <div class="text-[11px] text-gray-400">{{ $gallery->created_at->diffForHumans(\Carbon\Carbon::now(), true) }} yang lalu</div>
                     </td>
                     <td class="px-3 py-2 whitespace-nowrap">
                         @php
@@ -291,28 +294,15 @@
                             <span class="inline-flex items-center text-gray-700" title="Komentar">
                                 <i class="far fa-comment text-gray-500 mr-1"></i>{{ number_format($commentsCount) }}
                             </span>
+                            <span class="inline-flex items-center text-gray-700" title="Views">
+                                <i class="fas fa-eye text-blue-500 mr-1"></i>{{ number_format($gallery->views ?? 0) }}
+                            </span>
                             @if(!empty($likesCount))
-                                <button type="button" class="text-[11px] px-2 py-0.5 rounded bg-pink-50 text-pink-600 hover:bg-pink-100 ring-1 ring-pink-200" onclick="toggleLikeList('like-list-{{ $gallery->id }}')">
+                                <a href="{{ route('admin.galleries.likes', $gallery->id) }}" class="text-[11px] px-2 py-0.5 rounded bg-pink-50 text-pink-600 hover:bg-pink-100 ring-1 ring-pink-200 transition-colors">
                                     Lihat yang suka
-                                </button>
+                                </a>
                             @endif
                         </div>
-                        @if(!empty($likesCount) && isset($gallery->likes))
-                            <div id="like-list-{{ $gallery->id }}" class="mt-2 hidden bg-white border rounded-lg shadow p-3 max-w-sm">
-                                <div class="text-xs font-semibold text-gray-700 mb-2">Disukai oleh:</div>
-                                <ul class="space-y-1 text-sm text-gray-700 max-h-40 overflow-auto pr-1">
-                                    @foreach($gallery->likes->take(5) as $like)
-                                        <li class="flex items-center justify-between">
-                                            <span>{{ $like->user->name ?? 'Pengguna' }}</span>
-                                            <span class="text-xs text-gray-400">{{ $like->created_at?->format('d M Y H:i') }}</span>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                                @if($gallery->likes->count() > 5)
-                                    <div class="text-xs text-gray-500 mt-2">+{{ $gallery->likes->count() - 5 }} lainnya</div>
-                                @endif
-                            </div>
-                        @endif
                     </td>
                     <td class="px-3 py-2 whitespace-nowrap text-right font-medium">
                         <div class="flex items-center justify-end space-x-1.5">
@@ -673,12 +663,6 @@
         }
     }
 
-    // Toggle like list popover per baris
-    function toggleLikeList(id) {
-        const el = document.getElementById(id);
-        if (!el) return;
-        el.classList.toggle('hidden');
-    }
 </script>
 @endpush
 

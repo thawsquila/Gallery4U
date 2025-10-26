@@ -37,7 +37,6 @@ class GalleryController extends Controller
             'judul' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
             'kategori' => 'nullable|string|max:255',
-            'position' => 'required|integer',
             'status' => 'required|in:aktif,tidak aktif',
             'photos' => 'required|array|min:1',
             'photos.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:15360',
@@ -58,7 +57,6 @@ class GalleryController extends Controller
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
             'kategori' => $request->kategori,
-            'position' => $request->position,
             'status' => $request->status
         ]);
 
@@ -131,7 +129,6 @@ class GalleryController extends Controller
             'judul' => 'sometimes|required|string|max:255',
             'deskripsi' => 'sometimes|nullable|string',
             'kategori' => 'sometimes|nullable|string|max:255',
-            'position' => 'sometimes|required|integer',
             'status' => 'sometimes|required|in:aktif,tidak aktif',
             'photos' => 'sometimes|array',
             'photos.*' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -151,7 +148,6 @@ class GalleryController extends Controller
         if ($request->has('judul')) $gallery->judul = $request->judul;
         if ($request->has('deskripsi')) $gallery->deskripsi = $request->deskripsi;
         if ($request->has('kategori')) $gallery->kategori = $request->kategori;
-        if ($request->has('position')) $gallery->position = $request->position;
         if ($request->has('status')) $gallery->status = $request->status;
 
         $gallery->save();

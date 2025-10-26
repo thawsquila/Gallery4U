@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Gallery4U - Kontak Masuk</title>
+    <title>Admin Gallery4U - Daftar Suka - {{ $gallery->judul }}</title>
     <link rel="icon" href="{{ asset('images/favicon.svg') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -60,13 +60,6 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
-        
-        .line-clamp-2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -105,14 +98,13 @@
                         <span class="font-medium">Dashboard</span>
                     </a>
                     
-                    <a href="{{ route('admin.contacts.index') }}" class="group relative flex items-center px-4 py-3 rounded-xl transition-all duration-300 bg-white text-[#1F2937] shadow-md">
+                    <a href="{{ route('admin.contacts.index') }}" class="group relative flex items-center px-4 py-3 rounded-xl transition-all duration-300 text-slate-300 hover:text-white hover:bg-slate-700/50">
                         <div class="relative">
-                            <div class="p-2 rounded-lg mr-3 bg-white ring-1 ring-blue-100 text-blue-600">
+                            <div class="p-2 rounded-lg mr-3 bg-blue-500/20 text-blue-400 group-hover:bg-blue-500/30 group-hover:text-blue-300">
                                 <i class="fas fa-envelope text-sm"></i>
                             </div>
                         </div>
                         <span class="font-medium">Kontak Masuk</span>
-                        <div class="absolute right-2 w-2 h-2 bg-white rounded-full animate-pulse"></div>
                     </a>
                     
                     <a href="{{ route('admin.posts') }}" class="group relative flex items-center px-4 py-3 rounded-xl transition-all duration-300 text-slate-300 hover:text-white hover:bg-slate-700/50">
@@ -133,13 +125,14 @@
                         <span class="font-medium">Tenaga Pendidik</span>
                     </a>
                     
-                    <a href="{{ route('admin.galleries') }}" class="group relative flex items-center px-4 py-3 rounded-xl transition-all duration-300 text-slate-300 hover:text-white hover:bg-slate-700/50">
+                    <a href="{{ route('admin.galleries') }}" class="group relative flex items-center px-4 py-3 rounded-xl transition-all duration-300 bg-white text-[#1F2937] shadow-md">
                         <div class="relative">
-                            <div class="p-2 rounded-lg mr-3 bg-blue-500/20 text-blue-400 group-hover:bg-blue-500/30 group-hover:text-blue-300">
+                            <div class="p-2 rounded-lg mr-3 bg-white ring-1 ring-blue-100 text-blue-600">
                                 <i class="fas fa-images text-sm"></i>
                             </div>
                         </div>
                         <span class="font-medium">Galeri</span>
+                        <div class="absolute right-2 w-2 h-2 bg-white rounded-full animate-pulse"></div>
                     </a>
 
                     <a href="{{ route('admin.comments') }}" class="group relative flex items-center px-4 py-3 rounded-xl transition-all duration-300 text-slate-300 hover:text-white hover:bg-slate-700/50">
@@ -193,10 +186,13 @@
                 <div class="px-6 py-4">
                     <div class="flex items-center justify-between">
                         <div>
-                            <h1 class="text-2xl font-bold text-gray-900">Kontak Masuk</h1>
-                            <p class="text-sm text-gray-600 mt-1">Kelola pesan dari pengunjung website</p>
+                            <h1 class="text-2xl font-bold text-gray-900">Daftar Suka - {{ $gallery->judul }}</h1>
+                            <p class="text-sm text-gray-600 mt-1">Pengguna yang menyukai galeri ini</p>
                         </div>
                         <div class="flex items-center gap-3">
+                            <a href="{{ route('admin.galleries') }}" class="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors">
+                                <i class="fas fa-arrow-left"></i> Kembali ke Galeri
+                            </a>
                             <div class="relative" x-data="{ open: false }" x-init="open = false" @click.away="open = false">
                                 <button @click="open = !open" class="flex items-center space-x-3 focus:outline-none group">
                                     <div class="text-right">
@@ -253,159 +249,93 @@
 
             <!-- Content -->
             <main class="flex-1 p-6 relative z-10">
-
-                @if(session('success'))
-                    <div class="mb-6 glass-effect border border-green-400/50 text-white px-6 py-4 rounded-xl shadow-lg animate-fade-in-up" role="alert">
-                        <div class="flex items-center">
-                            <i class="fas fa-check-circle text-green-500 mr-3 text-xl"></i>
-                            <div>
-                                <p class="font-bold text-gray-900">Success!</p>
-                                <p class="text-sm text-gray-700">{{ session('success') }}</p>
+                <!-- Gallery Info Card -->
+                <div class="glass-effect rounded-2xl p-6 mb-6 animate-fade-in-up card">
+                    <div class="flex items-start gap-6">
+                        @if($gallery->fotos && $gallery->fotos->isNotEmpty())
+                            <div class="w-24 h-24 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                <img src="{{ asset('images/gallery/' . $gallery->fotos->first()->file) }}" 
+                                     alt="{{ $gallery->judul }}" 
+                                     class="w-full h-full object-cover">
                             </div>
-                        </div>
-                    </div>
-                @endif
-
-                <!-- Statistics Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div class="glass-effect rounded-2xl p-6 shadow-lg transition-all duration-300 card">
-                        <div class="flex items-center">
-                            <div class="p-3 rounded-xl bg-blue-100 text-blue-600 mr-4">
-                                <i class="fas fa-envelope text-xl"></i>
+                        @else
+                            <div class="w-24 h-24 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white flex-shrink-0">
+                                <i class="fas fa-images text-2xl"></i>
                             </div>
-                            <div>
-                                <p class="text-sm font-medium text-gray-600">Total Pesan</p>
-                                <h3 class="text-2xl font-bold text-gray-900">{{ $messages->total() }}</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="glass-effect rounded-2xl p-6 shadow-lg transition-all duration-300 card">
-                        <div class="flex items-center">
-                            <div class="p-3 rounded-xl bg-orange-100 text-orange-600 mr-4">
-                                <i class="fas fa-clock text-xl"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm font-medium text-gray-600">Belum Dibaca</p>
-                                <h3 class="text-2xl font-bold text-gray-900">{{ $unreadCount }}</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="glass-effect rounded-2xl p-6 shadow-lg transition-all duration-300 card">
-                        <div class="flex items-center">
-                            <div class="p-3 rounded-xl bg-green-100 text-green-600 mr-4">
-                                <i class="fas fa-check text-xl"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm font-medium text-gray-600">Sudah Dibaca</p>
-                                <h3 class="text-2xl font-bold text-gray-900">{{ $messages->total() - $unreadCount }}</h3>
+                        @endif
+                        <div class="flex-1">
+                            <h2 class="text-xl font-bold text-gray-900 mb-2">{{ $gallery->judul }}</h2>
+                            <p class="text-gray-600 mb-4">{{ Str::limit($gallery->deskripsi, 200) }}</p>
+                            <div class="flex items-center gap-6 text-sm text-gray-500">
+                                <span class="flex items-center gap-1">
+                                    <i class="fas fa-heart text-red-500"></i>
+                                    {{ number_format($gallery->likes->count()) }} suka
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <i class="fas fa-images"></i>
+                                    {{ $gallery->fotos->count() }} foto
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <i class="fas fa-calendar"></i>
+                                    {{ $gallery->created_at->format('d M Y') }}
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Search and Filter Section -->
-                <div class="glass-effect rounded-2xl p-6 mb-6 animate-fade-in-up">
-                    <div class="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
-                        <form method="GET" class="flex-1 max-w-2xl">
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                    <i class="fas fa-search text-gray-400"></i>
-                                </div>
-                                <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari berdasarkan nama, email, subjek, atau pesan..." class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" />
-                                <button type="submit" class="absolute inset-y-0 right-0 pr-4 flex items-center">
-                                    <span class="bg-gradient-to-r from-blue-500 to-indigo-500 hover:opacity-95 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all">
-                                        Cari
-                                    </span>
-                                </button>
-                            </div>
-                        </form>
-                        <div class="flex items-center gap-4">
-                            @if(request('q'))
-                                <a href="{{ route('admin.contacts.index') }}" class="text-sm text-blue-600 hover:text-blue-800 font-medium">
-                                    <i class="fas fa-times mr-1"></i> Hapus Filter
-                                </a>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Messages Section -->
+                <!-- Likes List -->
                 <div class="glass-effect rounded-2xl overflow-hidden animate-fade-in-up">
-            @forelse($messages as $index => $m)
-                <div class="border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors card-hover" style="animation-delay: {{ $index * 0.1 }}s">
-                    <div class="p-6">
-                        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                            <div class="flex-1">
-                                <div class="flex items-start justify-between mb-3">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
-                                            {{ strtoupper(substr($m->name, 0, 1)) }}
+                    <div class="p-6 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900">
+                            Daftar Pengguna yang Menyukai ({{ number_format($likes->total()) }})
+                        </h3>
+                    </div>
+                    
+                    @if($likes->count() > 0)
+                        <div class="divide-y divide-gray-100">
+                            @foreach($likes as $index => $like)
+                                <div class="p-6 hover:bg-gray-50 transition-colors" style="animation-delay: {{ $index * 0.1 }}s">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
+                                                {{ strtoupper(substr($like->user->name ?? 'U', 0, 1)) }}
+                                            </div>
+                                            <div>
+                                                <h4 class="font-semibold text-gray-900">{{ $like->user->name ?? 'Pengguna' }}</h4>
+                                                <p class="text-sm text-gray-600">{{ $like->user->email ?? 'Email tidak tersedia' }}</p>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <h3 class="font-semibold text-gray-900 text-lg">{{ $m->name }}</h3>
-                                            <p class="text-gray-600 text-sm flex items-center gap-1">
-                                                <i class="fas fa-envelope text-xs"></i>
-                                                {{ $m->email }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        @if(!$m->is_read)
-                                            <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-700 border border-blue-200">
-                                                <i class="fas fa-circle text-blue-500" style="font-size: 6px;"></i>
-                                                Belum Dibaca
-                                            </span>
-                                        @else
-                                            <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-600 border border-gray-200">
-                                                <i class="fas fa-check text-gray-500" style="font-size: 8px;"></i>
-                                                Sudah Dibaca
-                                            </span>
-                                        @endif
-                                        <div class="text-xs text-gray-500 flex items-center gap-1">
-                                            <i class="far fa-clock"></i>
-                                            {{ $m->created_at->diffForHumans() }}
+                                        <div class="text-right">
+                                            <div class="text-sm text-gray-500 flex items-center gap-1">
+                                                <i class="fas fa-heart text-red-500"></i>
+                                                {{ $like->created_at->diffForHumans(\Carbon\Carbon::now(), true) }} yang lalu
+                                            </div>
+                                            <div class="text-xs text-gray-400">
+                                                {{ $like->created_at->format('d M Y, H:i') }} WIB
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mb-3">
-                                    <h4 class="font-medium text-gray-800 mb-1">{{ $m->subject }}</h4>
-                                    <p class="text-gray-600 text-sm line-clamp-2">{{ Str::limit($m->message, 120) }}</p>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <div class="text-xs text-gray-500">
-                                        <i class="far fa-calendar-alt mr-1"></i>
-                                        {{ $m->created_at->format('d M Y, H:i') }} WIB
-                                    </div>
-                                    <a href="{{ route('admin.contacts.show', $m->id) }}" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                                        <i class="fas fa-eye"></i>
-                                        Lihat Detail
-                                    </a>
-                                </div>
+                            @endforeach
+                        </div>
+                        
+                        <!-- Pagination -->
+                        @if($likes->hasPages())
+                            <div class="p-6 border-t border-gray-200">
+                                {{ $likes->links() }}
                             </div>
+                        @endif
+                    @else
+                        <div class="p-12 text-center">
+                            <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-heart text-gray-400 text-2xl"></i>
+                            </div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">Belum Ada Yang Menyukai</h3>
+                            <p class="text-gray-600">Galeri ini belum mendapat like dari pengguna</p>
                         </div>
-                    </div>
+                    @endif
                 </div>
-            @empty
-                <div class="p-12 text-center">
-                    <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-inbox text-gray-400 text-2xl"></i>
-                    </div>
-                    <h3 class="text-lg font-medium text-gray-900 mb-2">Belum Ada Pesan</h3>
-                    <p class="text-gray-600">Pesan dari pengunjung akan muncul di sini</p>
-                </div>
-            @endforelse
-                </div>
-                
-                <!-- Pagination -->
-                @if($messages->hasPages())
-                    <div class="mt-6 animate-fade-in-up">
-                        <div class="glass-effect rounded-2xl p-4">
-                            {{ $messages->appends(request()->query())->links() }}
-                        </div>
-                    </div>
-                @endif
             </main>
         </div>
     </div>

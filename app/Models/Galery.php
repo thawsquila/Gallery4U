@@ -14,10 +14,10 @@ class Galery extends Model
     protected $fillable = [
         'post_id',
         'kategori',
-        'position',
         'status',
         'judul',
-        'deskripsi'
+        'deskripsi',
+        'views'
     ];
 
     protected $casts = [

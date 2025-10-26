@@ -323,6 +323,25 @@ class AdminController extends Controller
             ->take(5)
             ->get(['id', 'judul', 'views', 'kategori_id', 'created_at']);
 
+        // Gallery statistics - most liked galleries
+        $mostLikedGalleries = Galery::withCount('likes')
+            ->having('likes_count', '>', 0)
+            ->orderBy('likes_count', 'desc')
+            ->take(5)
+            ->get(['id', 'judul', 'deskripsi', 'created_at']);
+
+        // Gallery statistics - most viewed galleries
+        $mostViewedGalleries = Galery::where('views', '>', 0)
+            ->orderBy('views', 'desc')
+            ->take(5)
+            ->get(['id', 'judul', 'views', 'created_at']);
+
+        // Total likes across all galleries
+        $totalGalleryLikes = \App\Models\GaleryLike::count();
+
+        // Total gallery views
+        $totalGalleryViews = Galery::sum('views') ?? 0;
+
         return view('admin.dashboard-new', compact(
             'totalPosts', 
             'totalGalleries', 
@@ -342,7 +361,11 @@ class AdminController extends Controller
             'visitorChartData',
             'totalViews',
             'mostViewedPosts',
-            'recentPostsWithViews'
+            'recentPostsWithViews',
+            'mostLikedGalleries',
+            'mostViewedGalleries',
+            'totalGalleryLikes',
+            'totalGalleryViews'
         ));
     }
 
@@ -430,8 +453,7 @@ class AdminController extends Controller
                     [
                         'deskripsi' => 'Galeri untuk: ' . $post->judul,
                         'kategori' => $kategoriNama,
-                        'status' => $post->status,
-                        'position' => (int) (Galery::max('position') + 1)
+                        'status' => $post->status
                     ]
                 );
 
@@ -518,8 +540,7 @@ class AdminController extends Controller
                     [
                         'deskripsi' => 'Galeri untuk: ' . $post->judul,
                         'kategori' => $kategoriNama,
-                        'status' => $data['status'] ?? $post->status,
-                        'position' => (int) (Galery::max('position') + 1)
+                        'status' => $data['status'] ?? $post->status
                     ]
                 );
 
@@ -583,12 +604,16 @@ class AdminController extends Controller
         $perPage = (int) ($request->get('per_page') ?: 10);
         if (!in_array($perPage, [10,25,50,100])) { $perPage = 10; }
         // Base query
-        $gq = Galery::with('fotos')->latest();
-        // Load counts for comments and likes if available
-        $gq->withCount('comments');
+        $gq = Galery::query();
+        
+        // Load relationships and counts
+        $gq->with('fotos')->withCount('comments');
         if (\Illuminate\Support\Facades\Schema::hasTable('galery_likes')) {
             $gq->withCount('likes')->with(['likes.user']);
         }
+        
+        // Order by latest
+        $gq->latest();
         // Server-side search like posts page
         if ($request->filled('search')) {
             $term = $request->get('search');
@@ -622,7 +647,10 @@ class AdminController extends Controller
             $totalLikes = \App\Models\GaleryLike::count();
         }
 
-        return view('admin.galleries.index', compact('galleries', 'totalGalleries', 'activeGalleries', 'inactiveGalleries', 'galleryCategories', 'totalLikes'));
+        // Total views for stats card
+        $totalViews = Galery::sum('views') ?? 0;
+
+        return view('admin.galleries.index', compact('galleries', 'totalGalleries', 'activeGalleries', 'inactiveGalleries', 'galleryCategories', 'totalLikes', 'totalViews'));
     }
 
     public function createGallery()
@@ -635,14 +663,13 @@ class AdminController extends Controller
         $request->validate([
             'judul' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
-            'position' => 'required|integer',
             'status' => 'required|in:aktif,tidak_aktif',
             'kategori' => 'required|string',
             'photos' => 'required|array|min:1',
             'judul_foto' => 'nullable|string|max:255'
         ]);
 
-        $gallery = Galery::create($request->only(['judul', 'deskripsi', 'position', 'status', 'kategori']));
+        $gallery = Galery::create($request->only(['judul', 'deskripsi', 'status', 'kategori']));
 
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
@@ -691,7 +718,6 @@ class AdminController extends Controller
         $request->validate([
             'judul' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
-            'position' => 'required|integer',
             'status' => 'required|in:aktif,tidak_aktif',
             'kategori' => 'required|string',
             'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
@@ -699,7 +725,7 @@ class AdminController extends Controller
         ]);
 
         $gallery = Galery::findOrFail($id);
-        $gallery->update($request->only(['judul', 'deskripsi', 'position', 'status', 'kategori']));
+        $gallery->update($request->only(['judul', 'deskripsi', 'status', 'kategori']));
 
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
@@ -943,4 +969,13 @@ class AdminController extends Controller
         
         return back()->with('success', 'Komentar berhasil dihapus');
     }
+
+    public function galleryLikes($id)
+    {
+        $gallery = Galery::with(['likes.user'])->findOrFail($id);
+        $likes = $gallery->likes()->with('user')->orderBy('created_at', 'desc')->paginate(20);
+        
+        return view('admin.galleries.likes', compact('gallery', 'likes'));
+    }
+
 }

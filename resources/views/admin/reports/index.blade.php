@@ -36,22 +36,123 @@
   </div>
 </form>
 
+<!-- Content Statistics -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
   <div class="glass-effect rounded-2xl p-6 card">
-    <div class="text-sm text-gray-500">Total Berita & Event</div>
-    <div class="text-2xl font-bold">{{ $totalPosts }}</div>
+    <div class="flex items-center justify-between mb-3">
+      <div class="p-2 rounded-lg bg-blue-100 text-blue-600">
+        <i class="fas fa-newspaper"></i>
+      </div>
+    </div>
+    <div class="text-sm text-gray-500">Total Berita</div>
+    <div class="text-2xl font-bold text-blue-600">{{ number_format($totalBerita) }}</div>
   </div>
   <div class="glass-effect rounded-2xl p-6 card">
+    <div class="flex items-center justify-between mb-3">
+      <div class="p-2 rounded-lg bg-green-100 text-green-600">
+        <i class="fas fa-calendar-alt"></i>
+      </div>
+    </div>
+    <div class="text-sm text-gray-500">Total Event</div>
+    <div class="text-2xl font-bold text-green-600">{{ number_format($totalEvent) }}</div>
+  </div>
+  <div class="glass-effect rounded-2xl p-6 card">
+    <div class="flex items-center justify-between mb-3">
+      <div class="p-2 rounded-lg bg-purple-100 text-purple-600">
+        <i class="fas fa-images"></i>
+      </div>
+    </div>
     <div class="text-sm text-gray-500">Total Galeri</div>
-    <div class="text-2xl font-bold">{{ $totalGalleries }}</div>
+    <div class="text-2xl font-bold text-purple-600">{{ number_format($totalGalleries) }}</div>
   </div>
   <div class="glass-effect rounded-2xl p-6 card">
+    <div class="flex items-center justify-between mb-3">
+      <div class="p-2 rounded-lg bg-orange-100 text-orange-600">
+        <i class="fas fa-photo-video"></i>
+      </div>
+    </div>
     <div class="text-sm text-gray-500">Total Foto</div>
-    <div class="text-2xl font-bold">{{ $totalPhotos }}</div>
+    <div class="text-2xl font-bold text-orange-600">{{ number_format($totalPhotos) }}</div>
+  </div>
+</div>
+
+<!-- Views Statistics -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+  <div class="glass-effect rounded-2xl p-6 card">
+    <div class="flex items-center justify-between mb-3">
+      <div class="p-2 rounded-lg bg-blue-100 text-blue-600">
+        <i class="fas fa-eye"></i>
+      </div>
+    </div>
+    <div class="text-sm text-gray-500">Views Berita</div>
+    <div class="text-2xl font-bold text-blue-600">{{ number_format($totalBeritaViews) }}</div>
   </div>
   <div class="glass-effect rounded-2xl p-6 card">
+    <div class="flex items-center justify-between mb-3">
+      <div class="p-2 rounded-lg bg-green-100 text-green-600">
+        <i class="fas fa-eye"></i>
+      </div>
+    </div>
+    <div class="text-sm text-gray-500">Views Event</div>
+    <div class="text-2xl font-bold text-green-600">{{ number_format($totalEventViews) }}</div>
+  </div>
+  <div class="glass-effect rounded-2xl p-6 card">
+    <div class="flex items-center justify-between mb-3">
+      <div class="p-2 rounded-lg bg-purple-100 text-purple-600">
+        <i class="fas fa-eye"></i>
+      </div>
+    </div>
+    <div class="text-sm text-gray-500">Views Galeri</div>
+    <div class="text-2xl font-bold text-purple-600">{{ number_format($totalGalleryViews) }}</div>
+  </div>
+  <div class="glass-effect rounded-2xl p-6 card">
+    <div class="flex items-center justify-between mb-3">
+      <div class="p-2 rounded-lg bg-indigo-100 text-indigo-600">
+        <i class="fas fa-chart-line"></i>
+      </div>
+    </div>
     <div class="text-sm text-gray-500">Total Kunjungan (Periode)</div>
-    <div class="text-2xl font-bold">{{ $totalVisitorsRange }}</div>
+    <div class="text-2xl font-bold text-indigo-600">{{ number_format($totalVisitorsRange) }}</div>
+  </div>
+</div>
+
+<!-- Gallery Engagement Statistics -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+  <div class="glass-effect rounded-2xl p-6 card">
+    <div class="flex items-center justify-between mb-3">
+      <div class="p-2 rounded-lg bg-red-100 text-red-600">
+        <i class="fas fa-heart"></i>
+      </div>
+    </div>
+    <div class="text-sm text-gray-500">Total Suka</div>
+    <div class="text-2xl font-bold text-red-600">{{ number_format($totalGalleryLikes) }}</div>
+  </div>
+  <div class="glass-effect rounded-2xl p-6 card">
+    <div class="flex items-center justify-between mb-3">
+      <div class="p-2 rounded-lg bg-yellow-100 text-yellow-600">
+        <i class="fas fa-comments"></i>
+      </div>
+    </div>
+    <div class="text-sm text-gray-500">Total Komentar</div>
+    <div class="text-2xl font-bold text-yellow-600">{{ number_format($totalComments) }}</div>
+  </div>
+  <div class="glass-effect rounded-2xl p-6 card">
+    <div class="flex items-center justify-between mb-3">
+      <div class="p-2 rounded-lg bg-green-100 text-green-600">
+        <i class="fas fa-check-circle"></i>
+      </div>
+    </div>
+    <div class="text-sm text-gray-500">Galeri Aktif</div>
+    <div class="text-2xl font-bold text-green-600">{{ number_format($activeGalleries) }}</div>
+  </div>
+  <div class="glass-effect rounded-2xl p-6 card">
+    <div class="flex items-center justify-between mb-3">
+      <div class="p-2 rounded-lg bg-gray-100 text-gray-600">
+        <i class="fas fa-times-circle"></i>
+      </div>
+    </div>
+    <div class="text-sm text-gray-500">Galeri Tidak Aktif</div>
+    <div class="text-2xl font-bold text-gray-600">{{ number_format($inactiveGalleries) }}</div>
   </div>
 </div>
 

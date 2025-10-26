@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Admin Panel') - SMK Negeri 4 Bogor</title>
+    <title>@yield('title', 'Admin Panel') - Gallery4U</title>
     <link rel="icon" href="{{ asset('images/favicon.svg') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -192,7 +192,7 @@
                                 <i class="fas fa-comments text-sm"></i>
                             </div>
                         </div>
-                        <span class="font-medium">Kelola Komentar</span>
+                        <span class="font-medium">Komentar</span>
                         @if(request()->routeIs('admin.comments*'))
                             <div class="absolute right-2 w-2 h-2 bg-white rounded-full animate-pulse"></div>
                         @endif

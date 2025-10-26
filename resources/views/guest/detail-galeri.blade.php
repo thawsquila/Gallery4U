@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $galeri->judul ?? 'Detail Galeri' }} - SMK Negeri 4 Bogor</title>
+    <title>Gallery4U - {{ $galeri->judul ?? 'Detail Galeri' }}</title>
     <link rel="icon" href="{{ asset('images/favicon.svg') }}" type="image/svg">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -237,11 +237,18 @@
                             </span>
                             Suka galeri ini?
                         </span>
-                        <span class="inline-flex items-center gap-2 text-sm text-gray-600 bg-gray-50 px-3 py-1 rounded-full ring-1 ring-gray-200">
-                            <i class="far fa-user"></i>
-                            <span id="card-like-count">{{ number_format($galeri->likes_count ?? 0) }}</span>
-                            menyukai
-                        </span>
+                        <div class="flex items-center gap-3">
+                            <span class="inline-flex items-center gap-2 text-sm text-gray-600 bg-gray-50 px-3 py-1 rounded-full ring-1 ring-gray-200">
+                                <i class="far fa-user"></i>
+                                <span id="card-like-count">{{ number_format($galeri->likes_count ?? 0) }}</span>
+                                menyukai
+                            </span>
+                            <span class="inline-flex items-center gap-2 text-sm text-gray-600 bg-gray-50 px-3 py-1 rounded-full ring-1 ring-gray-200">
+                                <i class="fas fa-eye"></i>
+                                <span>{{ number_format($galeri->views ?? 0) }}</span>
+                                views
+                            </span>
+                        </div>
                     </div>
                     <div>
                         @auth
@@ -443,7 +450,7 @@
                                                 </h4>
                                                 <div class="flex items-center gap-3 text-xs text-gray-500">
                                                     <span><i class="far fa-images mr-1"></i>{{ $related->fotos->count() }}</span>
-                                                    <span>{{ $related->created_at->diffForHumans() }}</span>
+                                                    <span>{{ $related->created_at->diffForHumans(\Carbon\Carbon::now(), true) }} yang lalu</span>
                                                 </div>
                                             </div>
                                         </div>

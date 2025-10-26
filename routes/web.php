@@ -34,6 +34,7 @@ Route::post('/comments/{id}/delete', [GuestController::class, 'deleteComment'])
 Route::get('/event-detail/{id}', [GuestController::class, 'detailEvent'])->name('guest.event.detail');
 Route::get('/galeri-detail/{id}', [GuestController::class, 'detailGaleri'])->name('guest.detail-galeri');
 Route::get('/galeri-detail/{id}/download', [GuestController::class, 'downloadGaleri'])->name('guest.galeri.download');
+Route::post('/galeri/{id}/view', [GuestController::class, 'incrementGaleriView'])->name('guest.galeri.view');
 Route::post('/galeri-detail/{id}/comment', [GuestController::class, 'storeGaleriComment'])
     ->middleware('auth')
     ->name('guest.galeri.comment');
@@ -124,6 +125,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/galleries/{id}/update', [AdminController::class, 'updateGallery'])->name('galleries.update');
     Route::delete('/galleries/{id}/delete', [AdminController::class, 'deleteGallery'])->name('galleries.delete');
     Route::delete('/photos/{id}', [AdminController::class, 'deletePhoto'])->name('photos.delete');
+    Route::get('/galleries/{id}/likes', [AdminController::class, 'galleryLikes'])->name('galleries.likes');
 
     // Teachers (Tenaga Pendidik) Management
     Route::get('/teachers', [AdminController::class, 'teachers'])->name('teachers');

@@ -163,7 +163,6 @@
                     <th class="px-6 py-4">Kategori</th>
                     <th class="px-6 py-4">Status</th>
                     <th class="px-6 py-4">Views</th>
-                    <th class="px-6 py-4">Penulis</th>
                     <th class="px-6 py-4">Tanggal</th>
                     <th class="px-6 py-4 text-right">Aksi</th>
                 </tr>
@@ -231,14 +230,6 @@
                                 <span class="text-sm font-semibold text-gray-800">{{ number_format($post->views ?? 0) }}</span>
                                 <span class="text-xs text-gray-500">views</span>
                             </div>
-                        </div>
-                    </td>
-                    <td class="px-6 py-4">
-                        <div class="flex items-center">
-                            <div class="h-8 w-8 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center text-blue-600 font-semibold text-sm mr-2 shadow-sm border border-blue-50">
-                                {{ strtoupper(substr($post->user->name ?? 'A', 0, 1)) }}
-                            </div>
-                            <span class="text-sm text-gray-700">{{ $post->user->name ?? 'Admin' }}</span>
                         </div>
                     </td>
                     <td class="px-6 py-4">

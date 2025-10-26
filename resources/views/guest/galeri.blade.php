@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Galeri - SMK Negeri 4 Bogor</title>
+    <title>Gallery4U - Galeri</title>
     <link rel="icon" href="{{ asset('images/favicon.svg') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -455,6 +455,9 @@
                                             <span class="inline-flex items-center" title="Komentar">
                                                 <i class="far fa-comment mr-1 text-gray-500"></i>{{ number_format($commentsCount) }}
                                             </span>
+                                            <span class="inline-flex items-center" title="Views">
+                                                <i class="fas fa-eye mr-1 text-blue-500"></i>{{ number_format($item->views ?? 0) }}
+                                            </span>
                                             <!-- Share popover -->
                                             <div class="relative">
                                                 <button type="button" class="inline-flex items-center text-gray-700 hover:text-primary transition" title="Bagikan" onclick="toggleShareMenu('share-menu-{{ $item->id }}')">
@@ -484,7 +487,7 @@
 
                                     <!-- Title -->
                                     <h3 :class="view==='list' ? 'text-lg font-bold text-gray-800 mb-1 line-clamp-1 hover:text-primary transition-colors' : 'text-xl font-bold text-gray-800 mb-3 line-clamp-2 hover:text-primary transition-colors'">
-                                        <a href="{{ route('guest.detail-galeri', $item->id) }}">{{ $item->judul ?? 'Galeri' }}</a>
+                                        <a href="{{ route('guest.detail-galeri', $item->id) }}" class="gallery-link" data-gallery-id="{{ $item->id }}">{{ $item->judul ?? 'Galeri' }}</a>
                                     </h3>
 
                                     <!-- Excerpt -->
@@ -495,7 +498,7 @@
                                     @endif
 
                                     <!-- Button -->
-                                    <a href="{{ route('guest.detail-galeri', $item->id) }}" :class="view==='list' ? 'group inline-flex items-center bg-gradient-to-r from-primary to-primary-dark text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-primary-dark hover:to-primary hover-glow transition-all duration-300' : 'group inline-flex items-center bg-gradient-to-r from-primary to-primary-dark text-white px-6 py-3 rounded-full font-semibold hover:from-primary-dark hover:to-primary hover-glow transition-all duration-300 transform hover:scale-105'">
+                                    <a href="{{ route('guest.detail-galeri', $item->id) }}" class="gallery-link" data-gallery-id="{{ $item->id }}" :class="view==='list' ? 'group inline-flex items-center bg-gradient-to-r from-primary to-primary-dark text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-primary-dark hover:to-primary hover-glow transition-all duration-300' : 'group inline-flex items-center bg-gradient-to-r from-primary to-primary-dark text-white px-6 py-3 rounded-full font-semibold hover:from-primary-dark hover:to-primary hover-glow transition-all duration-300 transform hover:scale-105'">
                                         <span>Lihat Detail</span>
                                         <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                                     </a>
@@ -1014,6 +1017,32 @@
             } finally {
                 likeBtn.disabled = false;
             }
+        });
+    });
+
+    // Handle gallery link clicks to increment views
+    document.addEventListener('DOMContentLoaded', function() {
+        const galleryLinks = document.querySelectorAll('.gallery-link');
+        
+        galleryLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const galleryId = this.getAttribute('data-gallery-id');
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                
+                // Increment views via AJAX (non-blocking)
+                fetch(`/galeri/${galleryId}/view`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Content-Type': 'application/json'
+                    }
+                }).catch(error => {
+                    console.log('View tracking error:', error);
+                    // Don't prevent navigation on error
+                });
+                
+                // Allow normal navigation to continue
+            });
         });
     });
   </script>
