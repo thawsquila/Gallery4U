@@ -1769,15 +1769,15 @@
                                 <div class="absolute -bottom-2 -left-2 w-16 h-16 bg-gradient-to-tr from-[#254C6B]/20 to-[#66B1F2]/20 rounded-full blur-md"></div>
                                 
                                 <!-- Event Image with overlay -->
-                                <div class="relative overflow-hidden h-64">
+                                <div class="relative overflow-hidden h-48">
                                     @if($item->gambar)
                                         <img src="{{ asset('images/posts/' . $item->gambar) }}" alt="{{ $item->judul }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                                     @elseif($item->galeries && $item->galeries->isNotEmpty() && $item->galeries->first()->fotos && $item->galeries->first()->fotos->isNotEmpty())
                                         <img src="{{ asset('images/gallery/' . $item->galeries->first()->fotos->first()->file) }}" alt="{{ $item->judul }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                                     @else
                                         <div class="w-full h-full bg-gradient-to-br from-[#254C6B] via-[#66B1F2] to-[#4A90E2] flex items-center justify-center">
-                                            <div class="bg-white/10 backdrop-blur-sm p-6 rounded-2xl">
-                                                <i class="fas fa-calendar-alt text-white text-5xl animate-pulse"></i>
+                                            <div class="bg-white/10 backdrop-blur-sm p-4 rounded-2xl">
+                                                <i class="fas fa-calendar-alt text-white text-4xl animate-pulse"></i>
                                             </div>
                                         </div>
                                     @endif
@@ -1801,29 +1801,29 @@
                                     </div>
                                 </div>
                                 
-                                <div class="p-8 bg-white/80 backdrop-blur-sm">
+                                <div class="p-5 bg-white/80 backdrop-blur-sm">
                                     <!-- Event title -->
-                                    <h3 class="text-2xl font-bold text-gray-800 mb-4 group-hover:text-[#66B1F2] transition-colors duration-300 leading-tight">{{ Str::limit($item->judul, 50) }}</h3>
+                                    <h3 class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-[#66B1F2] transition-colors duration-300 leading-tight">{{ Str::limit($item->judul, 50) }}</h3>
                                     
                                     <!-- Event meta info -->
-                                    <div class="grid grid-cols-2 gap-4 mb-6">
-                                        <div class="flex items-center bg-blue-50 px-4 py-3 rounded-2xl border border-blue-100">
-                                            <div class="bg-gradient-to-r from-[#66B1F2] to-[#4A90E2] p-2 rounded-xl mr-3 group-hover:scale-110 transition-transform">
-                                                <i class="fas fa-map-marker-alt text-white text-sm"></i>
+                                    <div class="grid grid-cols-2 gap-3 mb-4">
+                                        <div class="flex items-center bg-blue-50 px-3 py-2 rounded-xl border border-blue-100">
+                                            <div class="bg-gradient-to-r from-[#66B1F2] to-[#4A90E2] p-1.5 rounded-lg mr-2 group-hover:scale-110 transition-transform">
+                                                <i class="fas fa-map-marker-alt text-white text-xs"></i>
                                             </div>
                                             <div>
                                                 <div class="text-xs text-[#66B1F2] font-bold uppercase tracking-wide">Lokasi</div>
-                                                <div class="text-sm font-bold text-gray-800">{{ Str::limit($item->lokasi ?? 'TBA', 15) }}</div>
+                                                <div class="text-xs font-bold text-gray-800">{{ Str::limit($item->lokasi ?? 'TBA', 15) }}</div>
                                             </div>
                                         </div>
                                         
-                                        <div class="flex items-center bg-sky-50 px-4 py-3 rounded-2xl border border-sky-100">
-                                            <div class="bg-gradient-to-r from-[#4A90E2] to-[#254C6B] p-2 rounded-xl mr-3 group-hover:scale-110 transition-transform">
-                                                <i class="fas fa-clock text-white text-sm"></i>
+                                        <div class="flex items-center bg-sky-50 px-3 py-2 rounded-xl border border-sky-100">
+                                            <div class="bg-gradient-to-r from-[#4A90E2] to-[#254C6B] p-1.5 rounded-lg mr-2 group-hover:scale-110 transition-transform">
+                                                <i class="fas fa-clock text-white text-xs"></i>
                                             </div>
                                             <div>
                                                 <div class="text-xs text-[#4A90E2] font-bold uppercase tracking-wide">Waktu</div>
-                                                <div class="text-sm font-bold text-gray-800">{{ $item->waktu_mulai ?? 'TBA' }}</div>
+                                                <div class="text-xs font-bold text-gray-800">{{ $item->waktu_mulai ?? 'TBA' }}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -1960,85 +1960,77 @@
                         </h2>
                         <div class="w-24 h-1.5 bg-[#425161] mx-auto mb-6 rounded-full"></div>
                         <p class="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
-                            Kumpulan momen berharga dan kegiatan inspiratif dari SMK Negeri 4 Bogor
+                            Kumpulan fasilitas modern dan lengkap yang mendukung kegiatan belajar mengajar di SMK Negeri 4 Bogor
                         </p>
                     </div>
 
-                    @php $hasGaleri = false; @endphp
-                    @foreach($galeriByKategori as $kategori => $galeriItems)
-                        @if($galeriItems->isNotEmpty())
-                            @php 
-                                $hasGaleri = true; 
-                                // Ambil max 8 items untuk masonry yang lebih full
-                                $displayItems = $galeriItems->take(8);
-                            @endphp
-                            <div class="mb-16 animate-fade-in-up delay-200">
-                                <!-- Category header -->
-                                <div class="flex items-center justify-between mb-8">
-                                    <h3 class="text-2xl font-bold text-gray-800 flex items-center">
-                                        <div class="w-2 h-8 bg-[#2E5A63] rounded-full mr-3 animate-pulse"></div>
-                                        {{ $kategori }}
-                                    </h3>
-                                </div>
-                                
-                                <!-- Clean responsive grid -->
-                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                                    @foreach($displayItems as $index => $item)
-                                        <div class="group animate-fade-in-up {{ ['delay-100','delay-200','delay-300','delay-400'][$index % 4] }}">
-                                            <div class="relative rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_12px_40px_rgba(102,177,242,0.25)] transition-all duration-500 bg-white border border-gray-200">
-                                                <!-- Image with fixed aspect ratio for neat grid -->
-                                                <div class="relative aspect-[4/3] overflow-hidden">
-                                                    @if($item->fotos && $item->fotos->isNotEmpty())
-                                                        <img src="{{ asset('images/gallery/' . $item->fotos->first()->file) }}" alt="{{ $item->judul ?? 'Gallery Image' }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                                                    @else
-                                                        <div class="absolute inset-0 bg-gradient-to-br from-[#66B1F2] via-[#4A90E2] to-[#FAB82F] flex items-center justify-center">
-                                                            <i class="fas fa-images text-white text-5xl opacity-30"></i>
-                                                        </div>
-                                                    @endif
-                                                    <!-- Badge count -->
-                                                    @if($item->fotos && $item->fotos->count() > 1)
-                                                    <div class="absolute top-3 right-3 bg-white/90 backdrop-blur px-2.5 py-1 rounded-full shadow text-[11px] font-semibold text-gray-700 flex items-center gap-1">
-                                                        <i class="fas fa-images text-[#66B1F2]"></i>{{ $item->fotos->count() }}
+                    @php 
+                        $hasGaleri = false;
+                        // Mengumpulkan semua galeri dari semua kategori
+                        $allGaleri = collect();
+                        foreach($galeriByKategori as $kategori => $galeriItems) {
+                            if($galeriItems->isNotEmpty()) {
+                                $hasGaleri = true;
+                                foreach($galeriItems as $item) {
+                                    $allGaleri->push($item);
+                                }
+                            }
+                        }
+                        // Mengurutkan berdasarkan tanggal terbaru
+                        $allGaleri = $allGaleri->sortByDesc('created_at');
+                        // Mengambil 8 galeri terbaru
+                        $latestGaleri = $allGaleri->take(8);
+                    @endphp
+                    
+                    @if($hasGaleri)
+                        <div class="mb-16 animate-fade-in-up delay-200">
+                            <!-- Clean responsive grid -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                @foreach($latestGaleri as $index => $item)
+                                    <div class="group animate-fade-in-up {{ ['delay-100','delay-200','delay-300','delay-400'][$index % 4] }}">
+                                        <div class="relative rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_12px_40px_rgba(102,177,242,0.25)] transition-all duration-500 bg-white border border-gray-200">
+                                            <!-- Image with fixed aspect ratio for neat grid -->
+                                            <div class="relative aspect-[4/3] overflow-hidden">
+                                                @if($item->fotos && $item->fotos->isNotEmpty())
+                                                    <img src="{{ asset('images/gallery/' . $item->fotos->first()->file) }}" alt="{{ $item->judul ?? 'Gallery Image' }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                                                @else
+                                                    <div class="absolute inset-0 bg-gradient-to-br from-[#66B1F2] via-[#4A90E2] to-[#FAB82F] flex items-center justify-center">
+                                                        <i class="fas fa-images text-white text-5xl opacity-30"></i>
                                                     </div>
-                                                    @endif
-                                                    <!-- Hover CTA overlay -->
-                                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-3">
-                                                        <a href="{{ route('guest.detail-galeri', $item->id) }}" class="ml-auto bg-white text-[#254C6B] px-4 py-2 rounded-full text-xs font-semibold shadow hover:bg-[#66B1F2] hover:text-white transition">Lihat Galeri</a>
-                                                    </div>
+                                                @endif
+                                                <!-- Badge count -->
+                                                @if($item->fotos && $item->fotos->count() > 1)
+                                                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur px-2.5 py-1 rounded-full shadow text-[11px] font-semibold text-gray-700 flex items-center gap-1">
+                                                    <i class="fas fa-images text-[#66B1F2]"></i>{{ $item->fotos->count() }}
                                                 </div>
-                                                <!-- Content -->
-                                                <div class="p-4">
-                                                    <h4 class="text-gray-800 font-bold text-base mb-1 leading-tight line-clamp-2 hover:text-[#66B1F2] transition-colors">
-                                                        {{ $item->judul ?? 'Galeri' }}
-                                                    </h4>
-                                                    @if($item->deskripsi)
-                                                    <p class="text-gray-600 text-sm mb-3 line-clamp-2">{{ Str::limit(strip_tags($item->deskripsi), 70) }}</p>
-                                                    @endif
-                                                    <div class="flex items-center justify-between text-xs text-gray-500">
-                                                        <span class="inline-flex items-center gap-1"><i class="fas fa-clock text-[#66B1F2]"></i>{{ $item->created_at->diffForHumans(\Carbon\Carbon::now(), true) }} yang lalu</span>
-                                                        <span class="inline-flex items-center gap-2">
-                                                            <span class="w-1.5 h-1.5 bg-[#66B1F2] rounded-full"></span>
-                                                            <span class="w-1.5 h-1.5 bg-[#FAB82F] rounded-full"></span>
-                                                        </span>
-                                                    </div>
+                                                @endif
+                                                <!-- Hover CTA overlay -->
+                                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-3">
+                                                    <a href="{{ route('guest.detail-galeri', $item->id) }}" class="ml-auto bg-white text-[#254C6B] px-4 py-2 rounded-full text-xs font-semibold shadow hover:bg-[#66B1F2] hover:text-white transition">Lihat Galeri</a>
+                                                </div>
+                                            </div>
+                                            <!-- Content -->
+                                            <div class="p-4">
+                                                <h4 class="text-gray-800 font-bold text-base mb-1 leading-tight line-clamp-2 hover:text-[#66B1F2] transition-colors">
+                                                    {{ $item->judul ?? 'Galeri' }}
+                                                </h4>
+                                                @if($item->deskripsi)
+                                                <p class="text-gray-600 text-sm mb-3 line-clamp-2">{{ Str::limit(strip_tags($item->deskripsi), 70) }}</p>
+                                                @endif
+                                                <div class="flex items-center justify-between text-xs text-gray-500">
+                                                    <span class="inline-flex items-center gap-1"><i class="fas fa-clock text-[#66B1F2]"></i>{{ $item->created_at->diffForHumans(\Carbon\Carbon::now(), true) }} yang lalu</span>
+                                                    <span class="inline-flex items-center gap-2">
+                                                        <span class="w-1.5 h-1.5 bg-[#66B1F2] rounded-full"></span>
+                                                        <span class="w-1.5 h-1.5 bg-[#FAB82F] rounded-full"></span>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
-                                    @endforeach
-                                </div>
-                                
-                                <!-- CTA button -->
-                                @if($galeriItems->count() > 8)
-                                <div class="text-center mt-10 animate-fade-in-up delay-500">
-                                    <a href="{{ route('guest.galeri', ['kategori' => $kategori]) }}" class="group inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#66B1F2] to-[#4A90E2] hover:from-[#4A90E2] hover:to-[#66B1F2] text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 border border-white/20">
-                                        <span>Lihat Semua {{ $kategori }}</span>
-                                        <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform duration-300"></i>
-                                    </a>
-                                </div>
-                                @endif
+                                    </div>
+                                @endforeach
                             </div>
-                        @endif
-                    @endforeach
+                        </div>
+                    @endif
                     
                     @if(!$hasGaleri)
                     <div class="text-center py-20">
@@ -2073,10 +2065,10 @@
         <div class="absolute top-16 left-16 w-64 h-64 bg-[#66B1F2]/10 rounded-full blur-3xl animate-pulse"></div>
         <div class="absolute bottom-16 right-16 w-96 h-96 bg-[#4A90E2]/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 animate-fade-in-up">
-                <h2 class="text-5xl font-bold text-[#FFFFFF] mb-6">Informasi Kontak & Lokasi</h2>
-                <div class="w-32 h-1.5 bg-[#425161] mx-auto mb-8 rounded-full"></div>
-                <p class="text-xl text-white/90 max-w-3xl mx-auto drop-shadow-md">Temukan lokasi SMK Negeri 4 Bogor dan informasi kontak lengkap</p>
+            <div class="text-center mb-6 animate-fade-in-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-[#FFFFFF] mb-3">Informasi Kontak & Lokasi</h2>
+                <div class="w-24 h-1.5 bg-[#425161] mx-auto mb-5 rounded-full"></div>
+                <p class="text-base md:text-lg text-white/90 max-w-3xl mx-auto drop-shadow-md">SMKN 4 Bogor adalah institusi pendidikan terdepan yang berkomitmen menghasilkan lulusan berkualitas dan siap kerja</p>
             </div>
             
             <div class="grid lg:grid-cols-2 gap-12 items-stretch">
