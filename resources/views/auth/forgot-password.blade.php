@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lupa Kata Sandi - SMK Negeri 4 Bogor</title>
+    <title>Lupa Kata Sandi - Gallery4U</title>
     <link rel="icon" href="{{ asset('images/favicon.svg') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -158,7 +158,7 @@
                     <!-- Bottom links -->
                     <div class="flex items-center justify-between text-sm">
                         <a href="{{ route('login') }}" class="text-gray-500 hover:text-[#4A90E2]">Kembali ke Login</a>
-                        <a href="{{ route('register') }}" class="text-[#4A90E2] font-medium">Daftar</a>
+                        <a href="{{ route('user.register') }}" class="text-[#4A90E2] font-medium">Daftar</a>
                     </div>
                 </form>
             </div>

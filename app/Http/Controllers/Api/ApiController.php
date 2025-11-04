@@ -69,4 +69,34 @@ class ApiController extends Controller
     {
         return response()->json($request->user());
     }
+    
+    /**
+     * Register a new user and create token
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'user', // Default role
+        ]);
+
+        $token = $user->createToken('api-token');
+
+        return response()->json([
+            'user' => $user,
+            'token' => $token->plainTextToken,
+            'message' => 'Registration successful'
+        ], 201);
+    }
 }

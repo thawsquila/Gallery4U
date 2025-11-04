@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - SMK Negeri 4 Bogor</title>
+    <title>Login - Gallery4U</title>
     <link rel="icon" href="{{ asset('images/favicon.svg') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -195,7 +195,7 @@
                     <!-- Bottom links -->
                     <div class="flex items-center justify-between text-sm">
                         <a href="/" class="text-gray-500 hover:text-[#4A90E2]">Kembali ke Website</a>
-                        <a href="{{ route('register', request('redirect') ? ['redirect' => request('redirect')] : []) }}" class="text-[#4A90E2] font-medium">Daftar</a>
+                        <a href="{{ route('user.register', request('redirect') ? ['redirect' => request('redirect')] : []) }}" class="text-[#4A90E2] font-medium">Daftar</a>
                     </div>
 
                     <a href="{{ request('redirect') ? url(request('redirect')) : url('/') }}" class="block text-center mt-2 text-gray-500 hover:text-[#4A90E2]">Lanjut sebagai Tamu</a>
