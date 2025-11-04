@@ -5,7 +5,8 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite",
-    "start": "php artisan serve --host=0.0.0.0 --port=$PORT"
+    "start": "php artisan serve --host=0.0.0.0 --port=$PORT",
+    "railway:build": "npm install && npm run build"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.11",
