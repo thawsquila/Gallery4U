@@ -57,6 +57,141 @@
         .delay-100 { animation-delay: 0.1s; }
         .delay-200 { animation-delay: 0.2s; }
         .delay-300 { animation-delay: 0.3s; }
+
+        /* Enhanced Mobile Responsiveness for Event */
+        @media (max-width: 640px) {
+            /* Navbar mobile fixes */
+            nav {
+                width: 98% !important;
+                top: 4px !important;
+            }
+            
+            /* Hero section mobile */
+            .hero-title {
+                font-size: 2.5rem !important;
+                line-height: 1.2 !important;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.125rem !important;
+            }
+            
+            /* Search bar mobile */
+            .search-form {
+                flex-direction: column !important;
+                gap: 0.5rem !important;
+            }
+            
+            .search-form input {
+                border-radius: 0.5rem !important;
+            }
+            
+            .search-form button {
+                border-radius: 0.5rem !important;
+                width: 100% !important;
+                justify-content: center !important;
+            }
+            
+            /* Main content mobile */
+            .max-w-7xl {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+            
+            /* Event grid mobile */
+            .event-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+            }
+            
+            /* Event card mobile */
+            .event-card {
+                margin-bottom: 1rem !important;
+            }
+            
+            .event-meta {
+                flex-direction: column !important;
+                gap: 0.5rem !important;
+                align-items: flex-start !important;
+            }
+            
+            .event-actions {
+                flex-direction: column !important;
+                gap: 0.75rem !important;
+            }
+            
+            .event-actions > div:first-child {
+                width: 100% !important;
+                justify-content: space-between !important;
+            }
+            
+            .event-calendar-btn {
+                width: 100% !important;
+            }
+            
+            /* Footer mobile */
+            footer .grid {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+            
+            .footer-buttons {
+                flex-wrap: wrap !important;
+                gap: 0.5rem !important;
+            }
+            
+            /* Mobile menu button improvements */
+            .mobile-menu-btn {
+                min-width: 44px !important;
+                min-height: 44px !important;
+                padding: 8px !important;
+                touch-action: manipulation !important;
+                -webkit-tap-highlight-color: transparent !important;
+            }
+            
+            .mobile-menu {
+                animation: slideDown 0.3s ease-out !important;
+            }
+            
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* Extra small screens */
+            .hero-title {
+                font-size: 2rem !important;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem !important;
+            }
+            
+            /* Padding adjustments */
+            .px-4 {
+                padding-left: 0.75rem !important;
+                padding-right: 0.75rem !important;
+            }
+            
+            /* Button sizes */
+            .btn-mobile {
+                padding: 0.5rem 1rem !important;
+                font-size: 0.875rem !important;
+            }
+            
+            /* Event card padding */
+            .event-card .p-6 {
+                padding: 1rem !important;
+            }
+        }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -129,6 +264,18 @@
                         <span class="font-bold text-xl text-gray-800">Gallery4U</span>
                     </div>
                 </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button type="button" class="mobile-menu-btn inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
                 <div class="hidden md:flex items-center gap-4">
                 <div class="flex items-center gap-1 bg-white/80 rounded-full px-2 py-1 ring-1 ring-gray-200/70">
                     <a href="/" class="px-4 py-2 rounded-full text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold transition">Beranda</a>
@@ -160,6 +307,47 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Mobile menu, show/hide based on menu state -->
+        <div class="mobile-menu hidden md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 bg-white/95 backdrop-blur-xl rounded-b-xl border-t border-gray-200">
+                <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Beranda</a>
+                <a href="{{ route('guest.teachers') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Tenaga Pendidik</a>
+                <a href="{{ route('guest.berita') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Berita</a>
+                <a href="{{ route('guest.event') }}" class="block px-3 py-2 rounded-md text-base font-medium bg-blue-50 text-blue-600">Event</a>
+                <a href="{{ route('guest.galeri') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Galeri</a>
+                <a href="{{ route('guest.kontak') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Kontak</a>
+                
+                <div class="border-t border-gray-200 pt-3 mt-3">
+                    @guest
+                    <a href="{{ route('user.login', ['redirect' => request()->getRequestUri()]) }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Login</a>
+                    <a href="{{ route('user.register', ['redirect' => request()->getRequestUri()]) }}" class="block px-3 py-2 rounded-md text-base font-medium bg-gradient-to-br from-[#66B1F2] to-[#4A90E2] text-white text-center mt-2">Daftar</a>
+                    @endguest
+                    @auth
+                    <div class="flex items-center px-3 py-2">
+                        <div class="flex-shrink-0">
+                            @php $av = auth()->user()->avatar ? asset('images/avatars/'.auth()->user()->avatar) : null; @endphp
+                            @if($av)
+                                <img class="h-8 w-8 rounded-full" src="{{ $av }}" alt="Avatar">
+                            @else
+                                <div class="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
+                                    <i class="fas fa-user text-gray-600"></i>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="ml-3">
+                            <div class="text-base font-medium text-gray-800">{{ auth()->user()->name }}</div>
+                        </div>
+                    </div>
+                    <a href="{{ route('user.profile') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Profil</a>
+                    <form action="{{ route('logout') }}" method="POST" class="mt-1">
+                        @csrf
+                        <button type="submit" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Keluar</button>
+                    </form>
+                    @endauth
+                </div>
+            </div>
+        </div>
     </nav>
 
     <!-- Hero Section -->
@@ -170,19 +358,19 @@
         
         <!-- Content -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center" style="margin-top: 120px;">
-            <h1 class="text-5xl lg:text-7xl font-extrabold leading-tight mb-6 drop-shadow-2xl animate-fade-in-up">
+            <h1 class="hero-title text-5xl lg:text-7xl font-extrabold leading-tight mb-6 drop-shadow-2xl animate-fade-in-up">
                 <span class="bg-gradient-to-r from-[#66B1F2] via-white to-[#4A90E2] bg-clip-text text-transparent">Event</span>
                 <br>
                 <span class="text-white">Terbaru</span>
             </h1>
             <!-- Line below title removed as requested -->
-            <p class="text-xl lg:text-2xl text-white/90 leading-relaxed mb-10 max-w-3xl mx-auto animate-fade-in-up delay-400 drop-shadow-lg font-medium">
+            <p class="hero-subtitle text-xl lg:text-2xl text-white/90 leading-relaxed mb-10 max-w-3xl mx-auto animate-fade-in-up delay-400 drop-shadow-lg font-medium">
                 Ikuti kegiatan dan acara terbaru dari SMKN 4 Bogor
             </p>
             
             <!-- Search Bar -->
             <div class="max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.4s">
-                <form action="{{ route('guest.event') }}" method="GET" class="flex rounded-lg overflow-hidden shadow-lg">
+                <form action="{{ route('guest.event') }}" method="GET" class="search-form flex rounded-lg overflow-hidden shadow-lg">
                     <input 
                         type="text" 
                         name="search" 
@@ -213,9 +401,9 @@
             @endif
             
             @if($events->count() > 0)
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="event-grid grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     @foreach($events as $index => $event)
-                        <article class="bg-white rounded-xl shadow-lg overflow-hidden card-hover transition-all duration-500 animate-scale-in" style="animation-delay: {{ $index * 0.1 }}s">
+                        <article class="event-card bg-white rounded-xl shadow-lg overflow-hidden card-hover transition-all duration-500 animate-scale-in" style="animation-delay: {{ $index * 0.1 }}s">
                             <!-- Event Image -->
                             <div class="h-48 overflow-hidden relative">
                                 @if($event->gambar)
@@ -239,7 +427,7 @@
                                 <div class="absolute bottom-0 left-0 p-4">
                                     <div class="text-sm text-white/80 mb-1">
                                         <i class="far fa-calendar-alt mr-1"></i>
-                                        {{ $event->created_at->translatedFormat('d F Y') }}
+                                        {{ ($event->tanggal ? \Carbon\Carbon::parse($event->tanggal) : $event->created_at)->translatedFormat('d F Y') }}
                                     </div>
                                     <h3 class="text-xl font-bold text-white cursor-pointer toggle-desc" data-target="desc-{{ $event->id }}">{{ $event->judul }}</h3>
                                 </div>
@@ -247,7 +435,7 @@
                             
                             <!-- Event Content -->
                             <div class="p-6">
-                                <div class="flex items-center text-sm text-gray-500 mb-4">
+                                <div class="event-meta flex items-center text-sm text-gray-500 mb-4">
                                     <div class="flex items-center mr-4">
                                         <i class="far fa-clock mr-1"></i>
                                         <span>{{ $event->waktu_mulai ? \Carbon\Carbon::parse($event->waktu_mulai)->format('H:i') : '--:--' }} WIB</span>
@@ -262,7 +450,7 @@
                                     {{ Str::limit(strip_tags($event->isi), 150) }}
                                 </p>
                                 
-                                <div class="flex flex-col gap-4">
+                                <div class="event-actions flex flex-col gap-4">
                                     <div class="flex items-center justify-between">
                                         <a href="{{ route('guest.event.detail', $event->id) }}" class="text-blue-600 hover:text-blue-800 font-medium flex items-center group">
                                             Baca Selengkapnya
@@ -285,7 +473,7 @@
                                         data-event-date="{{ \Carbon\Carbon::parse($event->tanggal)->format('Y-m-d') }}"
                                         data-event-time="{{ $event->waktu_mulai ? \Carbon\Carbon::parse($event->waktu_mulai)->format('H:i') : '09:00' }}"
                                         onclick="addEventToCalendarFromData(this)"
-                                        class="w-full bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-lg font-medium hover:from-red-600 hover:to-red-700 transition-all flex items-center justify-center group"
+                                        class="event-calendar-btn w-full bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-lg font-medium hover:from-red-600 hover:to-red-700 transition-all flex items-center justify-center group"
                                     >
                                         <i class="fab fa-google mr-2"></i>
                                         Tambah ke Google Calendar
@@ -367,7 +555,7 @@
                         <li><a href="{{ route('guest.jurusan') }}" class="text-gray-300 hover:text-primary transition-colors">Semua Jurusan</a></li>
                     </ul>
                     <!-- Floating style quick buttons -->
-                    <div class="mt-4 flex flex-wrap gap-2">
+                    <div class="footer-buttons mt-4 flex flex-wrap gap-2">
                         <button type="button" onclick="openMajor('pplg')" class="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-gray-200 text-xs font-semibold shadow-md ring-1 ring-white/20 backdrop-blur transition">PPLG</button>
                         <button type="button" onclick="openMajor('tkj')" class="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-gray-200 text-xs font-semibold shadow-md ring-1 ring-white/20 backdrop-blur transition">TKJ</button>
                         <button type="button" onclick="openMajor('tpfl')" class="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-gray-200 text-xs font-semibold shadow-md ring-1 ring-white/20 backdrop-blur transition">TPFL</button>
@@ -561,6 +749,53 @@ function addEventToCalendar(eventId, title, description, location, startDate, st
 
 // Test function to verify script is loaded
 console.log('Calendar script loaded successfully');
+
+// Mobile menu toggle functionality (debounced single pointer handler)
+document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.querySelector('.mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    if (!btn || !menu) return;
+    if (btn.dataset.bound === '1') return; // avoid double-binding
+    btn.dataset.bound = '1';
+
+    const icons = btn.querySelectorAll('svg');
+    let toggling = false;
+
+    function setOpen(open) {
+        if (open) {
+            menu.classList.remove('hidden');
+            btn.setAttribute('aria-expanded', 'true');
+            if (icons[0]) icons[0].classList.add('hidden');
+            if (icons[1]) icons[1].classList.remove('hidden');
+        } else {
+            menu.classList.add('hidden');
+            btn.setAttribute('aria-expanded', 'false');
+            if (icons[0]) icons[0].classList.remove('hidden');
+            if (icons[1]) icons[1].classList.add('hidden');
+        }
+    }
+
+    function toggleMenu() {
+        if (toggling) return;
+        toggling = true;
+        const open = menu.classList.contains('hidden');
+        requestAnimationFrame(() => {
+            setOpen(open);
+            setTimeout(() => { toggling = false; }, 120);
+        });
+    }
+
+    btn.addEventListener('pointerup', toggleMenu, { passive: true });
+    btn.addEventListener('click', toggleMenu, { passive: true });
+
+    document.addEventListener('pointerdown', function(ev) {
+        if (!menu.classList.contains('hidden')) {
+            if (!btn.contains(ev.target) && !menu.contains(ev.target)) {
+                setOpen(false);
+            }
+        }
+    }, { passive: true });
+});
 </script>
 
 </body>

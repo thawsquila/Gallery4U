@@ -19,6 +19,40 @@
             }
         }
     </script>
+<script>
+// Robust handler for mobile-menu anchor links (smooth scroll with offset + close)
+(function(){
+  const menu = document.getElementById('mobile-menu');
+  const openBtn = document.getElementById('mobile-menu-button');
+  const body = document.body;
+  if (!menu || !openBtn) return;
+
+  function getHeaderOffset(){
+    const nav = document.querySelector('nav');
+    return nav ? Math.ceil(nav.getBoundingClientRect().height + 10) : 80;
+  }
+
+  function closeMenu(){
+    menu.classList.add('hidden');
+    menu.classList.remove('flex');
+    body.classList.remove('menu-open');
+  }
+
+  menu.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      const href = this.getAttribute('href');
+      if (!href || href === '#') return;
+      const target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+      const offset = getHeaderOffset();
+      const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+      closeMenu();
+      window.scrollTo({ top, behavior: 'smooth' });
+    }, { passive: false });
+  });
+})();
+</script>
 
   <script>
     // Data jurusan untuk modal

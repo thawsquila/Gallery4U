@@ -85,6 +85,166 @@
         }
         .lightbox-prev { left: 20px; }
         .lightbox-next { right: 20px; }
+
+        /* Enhanced Mobile Responsiveness for Detail Galeri */
+        @media (max-width: 640px) {
+            /* Navbar mobile fixes */
+            nav {
+                width: 98% !important;
+                top: 4px !important;
+            }
+            
+            /* Hero section mobile */
+            .hero-title {
+                font-size: 2rem !important;
+                line-height: 1.2 !important;
+            }
+            
+            .hero-meta {
+                flex-direction: column !important;
+                gap: 0.5rem !important;
+                text-align: center !important;
+            }
+            
+            /* Main content mobile */
+            .max-w-7xl {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+            
+            /* Grid layout mobile */
+            .detail-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+            }
+            
+            /* Gallery masonry mobile */
+            .gallery-masonry {
+                columns: 2 !important;
+                gap: 0.75rem !important;
+            }
+            
+            /* Like section mobile */
+            .like-section {
+                flex-direction: column !important;
+                gap: 1rem !important;
+                align-items: flex-start !important;
+            }
+            
+            .like-stats {
+                flex-direction: column !important;
+                gap: 0.5rem !important;
+                align-items: flex-start !important;
+            }
+            
+            /* Share buttons mobile */
+            .share-buttons {
+                flex-wrap: wrap !important;
+                gap: 0.5rem !important;
+            }
+            
+            .share-buttons a {
+                flex: 1 !important;
+                min-width: calc(50% - 0.25rem) !important;
+                text-align: center !important;
+            }
+            
+            /* Comments mobile */
+            .comment-form {
+                padding: 1rem !important;
+            }
+            
+            /* Sidebar mobile */
+            .sidebar {
+                position: static !important;
+                top: auto !important;
+            }
+            
+            .related-item {
+                flex-direction: row !important;
+                gap: 0.75rem !important;
+            }
+            
+            .related-image {
+                width: 4rem !important;
+                height: 4rem !important;
+                flex-shrink: 0 !important;
+            }
+            
+            /* Footer mobile */
+            footer .grid {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+            
+            .footer-buttons {
+                flex-wrap: wrap !important;
+                gap: 0.5rem !important;
+            }
+            
+            /* Mobile menu button improvements */
+            .mobile-menu-btn {
+                min-width: 44px !important;
+                min-height: 44px !important;
+                padding: 8px !important;
+                touch-action: manipulation !important;
+                -webkit-tap-highlight-color: transparent !important;
+            }
+            
+            .mobile-menu {
+                animation: slideDown 0.3s ease-out !important;
+            }
+            
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            /* Lightbox mobile adjustments */
+            .lightbox-nav {
+                width: 40px !important;
+                height: 40px !important;
+                font-size: 18px !important;
+            }
+            
+            .lightbox-prev { left: 10px !important; }
+            .lightbox-next { right: 10px !important; }
+        }
+
+        @media (max-width: 480px) {
+            /* Extra small screens */
+            .hero-title {
+                font-size: 1.75rem !important;
+            }
+            
+            /* Gallery masonry extra small */
+            .gallery-masonry {
+                columns: 1 !important;
+            }
+            
+            /* Padding adjustments */
+            .px-4 {
+                padding-left: 0.75rem !important;
+                padding-right: 0.75rem !important;
+            }
+            
+            /* Card padding */
+            .card-mobile {
+                padding: 1rem !important;
+            }
+            
+            /* Share buttons full width */
+            .share-buttons a {
+                flex: 1 !important;
+                min-width: 100% !important;
+            }
+        }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -104,6 +264,18 @@
                         <img src="{{ asset('images/favicon.svg') }}" alt="SMKN 4 Logo" class="w-10 h-10 object-contain mr-3" />
                         <span class="font-bold text-xl text-gray-800">Gallery4U</span>
                     </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button type="button" class="mobile-menu-btn inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
                 <div class="hidden md:flex items-center gap-4">
                   <div class="flex items-center gap-1 bg-white/80 rounded-full px-2 py-1 ring-1 ring-gray-200/70">
@@ -136,6 +308,47 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Mobile menu, show/hide based on menu state -->
+        <div class="mobile-menu hidden md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 bg-white/95 backdrop-blur-xl rounded-b-xl border-t border-gray-200">
+                <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Beranda</a>
+                <a href="{{ route('guest.teachers') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Tenaga Pendidik</a>
+                <a href="{{ route('guest.berita') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Berita</a>
+                <a href="{{ route('guest.event') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Event</a>
+                <a href="{{ route('guest.galeri') }}" class="block px-3 py-2 rounded-md text-base font-medium bg-blue-50 text-blue-600">Galeri</a>
+                <a href="{{ route('guest.kontak') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Kontak</a>
+                
+                <div class="border-t border-gray-200 pt-3 mt-3">
+                    @guest
+                    <a href="{{ route('user.login', ['redirect' => request()->getRequestUri()]) }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Login</a>
+                    <a href="{{ route('user.register', ['redirect' => request()->getRequestUri()]) }}" class="block px-3 py-2 rounded-md text-base font-medium bg-gradient-to-br from-[#66B1F2] to-[#4A90E2] text-white text-center mt-2">Daftar</a>
+                    @endguest
+                    @auth
+                    <div class="flex items-center px-3 py-2">
+                        <div class="flex-shrink-0">
+                            @php $av = auth()->user()->avatar ? asset('images/avatars/'.auth()->user()->avatar) : null; @endphp
+                            @if($av)
+                                <img class="h-8 w-8 rounded-full" src="{{ $av }}" alt="Avatar">
+                            @else
+                                <div class="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
+                                    <i class="fas fa-user text-gray-600"></i>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="ml-3">
+                            <div class="text-base font-medium text-gray-800">{{ auth()->user()->name }}</div>
+                        </div>
+                    </div>
+                    <a href="{{ route('user.profile') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Profil</a>
+                    <form action="{{ route('logout') }}" method="POST" class="mt-1">
+                        @csrf
+                        <button type="submit" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Keluar</button>
+                    </form>
+                    @endauth
+                </div>
+            </div>
+        </div>
     </nav>
 
     <!-- Hero Section -->
@@ -157,12 +370,12 @@
                     <i class="fas fa-bookmark mr-2"></i>{{ $galeri->kategori }}
                 </div>
                 <div class="relative animate-fade-in-up">
-                    <h1 class="text-4xl lg:text-6xl font-extrabold text-white leading-tight mb-4 drop-shadow-2xl">
+                    <h1 class="hero-title text-4xl lg:text-6xl font-extrabold text-white leading-tight mb-4 drop-shadow-2xl">
                         {{ $galeri->judul ?? 'Detail Galeri' }}
                     </h1>
                     <div class="absolute -inset-1 bg-gradient-to-r from-[#66B1F2]/30 to-[#4A90E2]/30 blur-xl opacity-40 rounded-xl"></div>
                 </div>
-                <div class="flex flex-wrap justify-center items-center gap-4 text-white/90 animate-fade-in-up delay-200 text-base lg:text-lg drop-shadow-lg">
+                <div class="hero-meta flex flex-wrap justify-center items-center gap-4 text-white/90 animate-fade-in-up delay-200 text-base lg:text-lg drop-shadow-lg">
                     <span><i class="far fa-calendar-alt mr-2"></i>{{ $galeri->created_at->format('d M Y') }}</span>
                     <span>•</span>
                     <span><i class="far fa-images mr-2"></i>{{ $galeri->fotos->count() }} Foto</span>
@@ -177,7 +390,7 @@
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="grid lg:grid-cols-3 gap-8">
+        <div class="detail-grid grid lg:grid-cols-3 gap-8">
             <!-- Main Gallery Content -->
             <div class="lg:col-span-2">
                 <!-- Description -->
@@ -190,7 +403,7 @@
                 @endif
 
                 <!-- Pinterest Style Masonry Gallery -->
-                <div class="bg-white rounded-2xl shadow-lg p-6 mb-8 animate-fade-in-up delay-100">
+                <div class="card-mobile bg-white rounded-2xl shadow-lg p-6 mb-8 animate-fade-in-up delay-100">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
                         <span class="w-2 h-6 bg-[#66B1F2] rounded-full mr-3"></span>
                         Koleksi Foto
@@ -198,7 +411,7 @@
                     
                     @if($galeri->fotos && $galeri->fotos->isNotEmpty())
                         <!-- Masonry Grid -->
-                        <div class="columns-2 md:columns-3 gap-4 space-y-4">
+                        <div class="gallery-masonry columns-2 md:columns-3 gap-4 space-y-4">
                             @foreach($galeri->fotos as $index => $foto)
                                 <div class="break-inside-avoid mb-4 group">
                                     <div class="relative rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
@@ -229,7 +442,7 @@
                 </div>
 
                 <!-- Like Section: redesigned -->
-                <div class="bg-white rounded-2xl shadow-lg p-6 mb-6 flex items-center justify-between">
+                <div class="like-section bg-white rounded-2xl shadow-lg p-6 mb-6 flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <span class="text-gray-800 font-semibold flex items-center gap-2">
                             <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-pink-50 text-pink-500">
@@ -237,7 +450,7 @@
                             </span>
                             Suka galeri ini?
                         </span>
-                        <div class="flex items-center gap-3">
+                        <div class="like-stats flex items-center gap-3">
                             <span class="inline-flex items-center gap-2 text-sm text-gray-600 bg-gray-50 px-3 py-1 rounded-full ring-1 ring-gray-200">
                                 <i class="far fa-user"></i>
                                 <span id="card-like-count">{{ number_format($galeri->likes_count ?? 0) }}</span>
@@ -350,7 +563,7 @@
                 </script>
                 <div class="border-t pt-6 mt-8">
                     <h3 class="text-lg font-semibold text-gray-800 mb-4">Bagikan Galeri</h3>
-                    <div class="flex flex-wrap gap-3">
+                    <div class="share-buttons flex flex-wrap gap-3">
                         <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" target="_blank" rel="noopener" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
                             <i class="fab fa-facebook-f mr-2"></i>Facebook
                         </a>
@@ -400,7 +613,7 @@
 
                     <!-- Comment Form -->
                     @auth
-                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <div class="comment-form bg-white rounded-2xl shadow-lg p-6">
                         <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
                             <i class="far fa-edit text-[#66B1F2] mr-3"></i>
                             Tinggalkan Komentar
@@ -422,7 +635,7 @@
 
             <!-- Sidebar: Related Galleries -->
             <div class="lg:col-span-1">
-                <div class="sticky top-24">
+                <div class="sidebar sticky top-24">
                     <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
                         <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
                             <i class="fas fa-images text-[#66B1F2] mr-3"></i>
@@ -432,8 +645,8 @@
                             <div class="space-y-4">
                                 @foreach($relatedGaleri as $related)
                                     <a href="{{ route('guest.detail-galeri', $related->id) }}" class="block group">
-                                        <div class="flex gap-3 p-3 rounded-xl hover:bg-gray-50 transition-all duration-300">
-                                            <div class="w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden">
+                                        <div class="related-item flex gap-3 p-3 rounded-xl hover:bg-gray-50 transition-all duration-300">
+                                            <div class="related-image w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden">
                                                 @if($related->fotos && $related->fotos->isNotEmpty())
                                                     <img src="{{ asset('images/gallery/' . $related->fotos->first()->file) }}" 
                                                          alt="{{ $related->judul }}"
@@ -533,7 +746,7 @@
                         <li><a href="{{ route('guest.jurusan') }}" class="text-gray-300 hover:text-primary transition-colors">Semua Jurusan</a></li>
                     </ul>
                     <!-- Floating style quick buttons -->
-                    <div class="mt-4 flex flex-wrap gap-2">
+                    <div class="footer-buttons mt-4 flex flex-wrap gap-2">
                         <button type="button" onclick="openMajor('pplg')" class="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-gray-200 text-xs font-semibold shadow-md ring-1 ring-white/20 backdrop-blur transition">PPLG</button>
                         <button type="button" onclick="openMajor('tkj')" class="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-gray-200 text-xs font-semibold shadow-md ring-1 ring-white/20 backdrop-blur transition">TKJ</button>
                         <button type="button" onclick="openMajor('tpfl')" class="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-gray-200 text-xs font-semibold shadow-md ring-1 ring-white/20 backdrop-blur transition">TPFL</button>
@@ -728,6 +941,54 @@
         }
 
         // Note: Like functionality is handled by the main implementation above (lines 273-344)
+
+        // Mobile menu toggle functionality (debounced single pointer handler)
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.querySelector('.mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            if (!btn || !menu) return;
+            if (btn.dataset.bound === '1') return; // avoid double-binding
+            btn.dataset.bound = '1';
+
+            const icons = btn.querySelectorAll('svg');
+            let toggling = false;
+
+            function setOpen(open) {
+                if (open) {
+                    menu.classList.remove('hidden');
+                    btn.setAttribute('aria-expanded', 'true');
+                    if (icons[0]) icons[0].classList.add('hidden');
+                    if (icons[1]) icons[1].classList.remove('hidden');
+                } else {
+                    menu.classList.add('hidden');
+                    btn.setAttribute('aria-expanded', 'false');
+                    if (icons[0]) icons[0].classList.remove('hidden');
+                    if (icons[1]) icons[1].classList.add('hidden');
+                }
+            }
+
+            function toggleMenu(e) {
+                if (toggling) return;
+                toggling = true;
+                e.preventDefault();
+                e.stopPropagation();
+                const open = menu.classList.contains('hidden');
+                requestAnimationFrame(() => {
+                    setOpen(open);
+                    setTimeout(() => { toggling = false; }, 120);
+                });
+            }
+
+            btn.addEventListener('pointerup', toggleMenu, { passive: false });
+
+            document.addEventListener('pointerdown', function(ev) {
+                if (!menu.classList.contains('hidden')) {
+                    if (!btn.contains(ev.target) && !menu.contains(ev.target)) {
+                        setOpen(false);
+                    }
+                }
+            }, { passive: true });
+        });
     </script>
 </body>
 </html>

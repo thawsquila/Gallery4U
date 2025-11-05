@@ -88,7 +88,18 @@ class GuestController extends Controller
     {
         try {
             $galeri = Galery::findOrFail($id);
-            $galeri->increment('views');
+
+            // Prevent double counting: throttle per session per gallery (30 minutes)
+            $sessionKey = 'viewed_galeri_' . $id;
+            $lastViewed = session($sessionKey);
+            $shouldIncrement = true;
+            if ($lastViewed instanceof \Illuminate\Support\Carbon) {
+                $shouldIncrement = now()->diffInMinutes($lastViewed) >= 30;
+            }
+            if ($shouldIncrement) {
+                $galeri->increment('views');
+                session([$sessionKey => now()]);
+            }
             
             return response()->json([
                 'success' => true,
@@ -388,7 +399,7 @@ class GuestController extends Controller
 
             $galeri = $query->findOrFail($id);
 
-            // Increment views
+            // Increment views on every detail visit (no throttling)
             $galeri->increment('views');
 
             $liked = (Schema::hasTable('galery_likes') && auth()->check())

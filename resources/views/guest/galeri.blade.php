@@ -195,6 +195,134 @@
                 padding: 0.75rem 1rem;
             }
         }
+
+        /* Enhanced Mobile Responsiveness */
+        @media (max-width: 640px) {
+            /* Navbar mobile fixes */
+            nav {
+                width: 98% !important;
+                top: 4px !important;
+            }
+            
+            /* Hero section mobile */
+            .hero-title {
+                font-size: 2.5rem !important;
+                line-height: 1.2 !important;
+            }
+            
+            /* Main content mobile */
+            .max-w-7xl {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+            
+            /* Gallery cards mobile */
+            .gallery-section > div {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            
+            /* Filter buttons mobile */
+            .filter-buttons {
+                flex-wrap: wrap !important;
+                gap: 0.5rem !important;
+            }
+            
+            .filter-buttons button {
+                font-size: 0.875rem !important;
+                padding: 0.5rem 1rem !important;
+            }
+            
+            /* View switcher mobile */
+            .view-switcher {
+                flex-direction: column !important;
+                gap: 0.75rem !important;
+            }
+            
+            .view-switcher > div:first-child {
+                text-align: center !important;
+            }
+            
+            /* Gallery item mobile */
+            article {
+                margin-bottom: 1rem !important;
+            }
+            
+            /* Meta info mobile */
+            .meta-info {
+                flex-direction: column !important;
+                gap: 0.5rem !important;
+                align-items: flex-start !important;
+            }
+            
+            .meta-actions {
+                flex-wrap: wrap !important;
+                gap: 0.75rem !important;
+            }
+            
+            /* Search bar mobile */
+            .search-container {
+                flex-direction: column !important;
+                gap: 0.75rem !important;
+            }
+            
+            .search-container input {
+                width: 100% !important;
+            }
+            
+            /* Footer mobile */
+            footer .grid {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+            
+            /* Mobile menu button improvements */
+            .mobile-menu-btn {
+                min-width: 44px !important;
+                min-height: 44px !important;
+                padding: 8px !important;
+                touch-action: manipulation !important;
+                -webkit-tap-highlight-color: transparent !important;
+            }
+            
+            .mobile-menu {
+                animation: slideDown 0.3s ease-out !important;
+            }
+            
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* Extra small screens */
+            .hero-title {
+                font-size: 2rem !important;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem !important;
+            }
+            
+            /* Padding adjustments */
+            .px-4 {
+                padding-left: 0.75rem !important;
+                padding-right: 0.75rem !important;
+            }
+            
+            /* Button sizes */
+            .btn-mobile {
+                padding: 0.5rem 1rem !important;
+                font-size: 0.875rem !important;
+            }
+        }
         
         /* Loading animation for images */
         .lightbox-image {
@@ -223,6 +351,18 @@
                         <img class="h-10 w-auto" src="{{ asset('images/favicon.svg') }}" alt="SMKN 4 Logo">
                         <span class="ml-2 text-xl font-bold text-gray-800">Gallery4U</span>
                     </a>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button type="button" class="mobile-menu-btn inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
                 <div class="hidden md:flex items-center gap-4">
                     <div class="flex items-center gap-1 bg-white/80 rounded-full px-2 py-1 ring-1 ring-gray-200/70">
@@ -255,6 +395,47 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Mobile menu, show/hide based on menu state -->
+        <div class="mobile-menu hidden md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 bg-white/95 backdrop-blur-xl rounded-b-xl border-t border-gray-200">
+                <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Beranda</a>
+                <a href="{{ route('guest.teachers') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Tenaga Pendidik</a>
+                <a href="{{ route('guest.berita') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Berita</a>
+                <a href="{{ route('guest.event') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Event</a>
+                <a href="{{ route('guest.galeri') }}" class="block px-3 py-2 rounded-md text-base font-medium bg-blue-50 text-blue-600">Galeri</a>
+                <a href="{{ route('guest.kontak') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Kontak</a>
+                
+                <div class="border-t border-gray-200 pt-3 mt-3">
+                    @guest
+                    <a href="{{ route('user.login', ['redirect' => request()->getRequestUri()]) }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Login</a>
+                    <a href="{{ route('user.register', ['redirect' => request()->getRequestUri()]) }}" class="block px-3 py-2 rounded-md text-base font-medium bg-gradient-to-br from-[#66B1F2] to-[#4A90E2] text-white text-center mt-2">Daftar</a>
+                    @endguest
+                    @auth
+                    <div class="flex items-center px-3 py-2">
+                        <div class="flex-shrink-0">
+                            @php $av = auth()->user()->avatar ? asset('images/avatars/'.auth()->user()->avatar) : null; @endphp
+                            @if($av)
+                                <img class="h-8 w-8 rounded-full" src="{{ $av }}" alt="Avatar">
+                            @else
+                                <div class="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
+                                    <i class="fas fa-user text-gray-600"></i>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="ml-3">
+                            <div class="text-base font-medium text-gray-800">{{ auth()->user()->name }}</div>
+                        </div>
+                    </div>
+                    <a href="{{ route('user.profile') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Profil</a>
+                    <form action="{{ route('logout') }}" method="POST" class="mt-1">
+                        @csrf
+                        <button type="submit" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Keluar</button>
+                    </form>
+                    @endauth
+                </div>
+            </div>
+        </div>
     </nav>
 
     <!-- Header (match Berita hero style) -->
@@ -274,14 +455,14 @@
         <div class="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8" style="margin-top: 80px;">
             <div class="max-w-4xl mx-auto">
                 <div class="relative animate-fade-in-up">
-                    <h1 class="text-5xl lg:text-7xl font-extrabold text-white leading-tight mb-6 drop-shadow-2xl">
+                    <h1 class="hero-title text-5xl lg:text-7xl font-extrabold text-white leading-tight mb-6 drop-shadow-2xl">
                         <span class="bg-gradient-to-r from-[#66B1F2] via-white to-[#4A90E2] bg-clip-text text-transparent">Galeri</span>
                         <br>
                         <span class="text-white">Foto</span>
                     </h1>
                     <div class="absolute -inset-1 bg-gradient-to-r from-[#66B1F2]/30 to-[#4A90E2]/30 blur-xl opacity-40 rounded-xl"></div>
                 </div>
-                <p class="text-xl lg:text-2xl text-white/90 leading-relaxed mb-2 max-w-3xl mx-auto animate-fade-in-up delay-400 drop-shadow-lg font-medium">
+                <p class="hero-subtitle text-xl lg:text-2xl text-white/90 leading-relaxed mb-2 max-w-3xl mx-auto animate-fade-in-up delay-400 drop-shadow-lg font-medium">
                     Koleksi momen berharga dan kegiatan terbaik di SMKN 4 Bogor
                 </p>
             </div>
@@ -313,7 +494,7 @@
 
         <!-- Pencarian -->
         <div class="mb-6">
-            <div class="bg-white rounded-xl shadow p-4 flex items-center justify-between gap-4">
+            <div class="search-container bg-white rounded-xl shadow p-4 flex items-center justify-between gap-4">
                 <div class="relative flex-1">
                     <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
                     <input id="gallerySearch" type="text" placeholder="Cari nama kegiatan... (contoh: Lomba Paskibra 2023)" class="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary/60 focus:border-primary" />
@@ -325,7 +506,7 @@
         </div>
 
         <!-- Filter Bar (Kategori) -->
-        <div class="mb-6 flex flex-wrap items-center gap-3">
+        <div class="filter-buttons mb-6 flex flex-wrap items-center gap-3">
             <button @click="active='Semua'"
                     :class="active==='Semua' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'"
                     class="px-4 py-2 rounded-full border border-gray-300 shadow-sm transition-colors">Semua</button>
@@ -337,7 +518,7 @@
         </div>
         
         <!-- Segmented Control: View Switcher (Grid / Masonry / List) -->
-        <div class="mb-10 flex items-center justify-between gap-4 flex-wrap">
+        <div class="view-switcher mb-10 flex items-center justify-between gap-4 flex-wrap">
             <div class="text-sm text-gray-600">Tampilan: <span class="font-semibold" x-text="view.toUpperCase()"></span></div>
             <div class="inline-flex rounded-full ring-1 ring-gray-300 bg-white overflow-hidden shadow-sm">
                 <button @click="view='grid'" :class="view==='grid' ? 'bg-blue-600 text-white' : 'text-gray-700 hover:bg-gray-100'" class="px-4 py-2 text-sm font-semibold flex items-center gap-2">
@@ -426,7 +607,7 @@
                                         $shareUrl = route('guest.detail-galeri', $item->id);
                                         $shareTitle = $item->judul ?? 'Galeri SMKN 4';
                                     @endphp
-                                    <div class="flex items-center justify-between gap-3 mb-3 text-sm text-gray-600">
+                                    <div class="meta-info flex items-center justify-between gap-3 mb-3 text-sm text-gray-600">
                                         <div class="flex items-center gap-2 flex-wrap">
                                             <span class="inline-flex items-center"><i class="fas fa-calendar mr-2 text-primary"></i>{{ $item->created_at->format('d M Y') }}</span>
                                             <span class="mx-1 hidden sm:inline">•</span>
@@ -434,7 +615,7 @@
                                                 <i class="fas fa-images mr-1"></i>{{ $kategori }}
                                             </span>
                                         </div>
-                                        <div class="flex items-center gap-4 shrink-0 relative">
+                                        <div class="meta-actions flex items-center gap-4 shrink-0 relative">
                                             @auth
                                             @php
                                                 $userLiked = $item->likes->where('user_id', auth()->id())->isNotEmpty();
@@ -1020,30 +1201,57 @@
         });
     });
 
-    // Handle gallery link clicks to increment views
+    // (Removed) client-side AJAX view increment to avoid double counting
+
+    // Mobile menu toggle functionality (debounced single pointer handler)
     document.addEventListener('DOMContentLoaded', function() {
-        const galleryLinks = document.querySelectorAll('.gallery-link');
-        
-        galleryLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                const galleryId = this.getAttribute('data-gallery-id');
-                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                
-                // Increment views via AJAX (non-blocking)
-                fetch(`/galeri/${galleryId}/view`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken,
-                        'Content-Type': 'application/json'
-                    }
-                }).catch(error => {
-                    console.log('View tracking error:', error);
-                    // Don't prevent navigation on error
-                });
-                
-                // Allow normal navigation to continue
+        const btn = document.querySelector('.mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        if (!btn || !menu) return;
+        if (btn.dataset.bound === '1') return; // guard against double-binding
+        btn.dataset.bound = '1';
+
+        const icons = btn.querySelectorAll('svg');
+        let toggling = false;
+
+        function setOpen(open) {
+            if (open) {
+                menu.classList.remove('hidden');
+                btn.setAttribute('aria-expanded', 'true');
+                if (icons[0]) icons[0].classList.add('hidden');
+                if (icons[1]) icons[1].classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+                btn.setAttribute('aria-expanded', 'false');
+                if (icons[0]) icons[0].classList.remove('hidden');
+                if (icons[1]) icons[1].classList.add('hidden');
+            }
+        }
+
+        function toggleMenu() {
+            if (toggling) return;
+            toggling = true;
+            const open = menu.classList.contains('hidden');
+            // Use rAF to batch DOM changes and avoid lag
+            requestAnimationFrame(() => {
+                setOpen(open);
+                // small debounce window
+                setTimeout(() => { toggling = false; }, 120);
             });
-        });
+        }
+
+        // Prefer pointerup, but add click fallback for older browsers
+        btn.addEventListener('pointerup', toggleMenu, { passive: true });
+        btn.addEventListener('click', toggleMenu, { passive: true });
+
+        // Close when clicking outside
+        document.addEventListener('pointerdown', function(ev) {
+            if (!menu.classList.contains('hidden')) {
+                if (!btn.contains(ev.target) && !menu.contains(ev.target)) {
+                    setOpen(false);
+                }
+            }
+        }, { passive: true });
     });
   </script>
 </body>

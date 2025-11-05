@@ -190,6 +190,125 @@
         background: rgba(255, 255, 255, 0.1);
         border: 1px solid rgba(255, 255, 255, 0.2);
     }
+
+    /* Enhanced Mobile Responsiveness for Berita */
+    @media (max-width: 640px) {
+        /* Navbar mobile fixes */
+        nav {
+            width: 98% !important;
+            top: 4px !important;
+        }
+        
+        /* Hero section mobile */
+        .hero-title {
+            font-size: 2.5rem !important;
+            line-height: 1.2 !important;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.125rem !important;
+        }
+        
+        /* Stats cards mobile */
+        .stats-container {
+            flex-direction: column !important;
+            gap: 1rem !important;
+        }
+        
+        .stats-card {
+            padding: 1rem 1.5rem !important;
+        }
+        
+        /* Main content mobile */
+        .max-w-7xl {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
+        
+        /* Berita grid mobile */
+        .berita-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1.5rem !important;
+        }
+        
+        /* Berita card mobile */
+        .berita-card {
+            margin-bottom: 1rem !important;
+        }
+        
+        .berita-meta {
+            flex-direction: column !important;
+            gap: 0.5rem !important;
+            align-items: flex-start !important;
+        }
+        
+        /* Footer mobile */
+        footer .grid {
+            grid-template-columns: 1fr !important;
+            gap: 2rem !important;
+        }
+        
+        .footer-buttons {
+            flex-wrap: wrap !important;
+            gap: 0.5rem !important;
+        }
+        
+        /* Mobile menu button improvements */
+        .mobile-menu-btn {
+            min-width: 44px !important;
+            min-height: 44px !important;
+            padding: 8px !important;
+            touch-action: manipulation !important;
+            -webkit-tap-highlight-color: transparent !important;
+        }
+        
+        .mobile-menu {
+            animation: slideDown 0.3s ease-out !important;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    }
+
+    @media (max-width: 480px) {
+        /* Extra small screens */
+        .hero-title {
+            font-size: 2rem !important;
+        }
+        
+        .hero-subtitle {
+            font-size: 1rem !important;
+        }
+        
+        /* Padding adjustments */
+        .px-4 {
+            padding-left: 0.75rem !important;
+            padding-right: 0.75rem !important;
+        }
+        
+        /* Button sizes */
+        .btn-mobile {
+            padding: 0.5rem 1rem !important;
+            font-size: 0.875rem !important;
+        }
+        
+        /* Stats cards extra small */
+        .stats-card {
+            padding: 0.75rem 1rem !important;
+        }
+        
+        .stats-number {
+            font-size: 1.5rem !important;
+        }
+    }
   </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -209,6 +328,18 @@
                         <img src="{{ asset('images/favicon.svg') }}" alt="SMKN 4 Logo" class="w-10 h-10 object-contain mr-3" />
                         <span class="font-bold text-xl text-gray-800">Gallery4U</span>
                     </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button type="button" class="mobile-menu-btn inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
                 <div class="hidden md:flex items-center gap-4">
                   <div class="flex items-center gap-1 bg-white/80 rounded-full px-2 py-1 ring-1 ring-gray-200/70">
@@ -241,6 +372,47 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Mobile menu, show/hide based on menu state -->
+        <div class="mobile-menu hidden md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 bg-white/95 backdrop-blur-xl rounded-b-xl border-t border-gray-200">
+                <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Beranda</a>
+                <a href="{{ route('guest.teachers') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Tenaga Pendidik</a>
+                <a href="{{ route('guest.berita') }}" class="block px-3 py-2 rounded-md text-base font-medium bg-blue-50 text-blue-600">Berita</a>
+                <a href="{{ route('guest.event') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Event</a>
+                <a href="{{ route('guest.galeri') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Galeri</a>
+                <a href="{{ route('guest.kontak') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Kontak</a>
+                
+                <div class="border-t border-gray-200 pt-3 mt-3">
+                    @guest
+                    <a href="{{ route('user.login', ['redirect' => request()->getRequestUri()]) }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Login</a>
+                    <a href="{{ route('user.register', ['redirect' => request()->getRequestUri()]) }}" class="block px-3 py-2 rounded-md text-base font-medium bg-gradient-to-br from-[#66B1F2] to-[#4A90E2] text-white text-center mt-2">Daftar</a>
+                    @endguest
+                    @auth
+                    <div class="flex items-center px-3 py-2">
+                        <div class="flex-shrink-0">
+                            @php $av = auth()->user()->avatar ? asset('images/avatars/'.auth()->user()->avatar) : null; @endphp
+                            @if($av)
+                                <img class="h-8 w-8 rounded-full" src="{{ $av }}" alt="Avatar">
+                            @else
+                                <div class="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
+                                    <i class="fas fa-user text-gray-600"></i>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="ml-3">
+                            <div class="text-base font-medium text-gray-800">{{ auth()->user()->name }}</div>
+                        </div>
+                    </div>
+                    <a href="{{ route('user.profile') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Profil</a>
+                    <form action="{{ route('logout') }}" method="POST" class="mt-1">
+                        @csrf
+                        <button type="submit" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Keluar</button>
+                    </form>
+                    @endauth
+                </div>
+            </div>
+        </div>
     </nav>
 
     <!-- Hero Section with Background -->
@@ -263,7 +435,7 @@
             <div class="max-w-4xl mx-auto">
                 <!-- Animated Title -->
                 <div class="relative animate-fade-in-up">
-                    <h1 class="text-5xl lg:text-7xl font-extrabold text-white leading-tight mb-6 drop-shadow-2xl">
+                    <h1 class="hero-title text-5xl lg:text-7xl font-extrabold text-white leading-tight mb-6 drop-shadow-2xl">
                         <span class="bg-gradient-to-r from-[#66B1F2] via-white to-[#4A90E2] bg-clip-text text-transparent">Berita</span>
                         <br>
                         <span class="text-white">Terbaru</span>
@@ -272,19 +444,19 @@
                 </div>
                 
                 <!-- Animated Subtitle -->
-                <p class="text-xl lg:text-2xl text-white/90 leading-relaxed mb-8 max-w-4xl mx-auto animate-fade-in-up delay-400 drop-shadow-lg font-medium">
+                <p class="hero-subtitle text-xl lg:text-2xl text-white/90 leading-relaxed mb-8 max-w-4xl mx-auto animate-fade-in-up delay-400 drop-shadow-lg font-medium">
                     Dapatkan informasi terkini seputar kegiatan dan prestasi 
                     <span class="font-bold">SMKN 4 Bogor</span>
                 </p>
                 
                 <!-- Animated Stats -->
-                <div class="flex justify-center space-x-8 mb-8 animate-fade-in-up delay-600">
-                    <div class="text-center bg-white/95 backdrop-blur-md border border-white/60 px-6 py-4 rounded-2xl shadow-xl hover:shadow-2xl hover-glow transition-all duration-500 hover:scale-105">
-                        <div class="text-3xl font-bold text-primary">{{ $berita->count() }}</div>
+                <div class="stats-container flex justify-center space-x-8 mb-8 animate-fade-in-up delay-600">
+                    <div class="stats-card text-center bg-white/95 backdrop-blur-md border border-white/60 px-6 py-4 rounded-2xl shadow-xl hover:shadow-2xl hover-glow transition-all duration-500 hover:scale-105">
+                        <div class="stats-number text-3xl font-bold text-primary">{{ $berita->count() }}</div>
                         <div class="text-sm text-gray-600">Total Berita</div>
                     </div>
-                    <div class="text-center bg-white/95 backdrop-blur-md border border-white/60 px-6 py-4 rounded-2xl shadow-xl hover:shadow-2xl hover-glow transition-all duration-500 hover:scale-105">
-                        <div class="text-3xl font-bold text-primary">{{ date('Y') }}</div>
+                    <div class="stats-card text-center bg-white/95 backdrop-blur-md border border-white/60 px-6 py-4 rounded-2xl shadow-xl hover:shadow-2xl hover-glow transition-all duration-500 hover:scale-105">
+                        <div class="stats-number text-3xl font-bold text-primary">{{ date('Y') }}</div>
                         <div class="text-sm text-gray-600">Tahun Ini</div>
                     </div>
                 </div>
@@ -300,9 +472,9 @@
     <!-- Main Content -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         @if($berita->count() > 0)
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="berita-grid grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach($berita as $index => $item)
-                    <article class="bg-white rounded-xl shadow-lg overflow-hidden card-hover transition-all duration-500 animate-scale-in" style="animation-delay: {{ $index * 0.1 }}s">
+                    <article class="berita-card bg-white rounded-xl shadow-lg overflow-hidden card-hover transition-all duration-500 animate-scale-in" style="animation-delay: {{ $index * 0.1 }}s">
                         <!-- Image -->
                         <div class="h-48 overflow-hidden relative group">
                             @if($item->gambar)
@@ -324,7 +496,7 @@
                         <!-- Content -->
                         <div class="p-6">
                             <!-- Date and Category -->
-                            <div class="flex items-center text-sm text-gray-500 mb-3">
+                            <div class="berita-meta flex items-center text-sm text-gray-500 mb-3">
                                 <i class="fas fa-calendar mr-2 text-primary"></i>
                                 <span>{{ $item->created_at->format('d M Y') }}</span>
                                 <span class="mx-2">•</span>
@@ -423,7 +595,7 @@
                         <li><a href="{{ route('guest.jurusan') }}" class="text-gray-300 hover:text-primary transition-colors">Semua Jurusan</a></li>
                     </ul>
                     <!-- Floating style quick buttons -->
-                    <div class="mt-4 flex flex-wrap gap-2">
+                    <div class="footer-buttons mt-4 flex flex-wrap gap-2">
                         <button type="button" onclick="openMajor('pplg')" class="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-gray-200 text-xs font-semibold shadow-md ring-1 ring-white/20 backdrop-blur transition">PPLG</button>
                         <button type="button" onclick="openMajor('tkj')" class="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-gray-200 text-xs font-semibold shadow-md ring-1 ring-white/20 backdrop-blur transition">TKJ</button>
                         <button type="button" onclick="openMajor('tpfl')" class="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-gray-200 text-xs font-semibold shadow-md ring-1 ring-white/20 backdrop-blur transition">TPFL</button>
@@ -560,5 +732,55 @@
             overflow: hidden;
         }
     </style>
+
+    <script>
+    // Mobile menu toggle functionality (debounced single pointer handler)
+    document.addEventListener('DOMContentLoaded', function() {
+        const btn = document.querySelector('.mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        if (!btn || !menu) return;
+        if (btn.dataset.bound === '1') return; // avoid double-binding
+        btn.dataset.bound = '1';
+
+        const icons = btn.querySelectorAll('svg');
+        let toggling = false;
+
+        function setOpen(open) {
+            if (open) {
+                menu.classList.remove('hidden');
+                btn.setAttribute('aria-expanded', 'true');
+                if (icons[0]) icons[0].classList.add('hidden');
+                if (icons[1]) icons[1].classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+                btn.setAttribute('aria-expanded', 'false');
+                if (icons[0]) icons[0].classList.remove('hidden');
+                if (icons[1]) icons[1].classList.add('hidden');
+            }
+        }
+
+        function toggleMenu() {
+            if (toggling) return;
+            toggling = true;
+            const open = menu.classList.contains('hidden');
+            requestAnimationFrame(() => {
+                setOpen(open);
+                setTimeout(() => { toggling = false; }, 120);
+            });
+        }
+
+        // Prefer pointerup, with click fallback for older browsers
+        btn.addEventListener('pointerup', toggleMenu, { passive: true });
+        btn.addEventListener('click', toggleMenu, { passive: true });
+
+        document.addEventListener('pointerdown', function(ev) {
+            if (!menu.classList.contains('hidden')) {
+                if (!btn.contains(ev.target) && !menu.contains(ev.target)) {
+                    setOpen(false);
+                }
+            }
+        }, { passive: true });
+    });
+    </script>
 </body>
 </html>
