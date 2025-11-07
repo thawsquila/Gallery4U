@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset Kata Sandi - Gallery4U</title>
+    <title>Gallery4U - Reset Kata Sandi</title>
     <link rel="icon" href="{{ asset('images/favicon.svg') }}" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
