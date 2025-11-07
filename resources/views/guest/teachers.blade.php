@@ -30,49 +30,101 @@
         .animate-fade-in-up{ animation: fadeInUp .8s ease-out both; }
     </style>
 </head>
-<body class="bg-gray-50">
-    <!-- Floating Navbar -->
-    <nav class="fixed top-6 left-1/2 transform -translate-x-1/2 w-[95%] md:w-[90%] bg-white/90 shadow-2xl rounded-xl border border-gray-200 z-50 backdrop-blur-xl ring-1 ring-gray-200/60">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 flex items-center">
-                        <img src="{{ asset('images/favicon.svg') }}" alt="SMKN 4 Logo" class="w-10 h-10 object-contain mr-3" />
-                        <span class="font-bold text-xl text-gray-800">Gallery4U</span>
+    <body class="bg-gray-50">
+        <!-- Floating Navbar -->
+        <nav class="fixed top-6 left-1/2 transform -translate-x-1/2 w-[95%] md:w-[90%] bg-white/90 shadow-2xl rounded-xl border border-gray-200 z-50 backdrop-blur-xl ring-1 ring-gray-200/60">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 flex items-center">
+                            <img src="{{ asset('images/favicon.svg') }}" alt="SMKN 4 Logo" class="w-10 h-10 object-contain mr-3" />
+                            <span class="font-bold text-xl text-gray-800">Gallery4U</span>
+                        </div>
+                    </div>
+                    <!-- Mobile menu button -->
+                    <div class="md:hidden flex items-center">
+                        <button type="button" class="mobile-menu-btn inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-controls="mobile-menu" aria-expanded="false">
+                            <span class="sr-only">Open main menu</span>
+                            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                            <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="hidden md:flex items-center gap-4">
+                     <div class="flex items-center gap-1 bg-white/80 rounded-full px-2 py-1 ring-1 ring-gray-200/70">
+                     <a href="/" class="px-4 py-2 rounded-full text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold transition">Beranda</a>
+                    <a href="{{ route('guest.teachers') }}" class="px-4 py-2 rounded-full font-semibold bg-blue-50 text-blue-600">Tenaga Pendidik</a>
+                    <a href="{{ route('guest.berita') }}" class="px-4 py-2 rounded-full text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold transition">Berita</a>
+                    <a href="{{ route('guest.event') }}" class="px-4 py-2 rounded-full text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold transition">Event</a>
+                    <a href="{{ route('guest.galeri') }}" class="px-4 py-2 rounded-full text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold transition">Galeri</a>
+                    <a href="{{ route('guest.kontak') }}" class="px-4 py-2 rounded-full text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold transition">Kontak</a>
+                     </div>
+                    @guest
+                    <a href="{{ route('user.login', ['redirect' => request()->getRequestUri()]) }}" class="px-5 py-2 rounded-full text-gray-700 bg-white hover:bg-gray-100 ring-1 ring-gray-200 font-semibold transition">Login</a>
+                    <a href="{{ route('user.register', ['redirect' => request()->getRequestUri()]) }}" class="px-6 py-2 rounded-full bg-gradient-to-br from-[#66B1F2] to-[#4A90E2] text-white font-bold shadow-[0_10px_25px_-10px_rgba(59,130,246,0.6)] hover:opacity-95 transition">Daftar</a>
+                    @endguest
+                    @auth
+                    <a href="{{ route('user.profile') }}" title="Profil Saya" class="mr-2 inline-flex items-center justify-center w-9 h-9 rounded-full ring-1 ring-gray-200 overflow-hidden bg-white">
+                        @php $av = auth()->user()->avatar ? asset('images/avatars/'.auth()->user()->avatar) : null; @endphp
+                        @if($av)
+                            <img src="{{ $av }}" alt="Avatar" class="w-full h-full object-cover">
+                        @else
+                            <i class="fas fa-user text-gray-600"></i>
+                        @endif
+                    </a>
+                    <span class="text-sm text-gray-600">Hi, <span class="font-semibold">{{ auth()->user()->name }}</span></span>
+                    <form action="{{ route('logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="ml-1 px-4 py-2 text-sm rounded-full ring-1 ring-gray-200 hover:bg-gray-100">Keluar</button>
+                    </form>
+                    @endauth
                     </div>
                 </div>
-                <div class="hidden md:flex items-center gap-4">
-                 <div class="flex items-center gap-1 bg-white/80 rounded-full px-2 py-1 ring-1 ring-gray-200/70">
-                 <a href="/" class="px-4 py-2 rounded-full text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold transition">Beranda</a>
-                <a href="{{ route('guest.teachers') }}" class="px-4 py-2 rounded-full font-semibold bg-blue-50 text-blue-600">Tenaga Pendidik</a>
-                <a href="{{ route('guest.berita') }}" class="px-4 py-2 rounded-full text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold transition">Berita</a>
-                <a href="{{ route('guest.event') }}" class="px-4 py-2 rounded-full text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold transition">Event</a>
-                <a href="{{ route('guest.galeri') }}" class="px-4 py-2 rounded-full text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold transition">Galeri</a>
-                <a href="{{ route('guest.kontak') }}" class="px-4 py-2 rounded-full text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold transition">Kontak</a>
-                 </div>
-                @guest
-                <a href="{{ route('user.login', ['redirect' => request()->getRequestUri()]) }}" class="px-5 py-2 rounded-full text-gray-700 bg-white hover:bg-gray-100 ring-1 ring-gray-200 font-semibold transition">Login</a>
-                <a href="{{ route('user.register', ['redirect' => request()->getRequestUri()]) }}" class="px-6 py-2 rounded-full bg-gradient-to-br from-[#66B1F2] to-[#4A90E2] text-white font-bold shadow-[0_10px_25px_-10px_rgba(59,130,246,0.6)] hover:opacity-95 transition">Daftar</a>
-                @endguest
-                @auth
-                <a href="{{ route('user.profile') }}" title="Profil Saya" class="mr-2 inline-flex items-center justify-center w-9 h-9 rounded-full ring-1 ring-gray-200 overflow-hidden bg-white">
-                    @php $av = auth()->user()->avatar ? asset('images/avatars/'.auth()->user()->avatar) : null; @endphp
-                    @if($av)
-                        <img src="{{ $av }}" alt="Avatar" class="w-full h-full object-cover">
-                    @else
-                        <i class="fas fa-user text-gray-600"></i>
-                    @endif
-                </a>
-                <span class="text-sm text-gray-600">Hi, <span class="font-semibold">{{ auth()->user()->name }}</span></span>
-                <form action="{{ route('logout') }}" method="POST" class="inline">
-                    @csrf
-                    <button type="submit" class="ml-1 px-4 py-2 text-sm rounded-full ring-1 ring-gray-200 hover:bg-gray-100">Keluar</button>
-                </form>
-                @endauth
+            </div>
+            <!-- Mobile menu, show/hide based on menu state -->
+            <div class="mobile-menu hidden md:hidden" id="mobile-menu">
+                <div class="px-2 pt-2 pb-3 space-y-1 bg-white/95 backdrop-blur-xl rounded-b-xl border-t border-gray-200">
+                    <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Beranda</a>
+                    <a href="{{ route('guest.teachers') }}" class="block px-3 py-2 rounded-md text-base font-medium bg-blue-50 text-blue-600">Tenaga Pendidik</a>
+                    <a href="{{ route('guest.berita') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Berita</a>
+                    <a href="{{ route('guest.event') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Event</a>
+                    <a href="{{ route('guest.galeri') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Galeri</a>
+                    <a href="{{ route('guest.kontak') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Kontak</a>
+
+                    <div class="border-t border-gray-200 pt-3 mt-3">
+                        @guest
+                        <a href="{{ route('user.login', ['redirect' => request()->getRequestUri()]) }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Login</a>
+                        <a href="{{ route('user.register', ['redirect' => request()->getRequestUri()]) }}" class="block px-3 py-2 rounded-md text-base font-medium bg-gradient-to-br from-[#66B1F2] to-[#4A90E2] text-white text-center mt-2">Daftar</a>
+                        @endguest
+                        @auth
+                        <div class="flex items-center px-3 py-2">
+                            <div class="flex-shrink-0">
+                                @php $av = auth()->user()->avatar ? asset('images/avatars/'.auth()->user()->avatar) : null; @endphp
+                                @if($av)
+                                    <img class="h-8 w-8 rounded-full" src="{{ $av }}" alt="Avatar">
+                                @else
+                                    <div class="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
+                                        <i class="fas fa-user text-gray-600"></i>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="ml-3">
+                                <div class="text-base font-medium text-gray-800">{{ auth()->user()->name }}</div>
+                            </div>
+                        </div>
+                        <a href="{{ route('user.profile') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Profil</a>
+                        <form action="{{ route('logout') }}" method="POST" class="mt-1">
+                            @csrf
+                            <button type="submit" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Keluar</button>
+                        </form>
+                        @endauth
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
     <!-- Hero Section -->
     <section class="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
@@ -201,10 +253,10 @@
                         <li><a href="{{ route('guest.home') }}#home" class="text-gray-300 hover:text-primary transition-colors">Beranda</a></li>
                         <li><a href="{{ route('guest.home') }}#profil" class="text-gray-300 hover:text-primary transition-colors">Profil Sekolah</a></li>
                         <li><a href="{{ route('guest.home') }}#jurusan" class="text-gray-300 hover:text-primary transition-colors">Jurusan</a></li>
-                        <li><a href="{{ route('guest.home') }}#tenagapendidik" class="text-gray-300 hover:text-primary transition-colors">Tenaga Pendidik</a></li>
-                        <li><a href="{{ route('guest.home') }}#berita" class="text-gray-300 hover:text-primary transition-colors">Berita</a></li>
-                        <li><a href="{{ route('guest.home') }}#event" class="text-gray-300 hover:text-primary transition-colors">Event</a></li>
-                        <li><a href="{{ route('guest.home') }}#galeri" class="text-gray-300 hover:text-primary transition-colors">Galeri</a></li>
+                        <li><a href="{{ route('guest.teachers') }}" class="text-gray-300 hover:text-primary transition-colors">Tenaga Pendidik</a></li>
+                        <li><a href="{{ route('guest.berita') }}" class="text-gray-300 hover:text-primary transition-colors">Berita</a></li>
+                        <li><a href="{{ route('guest.event') }}" class="text-gray-300 hover:text-primary transition-colors">Event</a></li>
+                        <li><a href="{{ route('guest.galeri') }}" class="text-gray-300 hover:text-primary transition-colors">Galeri</a></li>
                     </ul>
                 </div>
                 
@@ -334,6 +386,54 @@
             document.getElementById('majorModal').classList.add('hidden');
             document.body.classList.remove('overflow-hidden');
         }
+    </script>
+    <script>
+        // Mobile menu toggle functionality (mirrors galeri.blade.php)
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.querySelector('.mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            if (!btn || !menu) return;
+            if (btn.dataset.bound === '1') return; // guard against double-binding
+            btn.dataset.bound = '1';
+
+            const icons = btn.querySelectorAll('svg');
+            let toggling = false;
+
+            function setOpen(open) {
+                if (open) {
+                    menu.classList.remove('hidden');
+                    btn.setAttribute('aria-expanded', 'true');
+                    if (icons[0]) icons[0].classList.add('hidden');
+                    if (icons[1]) icons[1].classList.remove('hidden');
+                } else {
+                    menu.classList.add('hidden');
+                    btn.setAttribute('aria-expanded', 'false');
+                    if (icons[0]) icons[0].classList.remove('hidden');
+                    if (icons[1]) icons[1].classList.add('hidden');
+                }
+            }
+
+            function toggleMenu() {
+                if (toggling) return;
+                toggling = true;
+                const open = menu.classList.contains('hidden');
+                requestAnimationFrame(() => {
+                    setOpen(open);
+                    setTimeout(() => { toggling = false; }, 120);
+                });
+            }
+
+            btn.addEventListener('pointerup', toggleMenu, { passive: true });
+            btn.addEventListener('click', toggleMenu, { passive: true });
+
+            document.addEventListener('pointerdown', function(ev) {
+                if (!menu.classList.contains('hidden')) {
+                    if (!btn.contains(ev.target) && !menu.contains(ev.target)) {
+                        setOpen(false);
+                    }
+                }
+            }, { passive: true });
+        });
     </script>
 </body>
 </html>

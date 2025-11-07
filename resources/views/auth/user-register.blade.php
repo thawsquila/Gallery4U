@@ -113,6 +113,11 @@
         .text-shadow {
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
+
+        /* Hide native password reveal/clear icons (Edge/Chromium) */
+        input[type="password"]::-ms-reveal,
+        input[type="password"]::-ms-clear { display: none; width: 0; height: 0; }
+        input[type="password"]::-webkit-credentials-auto-fill-button { visibility: hidden; display: none; }
     </style>
 </head>
 <body class="bg-[#EEF2F7] min-h-screen py-10 px-4 flex flex-col items-center">
@@ -252,6 +257,7 @@
         </div>
     </div>
     <!-- End new layout -->
+    <p class="w-full text-center text-gray-400 text-sm mt-6">&copy; 2025 Gallery4U by Cero Tech. All rights reserved.</p>
     <!-- Legacy dark layout below is hidden -->
     <div class="fixed inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.02\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"2\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20 pointer-events-none hidden"></div>
     <div class="fixed inset-0 bg-[#66B1F2]/20 pointer-events-none hidden"></div>
@@ -428,7 +434,7 @@
                     </div>
                 </div>
             </div>
-            <p class="text-white/40 text-sm">&copy; 2025 SMK Negeri 4 Bogor. All rights reserved.</p>
+            <p class="text-white/40 text-sm">&copy; 2025 Gallery4U by Cero Tech. All rights reserved.</p>
         </div>
     </div>
     <script>

@@ -812,35 +812,8 @@
     }
   </style>
     <script>
-      // Mobile menu functionality
+      // Smooth scroll functionality only (mobile menu handled elsewhere)
       document.addEventListener('DOMContentLoaded', function() {
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const closeMenuButton = document.getElementById('close-menu');
-        const mobileMenuLinks = document.querySelectorAll('#mobile-menu a');
-        
-        // Toggle mobile menu
-        mobileMenuButton.addEventListener('click', function() {
-          mobileMenu.classList.toggle('hidden');
-          mobileMenu.classList.toggle('flex');
-          document.body.classList.toggle('menu-open');
-        });
-        
-        // Close mobile menu when clicking the close button
-        closeMenuButton.addEventListener('click', function() {
-          mobileMenu.classList.add('hidden');
-          mobileMenu.classList.remove('flex');
-          document.body.classList.remove('menu-open');
-        });
-        
-        // Close mobile menu when clicking on a link
-        mobileMenuLinks.forEach(link => {
-          link.addEventListener('click', function() {
-            mobileMenu.classList.add('hidden');
-            mobileMenu.classList.remove('flex');
-            document.body.classList.remove('menu-open');
-          });
-        });
         
         // Smooth scroll for all anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1080,50 +1053,102 @@
         </button>
       </div>
 
-      <!-- Mobile Menu Overlay -->
-      <div id="mobile-menu" class="fixed inset-0 bg-white/95 backdrop-blur-xl z-50 hidden flex-col items-center justify-center space-y-8 text-center p-8">
-        <button id="close-menu" class="absolute top-6 right-6 text-gray-700 hover:text-indigo-600">
-          <i class="fas fa-times text-2xl"></i>
-        </button>
-        <a href="#home" class="text-xl font-semibold text-gray-800 hover:text-indigo-600 transition duration-300 mobile-link">Beranda</a>
-        <a href="#profil" class="text-xl font-semibold text-gray-800 hover:text-indigo-600 transition duration-300 mobile-link">Profil</a>
-        <a href="#jurusan" class="text-xl font-semibold text-gray-800 hover:text-indigo-600 transition duration-300 mobile-link">Jurusan</a>
-        <a href="#berita" class="text-xl font-semibold text-gray-800 hover:text-indigo-600 transition duration-300 mobile-link">Berita</a>
-        <a href="#event" class="text-xl font-semibold text-gray-800 hover:text-indigo-600 transition duration-300 mobile-link">Event</a>
-        <a href="#galeri" class="text-xl font-semibold text-gray-800 hover:text-indigo-600 transition duration-300 mobile-link">Galeri</a>
-        <a href="#kontak" class="text-xl font-semibold text-gray-800 hover:text-indigo-600 transition duration-300 mobile-link">Kontak</a>
-        <div class="pt-4 flex gap-3">
-          @guest
-          <a href="{{ route('user.login', ['redirect' => request()->getRequestUri()]) }}" class="px-5 py-2 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50">Login</a>
-          <a href="{{ route('user.register', ['redirect' => request()->getRequestUri()]) }}" class="px-5 py-2 rounded-xl bg-gradient-to-br from-[#66B1F2] to-[#4A90E2] text-white hover:opacity-95">Daftar</a>
-          @endguest
-          @auth
-          <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button type="submit" class="px-5 py-2 rounded-xl border hover:bg-gray-50">Keluar</button>
-          </form>
-          @endauth
+      <!-- Mobile Menu Overlay as centered card -->
+      <div id="mobile-menu" class="fixed inset-0 z-50 hidden md:hidden items-start justify-center p-4 pt-16 bg-black/40">
+        <div class="mobile-menu-card w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden mt-2 min-h-[420px]">
+          <!-- Header -->
+          <div class="flex items-center justify-between px-4 py-3 bg-gray-50">
+            <div class="flex items-center gap-2">
+              <img src="/images/favicon.svg" alt="Logo" class="w-7 h-7">
+              <span class="font-bold text-lg text-gray-800">Gallery4U</span>
+            </div>
+            <button id="close-menu" class="w-9 h-9 rounded-xl bg-white border border-gray-200 shadow flex items-center justify-center text-gray-700 hover:bg-gray-100">
+              <i class="fas fa-times text-lg"></i>
+            </button>
+          </div>
+          <!-- Links -->
+          <nav class="px-2 pt-3 pb-8 flex flex-col h-full">
+            <a href="#home" class="mobile-link block px-3 py-2 rounded-lg text-gray-800 hover:bg-gray-100">Beranda</a>
+            <a href="#profil" class="mobile-link block px-3 py-2 rounded-lg text-gray-800 hover:bg-gray-100">Profil</a>
+            <a href="#jurusan" class="mobile-link block px-3 py-2 rounded-lg text-gray-800 hover:bg-gray-100">Jurusan</a>
+            <a href="#tenagapendidik" class="mobile-link block px-3 py-2 rounded-lg text-gray-800 hover:bg-gray-100">Tenaga Pendidik</a>
+            <a href="#berita" class="mobile-link block px-3 py-2 rounded-lg text-gray-800 hover:bg-gray-100">Berita</a>
+            <a href="#event" class="mobile-link block px-3 py-2 rounded-lg text-gray-800 hover:bg-gray-100">Event</a>
+            <a href="#galeri" class="mobile-link block px-3 py-2 rounded-lg text-gray-800 hover:bg-gray-100">Galeri</a>
+            <a href="#kontak" class="mobile-link block px-3 py-2 rounded-lg text-gray-800 hover:bg-gray-100">Kontak</a>
+            <div class="my-3 border-t border-gray-200"></div>
+            <div class="flex gap-2 px-1 pb-3 mt-auto mb-2">
+              @guest
+              <a href="{{ route('user.login', ['redirect' => request()->getRequestUri()]) }}" class="flex-1 px-4 py-2 rounded-lg border border-gray-300 text-gray-700 text-center hover:bg-gray-50">Login</a>
+              <a href="{{ route('user.register', ['redirect' => request()->getRequestUri()]) }}" class="flex-1 px-4 py-2 rounded-lg bg-gradient-to-br from-[#66B1F2] to-[#4A90E2] text-white text-center hover:opacity-95">Daftar</a>
+              @endguest
+              @auth
+              <form action="{{ route('logout') }}" method="POST" class="w-full">
+                @csrf
+                <button type="submit" class="w-full px-4 py-2 rounded-lg border hover:bg-gray-50">Keluar</button>
+              </form>
+              @endauth
+            </div>
+          </nav>
         </div>
       </div>
     </div>
   </div>
 </nav>
 <script>
-  // Mobile menu toggle
-  (function() {
+  // Mobile menu toggle - Fixed version
+  document.addEventListener('DOMContentLoaded', function() {
     const openBtn = document.getElementById('mobile-menu-button');
     const closeBtn = document.getElementById('close-menu');
     const menu = document.getElementById('mobile-menu');
+    const card = menu ? menu.querySelector('.mobile-menu-card') : null;
+    
+    console.log('Mobile menu elements:', { openBtn, closeBtn, menu, card }); // Debug log
+    
     if (openBtn && closeBtn && menu) {
-      const open = () => menu.classList.remove('hidden');
-      const close = () => menu.classList.add('hidden');
-      openBtn.addEventListener('click', open);
-      closeBtn.addEventListener('click', close);
+      const open = () => { 
+        menu.classList.remove('hidden'); 
+        menu.classList.add('flex'); 
+        console.log('Menu opened'); // Debug log
+      };
+      const close = () => { 
+        menu.classList.add('hidden'); 
+        menu.classList.remove('flex'); 
+        console.log('Menu closed'); // Debug log
+      };
+      
+      openBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        open();
+      });
+      
+      closeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        close();
+      });
+      
+      // Close when clicking backdrop
+      menu.addEventListener('click', function(e){ 
+        if (e.target === menu) close(); 
+      });
+      
+      // Prevent closing when clicking inside the card
+      if (card) {
+        card.addEventListener('click', function(e){ 
+          e.stopPropagation(); 
+        });
+      }
+      
       // Close after clicking any mobile link
       document.querySelectorAll('#mobile-menu .mobile-link').forEach(function(el){
         el.addEventListener('click', close);
       });
+    } else {
+      console.error('Mobile menu elements not found');
     }
+    
     // Scrollspy: highlight active nav link
     const links = Array.from(document.querySelectorAll('nav .nav-link'));
     const map = links.map(function(link){
@@ -1167,11 +1192,11 @@
       },{ rootMargin: '0px 0px -70% 0px', threshold: 0.1 });
       map.forEach(function(x){ io.observe(x.target); });
     }
-  })();
+  });
 </script>
 
 
- <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden scroll-reveal">
+ <section id="home" class="relative min-h-[75vh] md:min-h-screen flex items-center justify-center overflow-hidden scroll-reveal">
   <!-- Decorative Background (no video) -->
   <div class="absolute inset-0 w-full h-full" style="background-image:url('{{ asset('images/hero.JPG') }}'); background-size:cover; background-position:center;">
     <!-- Base gradient overlays (retain existing palette) -->
@@ -1197,7 +1222,7 @@
   </div>
 
   <!-- Content Overlay -->
-  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center" style="margin-top: 80px;">
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center mt-28 md:mt-32 lg:mt-36">
     <div class="animate-fade-in-up">
       <div class="relative">
         <h1 class="text-5xl lg:text-7xl font-extrabold text-white leading-tight mb-6 drop-shadow-2xl">
@@ -1207,45 +1232,45 @@
         </h1>
         <div class="absolute -inset-1 bg-gradient-to-r from-[#66B1F2]/30 to-[#4A90E2]/30 blur-xl opacity-40 rounded-xl"></div>
       </div>
-      <p class="text-xl lg:text-2xl text-white/90 leading-relaxed mb-20 max-w-4xl mx-auto animate-fade-in-up delay-400 drop-shadow-lg font-medium">
+      <p class="text-xl lg:text-2xl text-white/90 leading-relaxed mb-10 md:mb-20 max-w-4xl mx-auto animate-fade-in-up delay-400 drop-shadow-lg font-medium">
       Platform galeri digital untuk mendokumentasikan kegiatan, prestasi, dan momen terbaik SMKN 4 Bogor.
       </p>
       
       <!-- Statistics Section - Single Bar Style -->
       <div class="mt-14 max-w-5xl mx-auto">
         <div class="bg-white/95 backdrop-blur-md border border-white/60 rounded-2xl shadow-xl">
-          <div class="grid grid-cols-1 md:grid-cols-3 md:divide-x md:divide-white/60">
+          <div class="grid grid-cols-3 divide-x divide-white/60">
             <!-- Siswa Aktif -->
-            <div class="flex flex-col items-center justify-center gap-2.5 px-6 py-6">
-              <div class="bg-gradient-to-br from-[#66B1F2] to-[#4A90E2] p-2.5 rounded-full">
-                <i class="fas fa-users text-white text-base"></i>
+            <div class="flex flex-col items-center justify-center gap-1.5 px-3 py-4 md:gap-2.5 md:px-6 md:py-6">
+              <div class="bg-gradient-to-br from-[#66B1F2] to-[#4A90E2] p-2 md:p-2.5 rounded-full">
+                <i class="fas fa-users text-white text-sm md:text-base"></i>
               </div>
-              <h4 class="text-2xl font-bold bg-gradient-to-r from-[#66B1F2] to-[#4A90E2] bg-clip-text text-transparent leading-none">
+              <h4 class="text-lg md:text-2xl font-bold bg-gradient-to-r from-[#66B1F2] to-[#4A90E2] bg-clip-text text-transparent leading-none">
                 <span class="count-up" data-start="1" data-target="{{ (int) $statistics->active_students }}" data-suffix="+">0</span>
               </h4>
-              <p class="text-[#1E88E5] text-xs md:text-sm font-semibold">Siswa Aktif</p>
+              <p class="text-[#1E88E5] text-[11px] md:text-sm font-semibold">Siswa Aktif</p>
             </div>
 
             <!-- Jurusan -->
-            <div class="flex flex-col items-center justify-center gap-2.5 px-6 py-6">
-              <div class="bg-gradient-to-br from-[#66B1F2] to-[#4A90E2] p-2.5 rounded-full">
-                <i class="fas fa-laptop-code text-white text-base"></i>
+            <div class="flex flex-col items-center justify-center gap-1.5 px-3 py-4 md:gap-2.5 md:px-6 md:py-6">
+              <div class="bg-gradient-to-br from-[#66B1F2] to-[#4A90E2] p-2 md:p-2.5 rounded-full">
+                <i class="fas fa-laptop-code text-white text-sm md:text-base"></i>
               </div>
-              <h4 class="text-2xl font-bold bg-gradient-to-r from-[#66B1F2] to-[#4A90E2] bg-clip-text text-transparent leading-none">
+              <h4 class="text-lg md:text-2xl font-bold bg-gradient-to-r from-[#66B1F2] to-[#4A90E2] bg-clip-text text-transparent leading-none">
                 <span class="count-up" data-start="1" data-target="{{ (int) $statistics->majors_count }}">0</span>
               </h4>
-              <p class="text-[#1E88E5] text-xs md:text-sm font-semibold">Jurusan</p>
+              <p class="text-[#1E88E5] text-[11px] md:text-sm font-semibold">Jurusan</p>
             </div>
 
             <!-- Guru Profesional -->
-            <div class="flex flex-col items-center justify-center gap-2.5 px-6 py-6">
-              <div class="bg-gradient-to-br from-[#66B1F2] to-[#4A90E2] p-2.5 rounded-full">
-                <i class="fas fa-chalkboard-teacher text-white text-base"></i>
+            <div class="flex flex-col items-center justify-center gap-1.5 px-3 py-4 md:gap-2.5 md:px-6 md:py-6">
+              <div class="bg-gradient-to-br from-[#66B1F2] to-[#4A90E2] p-2 md:p-2.5 rounded-full">
+                <i class="fas fa-chalkboard-teacher text-white text-sm md:text-base"></i>
               </div>
-              <h4 class="text-2xl font-bold bg-gradient-to-r from-[#66B1F2] to-[#4A90E2] bg-clip-text text-transparent leading-none">
+              <h4 class="text-lg md:text-2xl font-bold bg-gradient-to-r from-[#66B1F2] to-[#4A90E2] bg-clip-text text-transparent leading-none">
                 <span class="count-up" data-start="1" data-target="{{ (int) $statistics->professional_teachers }}" data-suffix="+">0</span>
               </h4>
-              <p class="text-[#1E88E5] text-xs md:text-sm font-semibold">Guru Profesional</p>
+              <p class="text-[#1E88E5] text-[11px] md:text-sm font-semibold">Guru Profesional</p>
             </div>
           </div>
         </div>
@@ -1257,16 +1282,48 @@
 <!-- Modal Detail Jurusan (on-page, no navigation) -->
 <div id="majorModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden">
   <div class="absolute inset-0" onclick="closeMajor()"></div>
-  <div class="relative max-w-4xl mx-auto mt-16 mb-10 bg-white rounded-2xl shadow-2xl overflow-hidden">
+  <div class="relative w-11/12 max-w-sm md:max-w-3xl lg:max-w-4xl mx-auto mt-8 md:mt-16 mb-6 md:mb-10 bg-white rounded-xl md:rounded-2xl shadow-2xl overflow-hidden">
     <div class="flex flex-col md:flex-row">
-      <div class="md:w-2/5 relative h-44 md:h-auto">
+      <div class="md:w-2/5 relative h-36 md:h-auto">
         <img id="majorImage" src="#" alt="Major" class="absolute inset-0 w-full h-full object-cover">
         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-        <button type="button" onclick="closeMajor()" class="absolute top-3 right-3 bg-white/90 hover:bg-white text-gray-700 w-9 h-9 rounded-full shadow flex items-center justify-center">
-          <i class="fas fa-times"></i>
+        <button type="button" onclick="newsNext()" class="md:hidden absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 text-gray-700 shadow flex items-center justify-center">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+        <button type="button" onclick="newsPrev()" class="md:hidden absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 text-gray-700 shadow flex items-center justify-center">
+          <i class="fas fa-chevron-left"></i>
         </button>
       </div>
-      <div class="md:w-3/5 p-6 md:p-8">
+      <script>
+        (function(){
+          const track = document.getElementById('newsCarousel');
+          if (!track) return;
+          function gapPx(){
+            const g = getComputedStyle(track).gap; return g ? parseFloat(g) : 0;
+          }
+          function cardWidth(){
+            const first = track.querySelector('article');
+            if (!first) return 0;
+            const rect = first.getBoundingClientRect();
+            return rect.width + gapPx();
+          }
+          window.newsPrev = function(){ track.scrollBy({ left: -cardWidth(), behavior: 'smooth' }); };
+          window.newsNext = function(){ track.scrollBy({ left: cardWidth(), behavior: 'smooth' }); };
+          let timer;
+          function startAuto(){
+            if (window.matchMedia('(min-width: 768px)').matches) { stopAuto(); return; }
+            stopAuto();
+            timer = setInterval(()=> window.newsNext(), 4500);
+          }
+          function stopAuto(){ if (timer) { clearInterval(timer); timer = null; } }
+          track.addEventListener('touchstart', stopAuto, { passive: true });
+          track.addEventListener('mouseenter', stopAuto);
+          track.addEventListener('mouseleave', startAuto);
+          window.addEventListener('resize', startAuto);
+          startAuto();
+        })();
+      </script>
+      <div class="md:w-3/5 p-4 md:p-8">
         <div class="flex items-center gap-2 mb-2">
           <span id="majorCode" class="px-2 py-0.5 text-xs rounded-full bg-[#254C6B] text-white"></span>
         </div>
@@ -1279,11 +1336,11 @@
       </div>
     </div>
     <!-- Floating switcher inside modal -->
-    <div class="absolute bottom-4 right-4 flex gap-2">
-      <button class="w-9 h-9 rounded-full bg-[#254C6B] text-white text-xs" onclick="openMajor('pplg')">PPLG</button>
-      <button class="w-9 h-9 rounded-full bg-[#254C6B] text-white text-xs" onclick="openMajor('tkj')">TKJ</button>
-      <button class="w-9 h-9 rounded-full bg-[#254C6B] text-white text-xs" onclick="openMajor('tpfl')">TPFL</button>
-      <button class="w-9 h-9 rounded-full bg-[#254C6B] text-white text-xs" onclick="openMajor('otomotif')">TO</button>
+    <div class="absolute bottom-3 right-3 md:bottom-4 md:right-4 flex gap-2">
+      <button class="w-7 h-7 md:w-9 md:h-9 rounded-full bg-[#254C6B] text-white text-[10px] md:text-xs" onclick="openMajor('pplg')">PPLG</button>
+      <button class="w-7 h-7 md:w-9 md:h-9 rounded-full bg-[#254C6B] text-white text-[10px] md:text-xs" onclick="openMajor('tkj')">TKJ</button>
+      <button class="w-7 h-7 md:w-9 md:h-9 rounded-full bg-[#254C6B] text-white text-[10px] md:text-xs" onclick="openMajor('tpfl')">TPFL</button>
+      <button class="w-7 h-7 md:w-9 md:h-9 rounded-full bg-[#254C6B] text-white text-[10px] md:text-xs" onclick="openMajor('otomotif')">TO</button>
     </div>
   </div>
   
@@ -1307,11 +1364,11 @@
     </div>
     <!-- Rest of the code remains the same -->
 
-            <div class="grid md:grid-cols-2 gap-6 items-start">
+            <div class="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-6 items-start">
                 <!-- Vision & Mission Section -->
-                <div class="space-y-8 animate-slide-in-left">
+                <div class="space-y-4 md:space-y-8 animate-slide-in-left">
                     <!-- Vision Card with enhanced effects -->
-                    <div class="group relative bg-white/95 backdrop-blur-md p-4 rounded-xl border border-white/30 hover:bg-white transition-all duration-700 hover:scale-105 hover:shadow-2xl overflow-hidden min-h-[180px] md:min-h-[200px] scroll-reveal delay-100">
+                    <div class="group relative bg-white/95 backdrop-blur-md p-3 md:p-4 rounded-xl border border-white/30 hover:bg-white transition-all duration-700 hover:scale-105 hover:shadow-2xl overflow-hidden min-h-[150px] md:min-h-[200px] scroll-reveal delay-100">
                         <!-- Animated background gradient -->
                         <div class="absolute inset-0 bg-gradient-to-br from-yellow-400/10 via-orange-500/5 to-yellow-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                         <!-- Floating particles effect -->
@@ -1319,20 +1376,20 @@
                         <div class="absolute bottom-6 left-6 w-1.5 h-1.5 bg-orange-500/60 rounded-full animate-bounce delay-700"></div>
                         
                         <div class="relative z-10">
-                            <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-2 flex items-center group-hover:scale-105 transition-transform duration-500">
-                                <div class="bg-[#254C6B] p-2.5 rounded-lg mr-3 shadow-md group-hover:shadow-lg transition-shadow duration-300">
-                                    <i class="fas fa-eye text-white text-base animate-pulse"></i>
+                            <h3 class="text-base md:text-xl font-bold text-gray-800 mb-2 flex items-center group-hover:scale-105 transition-transform duration-500">
+                                <div class="bg-[#254C6B] p-2 md:p-2.5 rounded-lg mr-3 shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                                    <i class="fas fa-eye text-white text-sm md:text-base animate-pulse"></i>
                                 </div>
                                 <span class="bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">Visi Sekolah</span>
                             </h3>
-                            <p class="text-gray-700 leading-relaxed text-xs md:text-sm font-medium group-hover:text-gray-800 transition-colors duration-500">
+                            <p class="text-gray-700 leading-relaxed text-[11px] md:text-sm font-medium group-hover:text-gray-800 transition-colors duration-500">
                                 {{ $school->vision ?? 'Menjadi SMK unggul yang menghasilkan lulusan berkarakter, kompeten, dan berdaya saing global di era digital.' }}
                             </p>
                         </div>
                     </div>
                     
                     <!-- Mission Card with enhanced effects -->
-                    <div class="group relative bg-white/95 backdrop-blur-md p-5 rounded-2xl border border-white/30 hover:bg-white transition-all duration-700 hover:scale-105 hover:shadow-2xl overflow-hidden min-h-[180px] md:min-h-[200px] scroll-reveal delay-200">
+                    <div class="group relative bg-white/95 backdrop-blur-md p-3 md:p-5 rounded-2xl border border-white/30 hover:bg-white transition-all duration-700 hover:scale-105 hover:shadow-2xl overflow-hidden min-h-[150px] md:min-h-[200px] scroll-reveal delay-200">
                         <!-- Animated background gradient -->
                         <div class="absolute inset-0 bg-gradient-to-br from-blue-400/10 via-blue-500/5 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                         <!-- Floating particles effect -->
@@ -1341,8 +1398,8 @@
                         
                         <div class="relative z-10">
                             <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-2 flex items-center group-hover:scale-105 transition-transform duration-500">
-                                <div class="bg-[#254C6B] p-2.5 rounded-lg mr-3 shadow-md group-hover:shadow-lg transition-shadow duration-300">
-                                    <i class="fas fa-bullseye text-white text-base animate-pulse"></i>
+                                <div class="bg-[#254C6B] p-2 md:p-2.5 rounded-lg mr-3 shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                                    <i class="fas fa-bullseye text-white text-sm md:text-base animate-pulse"></i>
                                 </div>
                                 <span class="bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">Misi Sekolah</span>
                             </h3>
@@ -1350,14 +1407,14 @@
                               $missions = preg_split("/(\r?\n)/", trim($school->mission ?? ''));
                             @endphp
                             @if(!empty($missions) && !empty($missions[0]))
-                              <ul class="text-gray-700 space-y-2">
+                              <ul class="text-gray-700 space-y-1.5 md:space-y-2">
                                 @foreach($missions as $m)
                                   @if(trim($m) !== '')
                                   <li class="flex items-start transform hover:translate-x-2 transition-all duration-500 group/item">
                                     <div class="bg-[#254C6B] p-1.5 rounded-full mr-3 mt-0.5 shadow-md group-hover/item:scale-110 transition-transform duration-300">
                                       <i class="fas fa-check text-white text-xs animate-bounce-custom"></i>
                                     </div>
-                                    <span class="text-sm font-medium group-hover/item:text-gray-800 transition-colors duration-300">{{ $m }}</span>
+                                    <span class="text-[12px] md:text-sm font-medium group-hover/item:text-gray-800 transition-colors duration-300">{{ $m }}</span>
                                   </li>
                                   @endif
                                 @endforeach
@@ -1368,19 +1425,19 @@
                                   <div class="bg-[#254C6B] p-1.5 rounded-full mr-3 mt-0.5 shadow-md group-hover/item:scale-110 transition-transform duration-300">
                                     <i class="fas fa-check text-white text-xs animate-bounce-custom"></i>
                                   </div>
-                                  <span class="text-sm font-medium group-hover/item:text-gray-800 transition-colors duration-300">Menyelenggarakan pendidikan berkualitas tinggi</span>
+                                  <span class="text-[12px] md:text-sm font-medium group-hover/item:text-gray-800 transition-colors duration-300">Menyelenggarakan pendidikan berkualitas tinggi</span>
                                 </li>
                                 <li class="flex items-start transform hover:translate-x-2 transition-all duration-500 group/item">
                                   <div class="bg-[#254C6B] p-1.5 rounded-full mr-3 mt-0.5 shadow-md group-hover/item:scale-110 transition-transform duration-300">
                                     <i class="fas fa-check text-white text-xs animate-bounce-custom"></i>
                                   </div>
-                                  <span class="text-sm font-medium group-hover/item:text-gray-800 transition-colors duration-300">Mengembangkan karakter dan soft skills siswa</span>
+                                  <span class="text-[12px] md:text-sm font-medium group-hover/item:text-gray-800 transition-colors duration-300">Mengembangkan karakter dan soft skills siswa</span>
                                 </li>
                                 <li class="flex items-start transform hover:translate-x-2 transition-all duration-500 group/item">
                                   <div class="bg-[#254C6B] p-1.5 rounded-full mr-3 mt-0.5 shadow-md group-hover/item:scale-110 transition-transform duration-300">
                                     <i class="fas fa-check text-white text-xs animate-bounce-custom"></i>
                                   </div>
-                                  <span class="text-sm font-medium group-hover/item:text-gray-800 transition-colors duration-300">Membangun kemitraan dengan industri</span>
+                                  <span class="text-[12px] md:text-sm font-medium group-hover/item:text-gray-800 transition-colors duration-300">Membangun kemitraan dengan industri</span>
                                 </li>
                               </ul>
                             @endif
@@ -1388,8 +1445,24 @@
                     </div>
                 </div>
                 
-                <!-- Principal Section with enhanced effects -->
-                <div class="group relative bg-white/95 backdrop-blur-md p-5 rounded-3xl shadow-2xl border border-white/30 hover:bg-white transition-all duration-700 hover:scale-105 animate-slide-in-right overflow-hidden scroll-reveal delay-300">
+                <!-- Principal Section (mobile compact) -->
+                <div class="block md:hidden bg-white/95 backdrop-blur-md p-3 rounded-2xl shadow-xl border border-white/30 overflow-hidden text-center min-h-[210px]">
+                    @php $headPhoto = !empty($school->headmaster_photo) ? asset('images/headmaster/'.$school->headmaster_photo) : asset('images/kepalasekolah.JPG'); @endphp
+                    <img src="{{ $headPhoto }}" alt="Kepala Sekolah" class="w-14 h-14 rounded-full object-cover border-2 border-white shadow mx-auto"/>
+                    <h3 class="mt-1 text-base font-bold text-gray-800 leading-tight tracking-tight truncate">{{ $school->headmaster_name ?? 'Kepala Sekolah' }}</h3>
+                    <p class="text-[11px] text-gray-600 mb-2">Kepala Sekolah SMKN 4 Bogor</p>
+                    <div class="bg-white/90 ring-1 ring-gray-200 rounded-xl p-2 text-left">
+                        <div class="flex items-start gap-2 mb-1">
+                            <div class="bg-[#254C6B] text-white rounded-md p-1.5 leading-none"><i class="fas fa-quote-left text-[10px]"></i></div>
+                            <span class="text-[13px] font-semibold text-gray-800">Sambutan Kepala Sekolah</span>
+                        </div>
+                        @php $greet = $school->headmaster_greeting ?? 'Selamat datang di SMKN 4 Bogor...'; @endphp
+                        <p class="text-[12px] text-gray-700 leading-relaxed">{{ $greet }}</p>
+                    </div>
+                </div>
+
+                <!-- Principal Section with enhanced effects (desktop/tablet) -->
+                <div class="hidden md:block group relative bg-white/95 backdrop-blur-md p-3 md:p-5 rounded-3xl shadow-2xl border border-white/30 hover:bg-white transition-all duration-700 hover:scale-105 animate-slide-in-right overflow-hidden scroll-reveal delay-300">
                     <!-- Animated background gradient -->
                     <div class="absolute inset-0 bg-gradient-to-br from-[#2E5A63]/10 via-[#66B1F2]/5 to-[#4A90E2]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                     <!-- Floating decorative elements -->
@@ -1406,7 +1479,7 @@
                             @php $headPhoto = !empty($school->headmaster_photo) ? asset('images/headmaster/'.$school->headmaster_photo) : asset('images/kepalasekolah.JPG'); @endphp
                             <img src="{{ $headPhoto }}" 
                                  alt="Kepala Sekolah" 
-                                 class="relative w-28 h-28 rounded-full mx-auto object-cover border-4 border-white shadow-2xl group-hover/photo:scale-110 transition-all duration-700 animate-float z-10">
+                                 class="relative w-20 h-20 md:w-28 md:h-28 rounded-full mx-auto object-cover border-4 border-white shadow-2xl group-hover/photo:scale-110 transition-all duration-700 animate-float z-10">
                             
                             <!-- Enhanced badge with animation -->
                             <div class="absolute -bottom-3 -right-3 bg-gradient-to-r from-[#2E5A63] to-[#66B1F2] text-white p-3 rounded-full shadow-xl animate-bounce-custom group-hover/photo:scale-110 transition-transform duration-300">
@@ -1429,7 +1502,7 @@
                     </div>
                     
                     <!-- Enhanced Welcome Message -->
-                    <div class="group/message relative bg-white/95 backdrop-blur-md p-4 rounded-xl shadow-lg ring-1 ring-gray-200/50 hover:bg-white transition-all duration-500 animate-fade-in-up delay-700 overflow-hidden min-h-[180px] md:min-h-[200px]">
+                    <div class="group/message relative bg-white/95 backdrop-blur-md p-3 md:p-4 rounded-xl shadow-lg ring-1 ring-gray-200/50 hover:bg-white transition-all duration-500 animate-fade-in-up delay-700 overflow-hidden min-h-[150px] md:min-h-[200px]">
                         <!-- Animated background -->
                         <div class="absolute inset-0 bg-gradient-to-r from-[#2E5A63]/5 to-[#66B1F2]/5 opacity-0 group-hover/message:opacity-100 transition-opacity duration-500"></div>
                         
@@ -1439,7 +1512,7 @@
                                     <i class="fas fa-quote-left text-white text-sm"></i>
                                 </div>
                                 <div>
-                                    <h4 class="text-base md:text-lg font-bold text-gray-800 mb-2 group-hover/message:scale-105 transition-transform duration-300">
+                                    <h4 class="text-sm md:text-lg font-bold text-gray-800 mb-2 group-hover/message:scale-105 transition-transform duration-300">
                                         Sambutan Kepala Sekolah
                                     </h4>
                                     <div class="space-y-3">
@@ -1477,52 +1550,52 @@
                 <p class="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">Pilih jurusan yang sesuai dengan minat dan bakatmu untuk masa depan yang cerah</p>
             </div>
             
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <div class="grid grid-cols-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-8">
                 <!-- PPLG (RPL) -->
-                <button type="button" onclick="openMajor('pplg')" class="group block w-full text-left rounded-3xl overflow-hidden shadow-2xl border border-gray-200 hover:shadow-[0_20px_50px_rgba(102,177,242,0.35)] transition-all duration-500 scroll-reveal delay-100">
+                <button type="button" onclick="openMajor('pplg')" class="group block w-full text-left rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl border border-gray-200 hover:shadow-[0_20px_50px_rgba(102,177,242,0.35)] transition-all duration-500 scroll-reveal delay-100">
                     <div class="relative aspect-square">
                         <img src="{{ asset('images/LOGO PPLG.png') }}" alt="PPLG" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
                     </div>
-                    <div class="px-2 pt-2 pb-1">
-                        <h3 class="text-gray-800 text-lg font-bold">PPLG</h3>
-                        <p class="text-gray-500 text-xs">Pengembangan Perangkat Lunak dan Gim</p>
+                    <div class="px-1 pt-1 pb-1 md:px-2 md:pt-2">
+                        <h3 class="text-gray-800 text-[11px] md:text-lg font-bold text-center truncate">PPLG</h3>
+                        <p class="hidden md:block text-gray-500 text-xs text-center">Pengembangan Perangkat Lunak dan Gim</p>
                     </div>
                 </button>
 
                 <!-- TKJ -->
-                <button type="button" onclick="openMajor('tkj')" class="group block w-full text-left rounded-3xl overflow-hidden shadow-2xl border border-gray-200 hover:shadow-[0_20px_50px_rgba(102,177,242,0.35)] transition-all duration-500 scroll-reveal delay-200">
+                <button type="button" onclick="openMajor('tkj')" class="group block w-full text-left rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl border border-gray-200 hover:shadow-[0_20px_50px_rgba(102,177,242,0.35)] transition-all duration-500 scroll-reveal delay-200">
                     <div class="relative aspect-square">
                         <img src="{{ asset('images/LOGO TJKJ.png') }}" alt="TKJ" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
                     </div>
-                    <div class="px-2 pt-2 pb-1">
-                        <h3 class="text-gray-800 text-lg font-bold">Teknik Jaringan Komputer</h3>
-                        <p class="text-gray-500 text-xs">TKJ</p>
+                    <div class="px-1 pt-1 pb-1 md:px-2 md:pt-2">
+                        <h3 class="text-gray-800 text-[10px] md:text-lg font-bold text-center truncate">TJKT</h3>
+                        <p class="hidden md:block text-gray-500 text-xs text-center">Teknik Jaringan Komputer Dan Telekomunikasi</p>
                     </div>
                 </button>
 
                 <!-- TPFL -->
-                <button type="button" onclick="openMajor('tpfl')" class="group block w-full text-left rounded-3xl overflow-hidden shadow-2xl border border-gray-200 hover:shadow-[0_20px_50px_rgba(102,177,242,0.35)] transition-all duration-500 scroll-reveal delay-300">
+                <button type="button" onclick="openMajor('tpfl')" class="group block w-full text-left rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl border border-gray-200 hover:shadow-[0_20px_50px_rgba(102,177,242,0.35)] transition-all duration-500 scroll-reveal delay-300">
                     <div class="relative aspect-square">
                         <img src="{{ asset('images/LOGO JURUSAN.png') }}" alt="TPFL" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
                     </div>
-                    <div class="px-2 pt-2 pb-1">
-                        <h3 class="text-gray-800 text-lg font-bold">Teknik Pengelasan</h3>
-                        <p class="text-gray-500 text-xs">TPFL</p>
+                    <div class="px-1 pt-1 pb-1 md:px-2 md:pt-2">
+                        <h3 class="text-gray-800 text-[10px] md:text-lg font-bold text-center truncate">TPFL</h3>
+                        <p class="hidden md:block text-gray-500 text-xs text-center">Teknik Pengelasan Dan Fabrikasi Logam</p>
                     </div>
                 </button>
 
                 <!-- Otomotif -->
-                <button type="button" onclick="openMajor('otomotif')" class="group block w-full text-left rounded-3xl overflow-hidden shadow-2xl border border-gray-200 hover:shadow-[0_20px_50px_rgba(102,177,242,0.35)] transition-all duration-500 scroll-reveal delay-400">
+                <button type="button" onclick="openMajor('otomotif')" class="group block w-full text-left rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl border border-gray-200 hover:shadow-[0_20px_50px_rgba(102,177,242,0.35)] transition-all duration-500 scroll-reveal delay-400">
                     <div class="relative aspect-square">
                         <img src="{{ asset('images/Logo TO.png') }}" alt="Otomotif" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
                     </div>
-                    <div class="px-2 pt-2 pb-1">
-                        <h3 class="text-gray-800 text-lg font-bold">Teknik Otomotif</h3>
-                        <p class="text-gray-500 text-xs">Otomotif</p>
+                    <div class="px-1 pt-1 pb-1 md:px-2 md:pt-2">
+                        <h3 class="text-gray-800 text-[10px] md:text-lg font-bold text-center truncate">TO</h3>
+                        <p class="hidden md:block text-gray-500 text-xs text-center">Teknik Otomotif</p>
                     </div>
                 </button>
             </div>
@@ -1557,14 +1630,14 @@
                         </p>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative">
+                    <div class="flex overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 relative -mx-4 px-4 pb-2">
                         @foreach($teachers as $i => $t)
-                        <div class="bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-200 group animate-fade-in-up relative hover:scale-[1.02] transition-all duration-300 scroll-reveal {{ ['delay-100','delay-200','delay-300','delay-400'][$i % 4] }}">
+                        <div class="bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-200 group animate-fade-in-up relative hover:scale-[1.02] transition-all duration-300 scroll-reveal min-w-[260px] md:min-w-0 snap-start {{ ['delay-100','delay-200','delay-300','delay-400'][$i % 4] }}">
                             <!-- Floating decorative elements -->
                             <div class="absolute -top-2 -right-2 w-16 h-16 bg-gradient-to-br from-[#66B1F2]/30 to-[#4A90E2]/30 rounded-full blur-lg"></div>
                             <div class="absolute -bottom-2 -left-2 w-12 h-12 bg-gradient-to-tr from-[#254C6B]/20 to-[#66B1F2]/20 rounded-full blur-md"></div>
                             
-                            <div class="relative h-56 overflow-hidden">
+                            <div class="relative h-48 md:h-56 overflow-hidden">
                                 @if($t->foto)
                                     <img src="{{ asset('images/teachers/' . $t->foto) }}" alt="{{ $t->nama }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                                 @else
@@ -1676,14 +1749,16 @@
                         </p>
                     </div>
             
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="relative md:static">
+              <!-- Mobile carousel track -->
+              <div id="newsCarousel" class="flex w-full md:grid md:grid-cols-2 lg:grid-cols-3 gap-0 md:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory scroll-smooth m-0 p-0 md:m-0 md:p-0">
                 @forelse($berita as $item)
-                <article class="modern-card glass-card rounded-3xl overflow-hidden shadow-2xl border border-white/20 group animate-fade-in-up delay-300 relative hover:scale-105 transition-all duration-500">
+                <article class="modern-card glass-card rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/20 group animate-fade-in-up delay-300 relative hover:scale-105 transition-all duration-500 min-w-full md:min-w-0 snap-center flex-shrink-0">
                     <!-- Floating decorative elements -->
                     <div class="absolute -top-2 -right-2 w-16 h-16 bg-gradient-to-br from-[#66B1F2]/30 to-[#4A90E2]/30 rounded-full blur-lg"></div>
                     <div class="absolute -bottom-2 -left-2 w-12 h-12 bg-gradient-to-tr from-[#254C6B]/20 to-[#66B1F2]/20 rounded-full blur-md"></div>
                     
-                    <div class="relative h-56 overflow-hidden">
+                    <div class="relative h-40 md:h-56 overflow-hidden">
                         @if($item->gambar)
                         <img src="{{ asset('images/posts/' . $item->gambar) }}" 
                              alt="{{ $item->judul }}" 
@@ -1704,36 +1779,38 @@
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                         
                         <!-- Category badge -->
-                        <div class="absolute top-4 right-4">
-                            <div class="bg-gradient-to-r from-[#254C6B] to-[#66B1F2] backdrop-blur-sm px-4 py-2 rounded-xl shadow-lg">
-                                <span class="text-white text-xs font-bold">{{ $item->kategori->nama ?? 'Berita' }}</span>
+                        <div class="absolute top-3 right-3 md:top-4 md:right-4">
+                            <div class="bg-gradient-to-r from-[#254C6B] to-[#66B1F2] backdrop-blur-sm px-2 py-1 md:px-4 md:py-2 rounded-lg md:rounded-xl shadow-lg">
+                                <span class="text-white text-[10px] md:text-xs font-bold">{{ $item->kategori->nama ?? 'Berita' }}</span>
                             </div>
                         </div>
                         
                         <!-- Date badge -->
-                        <div class="absolute bottom-4 left-4">
-                            <div class="bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-xl">
+                        <div class="absolute bottom-3 left-3 md:bottom-4 md:left-4">
+                            <div class="bg-white/20 backdrop-blur-sm px-2 py-1 md:px-3 md:py-1.5 rounded-lg md:rounded-xl">
                                 <div class="flex items-center space-x-2 text-white">
                                     <i class="fas fa-calendar-alt text-xs"></i>
-                                    <span class="text-xs font-medium">{{ $item->created_at->format('d M Y') }}</span>
+                                    <span class="text-[10px] md:text-xs font-medium">{{ $item->created_at->format('d M Y') }}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="p-6 bg-white/80 backdrop-blur-sm">
+                    <div class="p-4 md:p-6 bg-white/80 backdrop-blur-sm">
                         <!-- Title -->
-                        <h3 class="text-xl font-bold text-gray-800 mb-3 group-hover:text-[#66B1F2] transition-colors leading-tight">
-                            {{ Str::limit($item->judul, 60) }}
+                        <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-2 md:mb-3 group-hover:text-[#66B1F2] transition-colors leading-tight">
+                            <span class="md:hidden">{{ Str::limit($item->judul, 45) }}</span>
+                            <span class="hidden md:inline">{{ Str::limit($item->judul, 60) }}</span>
                         </h3>
                         
                         <!-- Content preview -->
-                        <p class="text-gray-600 mb-4 leading-relaxed text-sm">
-                            {{ Str::limit(strip_tags($item->isi), 120) }}
+                        <p class="text-gray-600 mb-3 md:mb-4 leading-relaxed text-sm">
+                            <span class="md:hidden">{{ Str::limit(strip_tags($item->isi), 90) }}</span>
+                            <span class="hidden md:inline">{{ Str::limit(strip_tags($item->isi), 120) }}</span>
                         </p>
                         
                         <!-- Stats and action -->
-                        <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+                        <div class="flex items-center justify-between pt-3 md:pt-4 border-t border-gray-200">
                             <div class="flex items-center space-x-4 text-xs text-gray-500">
                                 <div class="flex items-center space-x-1">
                                     <i class="fas fa-eye"></i>
@@ -1820,17 +1897,17 @@
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
                                     
                                     <!-- Prominent Date Display -->
-                                    <div class="absolute top-4 left-4">
-                                        <div class="bg-gradient-to-br from-[#254C6B] to-[#66B1F2] text-white rounded-2xl p-4 text-center min-w-[80px] shadow-2xl transform rotate-3 group-hover:rotate-0 transition-transform duration-300">
-                                            <div class="text-2xl font-black leading-none">{{ $item->tanggal ? \Carbon\Carbon::parse($item->tanggal)->format('d') : $item->created_at->format('d') }}</div>
-                                            <div class="text-sm font-bold uppercase tracking-wide mt-1">{{ $item->tanggal ? \Carbon\Carbon::parse($item->tanggal)->format('M') : $item->created_at->format('M') }}</div>
+                                    <div class="absolute top-3 left-3 md:top-4 md:left-4">
+                                        <div class="bg-gradient-to-br from-[#254C6B] to-[#66B1F2] text-white rounded-xl md:rounded-2xl p-2 md:p-4 text-center min-w-[56px] md:min-w-[80px] shadow-2xl transform rotate-3 group-hover:rotate-0 transition-transform duration-300">
+                                            <div class="text-lg md:text-2xl font-black leading-none">{{ $item->tanggal ? \Carbon\Carbon::parse($item->tanggal)->format('d') : $item->created_at->format('d') }}</div>
+                                            <div class="text-[10px] md:text-sm font-bold uppercase tracking-wide mt-1">{{ $item->tanggal ? \Carbon\Carbon::parse($item->tanggal)->format('M') : $item->created_at->format('M') }}</div>
                                         </div>
                                     </div>
                                     
                                     <!-- Event Status Badge -->
-                                    <div class="absolute top-4 right-4">
-                                        <div class="bg-gradient-to-r from-[#66B1F2] to-[#4A90E2] backdrop-blur-sm px-4 py-2 rounded-xl shadow-lg">
-                                            <span class="text-white text-xs font-bold">Event</span>
+                                    <div class="absolute top-3 right-3 md:top-4 md:right-4">
+                                        <div class="bg-gradient-to-r from-[#66B1F2] to-[#4A90E2] backdrop-blur-sm px-2 py-1 md:px-4 md:py-2 rounded-lg md:rounded-xl shadow-lg">
+                                            <span class="text-white text-[10px] md:text-xs font-bold">Event</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1862,8 +1939,8 @@
                                         </div>
                                     </div>
                                     
-                                    <!-- Event description -->
-                                    <p class="text-gray-600 mb-6 leading-relaxed">{{ Str::limit(strip_tags($item->isi), 120) }}</p>
+                                    <!-- Event description (hidden on mobile) -->
+                                    <p class="hidden md:block text-gray-600 md:mb-6 leading-relaxed">{{ Str::limit(strip_tags($item->isi), 120) }}</p>
                                     
                                     <!-- Bottom section -->
                                     <div class="flex justify-between items-center pt-4 border-t border-gray-200">
@@ -2019,7 +2096,7 @@
                     @if($hasGaleri)
                         <div class="mb-16 animate-fade-in-up delay-200">
                             <!-- Clean responsive grid -->
-                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
                                 @foreach($latestGaleri as $index => $item)
                                     <div class="group animate-fade-in-up {{ ['delay-100','delay-200','delay-300','delay-400'][$index % 4] }}">
                                         <div class="relative rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_12px_40px_rgba(102,177,242,0.25)] transition-all duration-500 bg-white border border-gray-200">
@@ -2105,15 +2182,15 @@
                 <p class="text-base md:text-lg text-white/90 max-w-3xl mx-auto drop-shadow-md">SMKN 4 Bogor adalah institusi pendidikan terdepan yang berkomitmen menghasilkan lulusan berkualitas dan siap kerja</p>
             </div>
             
-            <div class="grid lg:grid-cols-2 gap-12 items-stretch">
+            <div class="grid lg:grid-cols-2 gap-6 lg:gap-12 items-stretch">
                 <div class="space-y-6">
-                    <div class="bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-xl h-full border border-white/20 hover:shadow-2xl transition-all duration-300 hover:bg-white hover:scale-[1.02]">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Informasi Kontak</h3>
+                    <div class="bg-white/90 backdrop-blur-sm p-4 md:p-8 rounded-2xl shadow-xl h-full border border-white/20 hover:shadow-2xl transition-all duration-300 hover:bg-white hover:scale-[1.02]">
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6">Informasi Kontak</h3>
                         
-                        <div class="space-y-6">
-                            <div class="flex items-start space-x-4">
-                                <div class="bg-gradient-to-r from-[#66B1F2] to-[#4A90E2] text-white p-3 rounded-xl shadow-lg flex-shrink-0 transform transition-transform hover:scale-110 duration-300">
-                                    <i class="fas fa-map-marker-alt text-lg"></i>
+                        <div class="space-y-4 md:space-y-6">
+                            <div class="flex items-start space-x-3 md:space-x-4">
+                                <div class="bg-gradient-to-r from-[#66B1F2] to-[#4A90E2] text-white p-2 md:p-3 rounded-xl shadow-lg flex-shrink-0 transform transition-transform hover:scale-110 duration-300">
+                                    <i class="fas fa-map-marker-alt text-base md:text-lg"></i>
                                 </div>
                                 <div class="text-gray-600">
                                     <h4 class="font-semibold text-gray-800 mb-1">Alamat</h4>
@@ -2121,9 +2198,9 @@
                                 </div>
                             </div>
                             
-                            <div class="flex items-start space-x-4">
-                                <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-3 rounded-xl shadow-lg flex-shrink-0 transform transition-transform hover:scale-110 duration-300">
-                                    <i class="fas fa-phone text-lg"></i>
+                            <div class="flex items-start space-x-3 md:space-x-4">
+                                <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-2 md:p-3 rounded-xl shadow-lg flex-shrink-0 transform transition-transform hover:scale-110 duration-300">
+                                    <i class="fas fa-phone text-base md:text-lg"></i>
                                 </div>
                                 <div class="text-gray-600">
                                     <h4 class="font-semibold text-gray-800 mb-1">Telepon</h4>
@@ -2131,9 +2208,9 @@
                                 </div>
                             </div>
                             
-                            <div class="flex items-start space-x-4">
-                                <div class="bg-gradient-to-r from-yellow-500 to-amber-500 text-white p-3 rounded-xl shadow-lg flex-shrink-0 transform transition-transform hover:scale-110 duration-300">
-                                    <i class="fas fa-envelope text-lg"></i>
+                            <div class="flex items-start space-x-3 md:space-x-4">
+                                <div class="bg-gradient-to-r from-yellow-500 to-amber-500 text-white p-2 md:p-3 rounded-xl shadow-lg flex-shrink-0 transform transition-transform hover:scale-110 duration-300">
+                                    <i class="fas fa-envelope text-base md:text-lg"></i>
                                 </div>
                                 <div class="text-gray-600">
                                     <h4 class="font-semibold text-gray-800 mb-1">Email</h4>
@@ -2141,9 +2218,9 @@
                                 </div>
                             </div>
                             
-                            <div class="flex items-start space-x-4">
-                                <div class="bg-gradient-to-r from-purple-500 to-indigo-500 text-white p-3 rounded-xl shadow-lg flex-shrink-0 transform transition-transform hover:scale-110 duration-300">
-                                    <i class="fas fa-clock text-lg"></i>
+                            <div class="flex items-start space-x-3 md:space-x-4">
+                                <div class="bg-gradient-to-r from-purple-500 to-indigo-500 text-white p-2 md:p-3 rounded-xl shadow-lg flex-shrink-0 transform transition-transform hover:scale-110 duration-300">
+                                    <i class="fas fa-clock text-base md:text-lg"></i>
                                 </div>
                                 <div class="text-gray-600">
                                     <h4 class="font-semibold text-gray-800 mb-1">Jam Operasional</h4>
@@ -2160,7 +2237,7 @@
                         <iframe 
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.0498396124403!2d106.82211897475432!3d-6.6407333933537815!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c8b16ee07ef5%3A0x14ab253dd267de49!2sSMK%20Negeri%204%20Bogor%20(Nebrazka)!5e0!3m2!1sid!2sid!4v1757426549328!5m2!1sid!2sid" 
                             class="w-full h-full border-0 rounded-2xl" 
-                            style="min-height: 400px;"
+                            style="min-height: 320px;"
                             allowfullscreen="" 
                             loading="lazy" 
                             referrerpolicy="no-referrer-when-downgrade">
@@ -2208,10 +2285,10 @@
                         <li><a href="{{ route('guest.home') }}#home" class="text-gray-300 hover:text-primary transition-colors">Beranda</a></li>
                         <li><a href="{{ route('guest.home') }}#profil" class="text-gray-300 hover:text-primary transition-colors">Profil Sekolah</a></li>
                         <li><a href="{{ route('guest.home') }}#jurusan" class="text-gray-300 hover:text-primary transition-colors">Jurusan</a></li>
-                        <li><a href="{{ route('guest.home') }}#tenagapendidik" class="text-gray-300 hover:text-primary transition-colors">Tenaga Pendidik</a></li>
-                        <li><a href="{{ route('guest.home') }}#berita" class="text-gray-300 hover:text-primary transition-colors">Berita</a></li>
-                        <li><a href="{{ route('guest.home') }}#event" class="text-gray-300 hover:text-primary transition-colors">Event</a></li>
-                        <li><a href="{{ route('guest.home') }}#galeri" class="text-gray-300 hover:text-primary transition-colors">Galeri</a></li>
+                        <li><a href="{{ route('guest.teachers') }}" class="text-gray-300 hover:text-primary transition-colors">Tenaga Pendidik</a></li>
+                        <li><a href="{{ route('guest.berita') }}" class="text-gray-300 hover:text-primary transition-colors">Berita</a></li>
+                        <li><a href="{{ route('guest.event') }}" class="text-gray-300 hover:text-primary transition-colors">Event</a></li>
+                        <li><a href="{{ route('guest.galeri') }}" class="text-gray-300 hover:text-primary transition-colors">Galeri</a></li>
                     </ul>
                 </div>
                 

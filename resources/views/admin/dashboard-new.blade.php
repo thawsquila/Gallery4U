@@ -27,7 +27,7 @@
 
   <!-- Logged-in User Widget -->
   <section class="mb-6">
-    <div class="glass-effect rounded-2xl p-5 flex items-center justify-between">
+    <div class="glass-effect rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center items-start justify-between gap-4 sm:gap-0">
       <div class="flex items-center gap-4">
         @php $av = Auth::user()->avatar ? asset('images/avatars/'.Auth::user()->avatar) : null; @endphp
         <div class="w-12 h-12 rounded-full overflow-hidden ring-2 ring-blue-100 bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center text-lg font-bold">
@@ -43,7 +43,7 @@
           <div class="text-xs text-gray-500">{{ Auth::user()->email }}</div>
         </div>
       </div>
-      <span class="inline-flex items-center px-3 py-1 text-xs rounded-full bg-blue-50 text-blue-700 font-medium">
+      <span class="inline-flex items-center px-3 py-1 text-xs rounded-full bg-blue-50 text-blue-700 font-medium mt-3 sm:mt-0 self-start sm:self-auto">
         <i class="fas fa-user-shield mr-1"></i>{{ ucfirst(Auth::user()->role ?? 'admin') }}
       </span>
     </div>
@@ -108,7 +108,7 @@
 
     <!-- Gallery Statistics Section -->
     <div class="glass-effect rounded-2xl p-6 shadow-lg card mb-8 relative z-0">
-      <div class="flex items-center justify-between mb-6">
+      <div class="flex items-start sm:items-center justify-between mb-6 flex-col sm:flex-row gap-3">
         <h3 class="text-xl font-bold text-gray-800 flex items-center">
           <div class="p-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-500 text-white mr-3">
             <i class="fas fa-heart"></i>
@@ -121,7 +121,7 @@
         <!-- Chart Section -->
         <div class="bg-white rounded-xl p-6 border border-gray-100">
           <h4 class="text-lg font-semibold text-gray-800 mb-4">Top 5 Galeri Terpopuler</h4>
-          <div class="relative h-80">
+          <div class="relative h-64 md:h-80">
             <canvas id="mostLikedChart"></canvas>
           </div>
         </div>
@@ -195,7 +195,7 @@
 
     <!-- Article Statistics Section -->
     <div class="glass-effect rounded-2xl p-6 shadow-lg card mb-8 relative z-0">
-      <div class="flex items-center justify-between mb-6">
+      <div class="flex items-start sm:items-center justify-between mb-6 flex-col sm:flex-row gap-3">
         <h3 class="text-xl font-bold text-gray-800 flex items-center">
           <div class="p-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-500 text-white mr-3">
             <i class="fas fa-chart-bar"></i>
@@ -208,7 +208,7 @@
         <!-- Chart Section -->
         <div class="bg-white rounded-xl p-6 border border-gray-100">
           <h4 class="text-lg font-semibold text-gray-800 mb-4">Top 5 Berita Terpopuler</h4>
-          <div class="relative h-80">
+          <div class="relative h-64 md:h-80">
             <canvas id="mostReadChart"></canvas>
           </div>
         </div>
@@ -319,7 +319,7 @@
                   <div class="text-sm font-medium text-gray-800 truncate">{{ $v->page_visited }}</div>
                   <div class="text-xs text-gray-500 truncate">{{ $v->ip_address }} · {{ \Carbon\Carbon::parse($v->visit_date)->format('d M Y H:i') }}</div>
                 </div>
-                <span class="ml-3 text-xs text-gray-500 hidden md:inline truncate max-w-[180px]">{{ Str::limit($v->user_agent, 50) }}</span>
+                <span class="ml-3 text-xs text-gray-500 hidden sm:inline truncate max-w-[180px]">{{ Str::limit($v->user_agent, 50) }}</span>
               </div>
             @empty
               <p class="text-sm text-gray-500 text-center py-4">Belum ada data kunjungan.</p>
@@ -474,7 +474,7 @@
             <h3 class="text-xl font-bold text-gray-800">Galeri Terbaru</h3>
             <a href="{{ route('admin.galleries') }}" class="text-blue-600 hover:text-blue-800 font-medium transition-colors">Lihat Semua</a>
           </div>
-          <div class="grid grid-cols-3 gap-3 mt-4">
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4">
             @forelse($recentGalleries as $gallery)
               <div class="aspect-square rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
                 @if($gallery->fotos->count() > 0)

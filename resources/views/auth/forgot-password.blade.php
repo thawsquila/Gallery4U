@@ -156,9 +156,8 @@
                     </button>
 
                     <!-- Bottom links -->
-                    <div class="flex items-center justify-between text-sm">
+                    <div class="flex items-center justify-start text-sm">
                         <a href="{{ route('login') }}" class="text-gray-500 hover:text-[#4A90E2]">Kembali ke Login</a>
-                        <a href="{{ route('user.register') }}" class="text-[#4A90E2] font-medium">Daftar</a>
                     </div>
                 </form>
             </div>
@@ -180,7 +179,7 @@
             </div>
         </div>
 
-        <p class="text-center text-gray-400 text-sm mt-6">&copy; 2025 SMK Negeri 4 Bogor. All rights reserved.</p>
+        <p class="text-center text-gray-400 text-sm mt-6">&copy; 2025 Gallery4U by Cero Tech. All rights reserved.</p>
     </div>
 </body>
 </html>

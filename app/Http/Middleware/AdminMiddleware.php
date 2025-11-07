@@ -22,10 +22,12 @@ class AdminMiddleware
             return redirect()->route('login')->with('error', 'Silakan login sebagai admin.');
         }
 
-        // Logged in but not admin: send to user login page
+        // Logged in but not admin: force logout and return to admin login
         if (Auth::user()->role !== 'admin') {
-            return redirect()->route('user.login')
-                ->with('error', 'Akses admin saja. Silakan login sebagai user.');
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect()->route('login')->with('error', 'Akses khusus Admin. Silakan gunakan akun Admin.');
         }
 
         return $next($request);

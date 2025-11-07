@@ -22,10 +22,10 @@
           <li><a href="{{ route('guest.home') }}#home" class="text-gray-300 hover:text-primary transition-colors">Beranda</a></li>
           <li><a href="{{ route('guest.home') }}#profil" class="text-gray-300 hover:text-primary transition-colors">Profil Sekolah</a></li>
           <li><a href="{{ route('guest.home') }}#jurusan" class="text-gray-300 hover:text-primary transition-colors">Jurusan</a></li>
-          <li><a href="{{ route('guest.home') }}#tenagapendidik" class="text-gray-300 hover:text-primary transition-colors">Tenaga Pendidik</a></li>
-          <li><a href="{{ route('guest.home') }}#berita" class="text-gray-300 hover:text-primary transition-colors">Berita</a></li>
-          <li><a href="{{ route('guest.home') }}#event" class="text-gray-300 hover:text-primary transition-colors">Event</a></li>
-          <li><a href="{{ route('guest.home') }}#galeri" class="text-gray-300 hover:text-primary transition-colors">Galeri</a></li>
+          <li><a href="{{ route('guest.teachers') }}" class="text-gray-300 hover:text-primary transition-colors">Tenaga Pendidik</a></li>
+          <li><a href="{{ route('guest.berita') }}" class="text-gray-300 hover:text-primary transition-colors">Berita</a></li>
+          <li><a href="{{ route('guest.event') }}" class="text-gray-300 hover:text-primary transition-colors">Event</a></li>
+          <li><a href="{{ route('guest.galeri') }}" class="text-gray-300 hover:text-primary transition-colors">Galeri</a></li>
         </ul>
       </div>
 
@@ -56,7 +56,10 @@
     </div>
     <div class="border-t border-gray-700 mt-12 pt-8 text-center">
     <p class="text-gray-400">&copy; 2025 <span class="font-semibold text-white">Gallery4U</span> by 
-    <span class="text-blue-400 font-semibold">Cero Tech</span>. All rights reserved.</p><p class="text-gray-400">&copy; 2025 SMK Negeri 4. All rights reserved.</p>
+    <span class="text-blue-400 font-semibold">Cero Tech</span>. All rights reserved.</p>
+    @unless (request()->routeIs('guest.kontak'))
+    <p class="text-gray-400">&copy; 2025 SMK Negeri 4. All rights reserved.</p>
+    @endunless
     </div>
   </div>
 </footer>

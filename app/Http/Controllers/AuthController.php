@@ -32,13 +32,13 @@ class AuthController extends Controller
             $user = Auth::user();
             \Log::info('User logged in', ['user_id' => $user->id, 'role' => $user->role, 'email' => $user->email]);
 
-            // /login is reserved for admin. Non-admins are redirected to user login.
+            // /panel-akses is for admin only. Non-admins: logout and return to admin login with error
             if ($user->role !== 'admin') {
                 \Log::warning('Non-admin attempted to log in via admin login page', ['user_id' => $user->id]);
                 Auth::logout();
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
-                return redirect()->route('user.login')->with('error', 'Gunakan halaman login pengguna untuk akun non-admin.');
+                return redirect()->route('login')->with('error', 'Akses khusus Admin. Silakan gunakan akun Admin.');
             }
 
             // Admin goes to dashboard

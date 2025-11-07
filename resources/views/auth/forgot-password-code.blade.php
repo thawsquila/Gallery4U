@@ -103,7 +103,7 @@
       </div>
     </div>
 
-    <p class="text-center text-gray-400 text-sm mt-6">&copy; 2025 SMK Negeri 4 Bogor. All rights reserved.</p>
+    <p class="text-center text-gray-400 text-sm mt-6">&copy; 2025 Gallery4U by Cero Tech. All rights reserved.</p>
   </div>
 </body>
 </html>

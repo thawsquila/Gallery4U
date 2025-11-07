@@ -112,6 +112,11 @@
         .text-shadow {
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
+
+        /* Hide native password reveal/clear icons (Edge/Chromium) */
+        input[type="password"]::-ms-reveal,
+        input[type="password"]::-ms-clear { display: none; width: 0; height: 0; }
+        input[type="password"]::-webkit-credentials-auto-fill-button { visibility: hidden; display: none; }
     </style>
 </head>
 <body class="bg-[#EEF2F7] min-h-screen py-10 px-4 flex flex-col items-center">
@@ -213,7 +218,7 @@
             </div>
         </div>
 
-        <p class="w-full text-center text-gray-400 text-sm mt-6">&copy; 2025 SMK Negeri 4 Bogor. All rights reserved.</p>
+        <p class="w-full text-center text-gray-400 text-sm mt-6">&copy; 2025 Gallery4U by Cero Tech. All rights reserved.</p>
     </div>
 
     <script>

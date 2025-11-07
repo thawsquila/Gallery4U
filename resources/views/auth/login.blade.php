@@ -112,6 +112,11 @@
         .text-shadow {
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
+
+        /* Hide native password reveal/clear icons (Edge/Chromium) */
+        input[type="password"]::-ms-reveal,
+        input[type="password"]::-ms-clear { display: none; width: 0; height: 0; }
+        input[type="password"]::-webkit-credentials-auto-fill-button { visibility: hidden; display: none; }
     </style>
     </head>
 <body class="bg-[#EEF2F7] min-h-screen py-10 px-4 flex items-center justify-center">
@@ -193,12 +198,9 @@
                     @endif
 
                     <!-- Bottom links -->
-                    <div class="flex items-center justify-between text-sm">
+                    <div class="flex items-center justify-start text-sm">
                         <a href="/" class="text-gray-500 hover:text-[#4A90E2]">Kembali ke Website</a>
-                        <a href="{{ route('user.register', request('redirect') ? ['redirect' => request('redirect')] : []) }}" class="text-[#4A90E2] font-medium">Daftar</a>
                     </div>
-
-                    <a href="{{ request('redirect') ? url(request('redirect')) : url('/') }}" class="block text-center mt-2 text-gray-500 hover:text-[#4A90E2]">Lanjut sebagai Tamu</a>
                 </form>
             </div>
 
@@ -227,7 +229,7 @@
             </div>
         </div>
 
-        <p class="text-center text-gray-400 text-sm mt-6">&copy; 2025 SMK Negeri 4 Bogor. All rights reserved.</p>
+        <p class="text-center text-gray-400 text-sm mt-6">&copy; 2025 Gallery4U by Cero Tech. All rights reserved.</p>
     </div>
 
     <script>

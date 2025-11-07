@@ -38,6 +38,18 @@
                         <span class="font-bold text-xl text-gray-800">Gallery4U</span>
                     </div>
                 </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button type="button" class="mobile-menu-btn inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
                 <div class="hidden md:flex items-center gap-4">
                     <div class="flex items-center gap-1 bg-white/80 rounded-full px-2 py-1 ring-1 ring-gray-200/70">
                         <a href="/" class="px-4 py-2 rounded-full text-gray-700 hover:text-blue-600 hover:bg-blue-50 font-semibold transition">Beranda</a>
@@ -64,6 +76,46 @@
                     <form action="{{ route('logout') }}" method="POST" class="inline">
                         @csrf
                         <button type="submit" class="ml-1 px-4 py-2 text-sm rounded-full ring-1 ring-gray-200 hover:bg-gray-100">Keluar</button>
+                    </form>
+                    @endauth
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu, show/hide based on menu state -->
+        <div class="mobile-menu hidden md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 bg-white/95 backdrop-blur-xl rounded-b-xl border-t border-gray-200">
+                <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Beranda</a>
+                <a href="{{ route('guest.teachers') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Tenaga Pendidik</a>
+                <a href="{{ route('guest.berita') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Berita</a>
+                <a href="{{ route('guest.event') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Event</a>
+                <a href="{{ route('guest.galeri') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Galeri</a>
+                <a href="{{ route('guest.kontak') }}" class="block px-3 py-2 rounded-md text-base font-medium bg-blue-50 text-blue-600">Kontak</a>
+
+                <div class="border-t border-gray-200 pt-3 mt-3">
+                    @guest
+                    <a href="{{ route('user.login', ['redirect' => request()->getRequestUri()]) }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Login</a>
+                    <a href="{{ route('user.register', ['redirect' => request()->getRequestUri()]) }}" class="block px-3 py-2 rounded-md text-base font-medium bg-gradient-to-br from-[#66B1F2] to-[#4A90E2] text-white text-center mt-2">Daftar</a>
+                    @endguest
+                    @auth
+                    <div class="flex items-center px-3 py-2">
+                        <div class="flex-shrink-0">
+                            @php $av = auth()->user()->avatar ? asset('images/avatars/'.auth()->user()->avatar) : null; @endphp
+                            @if($av)
+                                <img class="h-8 w-8 rounded-full" src="{{ $av }}" alt="Avatar">
+                            @else
+                                <div class="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
+                                    <i class="fas fa-user text-gray-600"></i>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="ml-3">
+                            <div class="text-base font-medium text-gray-800">{{ auth()->user()->name }}</div>
+                        </div>
+                    </div>
+                    <a href="{{ route('user.profile') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Profil</a>
+                    <form action="{{ route('logout') }}" method="POST" class="mt-1">
+                        @csrf
+                        <button type="submit" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Keluar</button>
                     </form>
                     @endauth
                 </div>
@@ -156,5 +208,53 @@
     </main>
 
     @include('guest.partials.footer')
+    <script>
+        // Mobile menu toggle functionality (same as galeri/teachers)
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.querySelector('.mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            if (!btn || !menu) return;
+            if (btn.dataset.bound === '1') return;
+            btn.dataset.bound = '1';
+
+            const icons = btn.querySelectorAll('svg');
+            let toggling = false;
+
+            function setOpen(open) {
+                if (open) {
+                    menu.classList.remove('hidden');
+                    btn.setAttribute('aria-expanded', 'true');
+                    if (icons[0]) icons[0].classList.add('hidden');
+                    if (icons[1]) icons[1].classList.remove('hidden');
+                } else {
+                    menu.classList.add('hidden');
+                    btn.setAttribute('aria-expanded', 'false');
+                    if (icons[0]) icons[0].classList.remove('hidden');
+                    if (icons[1]) icons[1].classList.add('hidden');
+                }
+            }
+
+            function toggleMenu() {
+                if (toggling) return;
+                toggling = true;
+                const open = menu.classList.contains('hidden');
+                requestAnimationFrame(() => {
+                    setOpen(open);
+                    setTimeout(() => { toggling = false; }, 120);
+                });
+            }
+
+            btn.addEventListener('pointerup', toggleMenu, { passive: true });
+            btn.addEventListener('click', toggleMenu, { passive: true });
+
+            document.addEventListener('pointerdown', function(ev) {
+                if (!menu.classList.contains('hidden')) {
+                    if (!btn.contains(ev.target) && !menu.contains(ev.target)) {
+                        setOpen(false);
+                    }
+                }
+            }, { passive: true });
+        });
+    </script>
 </body>
 </html>

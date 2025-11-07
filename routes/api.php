@@ -15,6 +15,9 @@ Route::post('/login', [ApiController::class, 'login']);
 Route::post('/register', [ApiController::class, 'register']);
 Route::post('/logout', [ApiController::class, 'logout'])->middleware('auth:sanctum');
 Route::get('/user', [ApiController::class, 'user'])->middleware('auth:sanctum');
+// Password management
+Route::post('/password/change', [ApiController::class, 'changePassword'])->middleware('auth:sanctum');
+Route::post('/password/reset', [ApiController::class, 'resetPassword']);
 
 // Direct API routes for mobile app compatibility
 Route::get('/galeri', [GalleryController::class, 'index']);

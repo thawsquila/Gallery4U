@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
 
@@ -98,5 +100,36 @@ class ApiController extends Controller
             'token' => $token->plainTextToken,
             'message' => 'Registration successful'
         ], 201);
+    }
+
+    /**
+     * Change password for authenticated user (Sanctum)
+     *
+     * Request body:
+     * - current_password: string (required)
+     * - new_password: string (required, min:8, confirmed -> needs new_password_confirmation)
+     */
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required|string',
+            'new_password' => 'required|string|min:8|confirmed',
+        ]);
+
+        /** @var \App\Models\User $user */
+        $user = $request->user();
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json([
+                'message' => 'Current password is incorrect.'
+            ], 422);
+        }
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return response()->json([
+            'message' => 'Password updated successfully.'
+        ]);
     }
 }
