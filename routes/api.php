@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\GalleryController;
 use App\Http\Controllers\Api\KategoriController;
 use App\Http\Controllers\Api\NewsController;
 use App\Http\Controllers\Api\EventController;
+use App\Http\Controllers\Api\EngagementController;
+use App\Http\Controllers\Api\TeacherController;
 
 // Authentication routes
 Route::post('/login', [ApiController::class, 'login']);
@@ -45,10 +47,38 @@ Route::prefix('public')->group(function () {
     Route::get('/galleries', [GalleryController::class, 'index']);
     Route::get('/galleries/{id}', [GalleryController::class, 'show']);
     
+    // Teachers (Tenaga Pendidik)
+    Route::get('/teachers', [TeacherController::class, 'index']);
+    Route::get('/teachers/{id}', [TeacherController::class, 'show']);
+    
     // Categories routes
     Route::get('/categories', [KategoriController::class, 'index']);
     Route::get('/categories/{id}', [KategoriController::class, 'show']);
     Route::get('/categories/{id}/posts', [KategoriController::class, 'posts']);
+});
+
+// Engagement routes (public and auth-protected)
+// Public: counts, views, and list comments
+Route::prefix('engagement')->group(function () {
+    // Post counts and views
+    Route::get('/posts/{id}/counts', [EngagementController::class, 'postCounts']);
+    Route::post('/posts/{id}/view', [EngagementController::class, 'incrementPostView']);
+    Route::get('/posts/{id}/comments', [EngagementController::class, 'postComments']);
+
+    // Gallery counts and views
+    Route::get('/galleries/{id}/counts', [EngagementController::class, 'galleryCounts']);
+    Route::post('/galleries/{id}/view', [EngagementController::class, 'incrementGalleryView']);
+    Route::get('/galleries/{id}/comments', [EngagementController::class, 'galleryComments']);
+});
+
+// Auth-protected engagement actions (comments and likes)
+Route::middleware('auth:sanctum')->prefix('engagement')->group(function () {
+    // Comment on posts and galleries (login required)
+    Route::post('/posts/{id}/comments', [EngagementController::class, 'storePostComment']);
+    Route::post('/galleries/{id}/comments', [EngagementController::class, 'storeGalleryComment']);
+
+    // Toggle like on gallery (login required)
+    Route::post('/galleries/{id}/like', [EngagementController::class, 'toggleGalleryLike']);
 });
 
 // Admin routes
