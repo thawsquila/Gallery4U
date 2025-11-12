@@ -333,7 +333,7 @@ class AuthController extends Controller
     private function verifyRecaptcha(?string $token): bool
     {
         if (!$token) return false;
-        $secret = env('RECAPTCHA_SECRET');
+        $secret = config('services.recaptcha.secret');
         if (!$secret) return false;
         try {
             $response = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.

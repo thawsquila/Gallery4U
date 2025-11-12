@@ -212,7 +212,7 @@
 
                     <!-- reCAPTCHA -->
                     <div>
-                        <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
+                        <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
                         @error('g-recaptcha-response')
                           <p class="text-red-600 text-sm mt-2 flex items-center"><i class="fas fa-exclamation-circle mr-1"></i>{{ $message }}</p>
                         @enderror
@@ -380,7 +380,7 @@
 
                     <!-- reCAPTCHA -->
                     <div class="animate-slide-in" style="animation-delay: 0.8s;">
-                        <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
+                        <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
                         @error('g-recaptcha-response')
                           <p class="text-red-400 text-sm mt-2 flex items-center"><i class="fas fa-exclamation-circle mr-1"></i>{{ $message }}</p>
                         @enderror

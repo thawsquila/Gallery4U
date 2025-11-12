@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'recaptcha' => [
+        'site_key' => env('RECAPTCHA_SITE_KEY'),
+        // Support both variable names used in different environments
+        'secret' => env('RECAPTCHA_SECRET', env('RECAPTCHA_SECRET_KEY')),
+    ],
+
 ];
