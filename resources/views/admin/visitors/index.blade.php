@@ -41,7 +41,10 @@
         <tbody class="divide-y">
           @forelse($visitors as $v)
             <tr class="hover:bg-gray-50 align-top">
-              <td class="px-2.5 py-1.5 text-gray-700 whitespace-nowrap">{{ \Carbon\Carbon::parse($v->visit_date)->format('d M Y H:i') }}</td>
+              <td class="px-2.5 py-1.5 text-gray-700 whitespace-nowrap">
+                @php $ts = $v->visited_at ?: ($v->created_at ?: $v->visit_date); @endphp
+                {{ \Carbon\Carbon::parse($ts)->format('d M Y H:i') }}
+              </td>
               <td class="px-2.5 py-1.5 text-gray-700 font-mono whitespace-nowrap">{{ $v->ip_address }}</td>
               <td class="px-2.5 py-1.5 text-gray-700 truncate" title="{{ $v->page_visited }}">{{ $v->page_visited }}</td>
               <td class="px-2.5 py-1.5 text-gray-500 truncate" title="{{ $v->user_agent }}">

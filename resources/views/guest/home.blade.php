@@ -1630,7 +1630,7 @@
                         </p>
                     </div>
                     
-                    <div class="flex overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 relative -mx-4 px-4 pb-2">
+                    <div class="flex overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 relative pl-4 pr-4 md:pl-0 md:pr-0 pb-2">
                         @foreach($teachers as $i => $t)
                         <div class="bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-200 group animate-fade-in-up relative hover:scale-[1.02] transition-all duration-300 scroll-reveal min-w-[260px] md:min-w-0 snap-start {{ ['delay-100','delay-200','delay-300','delay-400'][$i % 4] }}">
                             <!-- Floating decorative elements -->
@@ -1751,9 +1751,10 @@
             
             <div class="relative md:static">
               <!-- Mobile carousel track -->
-              <div id="newsCarousel" class="flex w-full md:grid md:grid-cols-2 lg:grid-cols-3 gap-0 md:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory scroll-smooth m-0 p-0 md:m-0 md:p-0">
+              <div id="newsCarousel" class="flex w-full md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory scroll-smooth pl-4 pr-4 md:pl-0 md:pr-0">
                 @forelse($berita as $item)
-                <article class="modern-card glass-card rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/20 group animate-fade-in-up delay-300 relative hover:scale-105 transition-all duration-500 min-w-full md:min-w-0 snap-center flex-shrink-0">
+                <div class="w-full flex-shrink-0 snap-start md:w-auto">
+                <article class="modern-card glass-card rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-white/20 group animate-fade-in-up delay-300 relative md:hover:scale-105 transition-all duration-500">
                     <!-- Floating decorative elements -->
                     <div class="absolute -top-2 -right-2 w-16 h-16 bg-gradient-to-br from-[#66B1F2]/30 to-[#4A90E2]/30 rounded-full blur-lg"></div>
                     <div class="absolute -bottom-2 -left-2 w-12 h-12 bg-gradient-to-tr from-[#254C6B]/20 to-[#66B1F2]/20 rounded-full blur-md"></div>
@@ -1827,6 +1828,7 @@
                         </div>
                     </div>
                 </article>
+                </div>
                 @empty
                 <div class="col-span-3 text-center py-16">
                     <div class="inline-flex items-center justify-center w-24 h-24 bg-blue-100 rounded-3xl mb-6 mx-auto">
@@ -1874,13 +1876,13 @@
                     <div class="swiper-wrapper">
                         @forelse($event as $item)
                         <div class="swiper-slide">
-                            <div class="modern-card glass-card rounded-3xl overflow-hidden shadow-2xl border border-white/20 group animate-fade-in-up delay-300 relative hover:scale-105 transition-all duration-500 h-full">
+                            <div class="modern-card glass-card rounded-3xl overflow-hidden shadow-2xl border border-white/20 group animate-fade-in-up delay-300 relative md:hover:scale-105 transition-all duration-500 h-full">
                                 <!-- Floating decorative elements -->
                                 <div class="absolute -top-2 -right-2 w-20 h-20 bg-gradient-to-br from-[#66B1F2]/30 to-[#4A90E2]/30 rounded-full blur-lg"></div>
                                 <div class="absolute -bottom-2 -left-2 w-16 h-16 bg-gradient-to-tr from-[#254C6B]/20 to-[#66B1F2]/20 rounded-full blur-md"></div>
                                 
                                 <!-- Event Image with overlay -->
-                                <div class="relative overflow-hidden h-48">
+                                <div class="relative overflow-hidden h-32 md:h-48">
                                     @if($item->gambar)
                                         <img src="{{ asset('images/posts/' . $item->gambar) }}" alt="{{ $item->judul }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                                     @elseif($item->galeries && $item->galeries->isNotEmpty() && $item->galeries->first()->fotos && $item->galeries->first()->fotos->isNotEmpty())
@@ -1912,29 +1914,29 @@
                                     </div>
                                 </div>
                                 
-                                <div class="p-5 bg-white/80 backdrop-blur-sm">
+                                <div class="p-4 md:p-5 bg-white/80 backdrop-blur-sm">
                                     <!-- Event title -->
-                                    <h3 class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-[#66B1F2] transition-colors duration-300 leading-tight">{{ Str::limit($item->judul, 50) }}</h3>
+                                    <h3 class="text-base md:text-2xl font-bold text-gray-800 mb-2 md:mb-3 group-hover:text-[#66B1F2] transition-colors duration-300 leading-tight line-clamp-2">{{ $item->judul }}</h3>
                                     
                                     <!-- Event meta info -->
-                                    <div class="grid grid-cols-2 gap-3 mb-4">
-                                        <div class="flex items-center bg-blue-50 px-3 py-2 rounded-xl border border-blue-100">
-                                            <div class="bg-gradient-to-r from-[#66B1F2] to-[#4A90E2] p-1.5 rounded-lg mr-2 group-hover:scale-110 transition-transform">
+                                    <div class="grid grid-cols-2 gap-2 md:gap-3 mb-3 md:mb-4">
+                                        <div class="flex items-center bg-blue-50 px-2 py-1.5 md:px-3 md:py-2 rounded-lg md:rounded-xl border border-blue-100">
+                                            <div class="bg-gradient-to-r from-[#66B1F2] to-[#4A90E2] p-1 md:p-1.5 rounded-lg mr-1.5 md:mr-2 group-hover:scale-110 transition-transform">
                                                 <i class="fas fa-map-marker-alt text-white text-xs"></i>
                                             </div>
                                             <div>
-                                                <div class="text-xs text-[#66B1F2] font-bold uppercase tracking-wide">Lokasi</div>
-                                                <div class="text-xs font-bold text-gray-800">{{ Str::limit($item->lokasi ?? 'TBA', 15) }}</div>
+                                                <div class="text-[10px] md:text-xs text-[#66B1F2] font-bold uppercase tracking-wide">Lokasi</div>
+                                                <div class="text-[10px] md:text-xs font-bold text-gray-800">{{ Str::limit($item->lokasi ?? 'TBA', 12) }}</div>
                                             </div>
                                         </div>
                                         
-                                        <div class="flex items-center bg-sky-50 px-3 py-2 rounded-xl border border-sky-100">
-                                            <div class="bg-gradient-to-r from-[#4A90E2] to-[#254C6B] p-1.5 rounded-lg mr-2 group-hover:scale-110 transition-transform">
+                                        <div class="flex items-center bg-sky-50 px-2 py-1.5 md:px-3 md:py-2 rounded-lg md:rounded-xl border border-sky-100">
+                                            <div class="bg-gradient-to-r from-[#4A90E2] to-[#254C6B] p-1 md:p-1.5 rounded-lg mr-1.5 md:mr-2 group-hover:scale-110 transition-transform">
                                                 <i class="fas fa-clock text-white text-xs"></i>
                                             </div>
                                             <div>
-                                                <div class="text-xs text-[#4A90E2] font-bold uppercase tracking-wide">Waktu</div>
-                                                <div class="text-xs font-bold text-gray-800">{{ $item->waktu_mulai ?? 'TBA' }}</div>
+                                                <div class="text-[10px] md:text-xs text-[#4A90E2] font-bold uppercase tracking-wide">Waktu</div>
+                                                <div class="text-[10px] md:text-xs font-bold text-gray-800">{{ $item->waktu_mulai ?? 'TBA' }}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -1943,7 +1945,7 @@
                                     <p class="hidden md:block text-gray-600 md:mb-6 leading-relaxed">{{ Str::limit(strip_tags($item->isi), 120) }}</p>
                                     
                                     <!-- Bottom section -->
-                                    <div class="flex justify-between items-center pt-4 border-t border-gray-200">
+                                    <div class="flex justify-between items-center pt-3 md:pt-4 border-t border-gray-200">
                                         <div class="flex items-center space-x-4">
                                             <!-- Gallery preview -->
                                             @if($item->galeries && $item->galeries->isNotEmpty() && $item->galeries->first()->fotos && $item->galeries->first()->fotos->isNotEmpty())
@@ -2023,19 +2025,16 @@
         <script>
           document.addEventListener('DOMContentLoaded', function () {
             new Swiper('.event-swiper', {
-              slidesPerView: 2.1, // 1 event utama + sisi kanan/kiri tidak ditonjolkan
-              spaceBetween: 28,
               loop: false,
-              rewind: true, // go back to first after reaching the end
-              centeredSlides: true,
-              slidesPerGroup: 1, // geser per satu event
-              speed: 600, // transition speed between slides
+              rewind: true,
+              slidesPerGroup: 1,
+              speed: 600,
               autoplay: {
-                delay: 2000, // 2s per slide (faster)
+                delay: 2000,
                 disableOnInteraction: false,
                 pauseOnMouseEnter: true,
               },
-              allowTouchMove: true, // allow swipe on touch devices
+              allowTouchMove: true,
               navigation: {
                 nextEl: '.event-swiper-next',
                 prevEl: '.event-swiper-prev',
@@ -2045,9 +2044,24 @@
                 clickable: true,
               },
               grabCursor: true,
-              
-              // Improve side preview smoothness
               watchSlidesProgress: true,
+              breakpoints: {
+                0: {
+                  slidesPerView: 1.05,
+                  spaceBetween: 16,
+                  centeredSlides: false,
+                },
+                640: {
+                  slidesPerView: 1.6,
+                  spaceBetween: 20,
+                  centeredSlides: true,
+                },
+                1024: {
+                  slidesPerView: 2.1,
+                  spaceBetween: 28,
+                  centeredSlides: true,
+                },
+              },
             });
           });
         </script>

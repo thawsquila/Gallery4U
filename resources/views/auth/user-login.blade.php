@@ -195,7 +195,7 @@
             </div>
 
             <!-- Right: Illustration / Accent Panel -->
-            <div class="relative z-0 overflow-hidden min-h-[420px] md:min-h-full bg-gradient-to-br from-black/70 via-[#254C6B]/60 to-black/80">
+            <div class="relative z-0 overflow-hidden min-h-[280px] md:min-h-full bg-gradient-to-br from-black/70 via-[#254C6B]/60 to-black/80">
                 <div class="absolute inset-0 pointer-events-none">
                     <!-- Blobs -->
                     <div class="absolute top-8 left-10 w-48 h-48 bg-[#66B1F2]/30 rounded-full blur-3xl animate-float"></div>
@@ -209,10 +209,10 @@
                     <span class="absolute bottom-16 left-20 w-1 h-1 bg-white/60 rounded-full animate-pulse" style="animation-delay:.4s"></span>
                     <span class="absolute top-1/3 left-1/3 w-1 h-1 bg-white/60 rounded-full animate-pulse" style="animation-delay:.8s"></span>
                 </div>
-                <div class="relative h-full flex items-center justify-center p-10">
-                    <div class="bg-white/70 rounded-3xl shadow-lg p-6">
-                        <img src="{{ asset('images/favicon.svg') }}" alt="Logo" class="w-24 h-24 mx-auto mb-4">
-                        <p class="text-center text-[#394867] font-extrabold text-2xl md:text-3xl tracking-tight">Gallery4U</p>
+                <div class="relative h-full flex items-center justify-center p-6 md:p-10">
+                    <div class="bg-white/70 rounded-3xl shadow-lg p-4 md:p-6">
+                        <img src="{{ asset('images/favicon.svg') }}" alt="Logo" class="w-16 h-16 md:w-24 md:h-24 mx-auto mb-3 md:mb-4">
+                        <p class="text-center text-[#394867] font-extrabold text-xl md:text-3xl tracking-tight">Gallery4U</p>
                     </div>
                 </div>
             </div>

@@ -4,13 +4,17 @@
 @endphp
 <div class="mb-5" id="comment-thread-{{ $comment->id }}">
     <div class="flex items-start">
-        <div class="{{ $level > 0 ? 'h-8 w-8' : 'h-10 w-10' }} rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 text-white flex items-center justify-center font-bold mr-3 text-sm">
-            {{ strtoupper(substr($comment->name,0,1)) }}
-        </div>
+        @if($comment->user && $comment->user->avatar)
+            <img src="{{ asset('images/avatars/'.$comment->user->avatar) }}" alt="{{ $comment->user->name }}" class="{{ $level > 0 ? 'h-8 w-8' : 'h-10 w-10' }} rounded-full object-cover mr-3">
+        @else
+            <div class="{{ $level > 0 ? 'h-8 w-8' : 'h-10 w-10' }} rounded-full bg-gray-200 flex items-center justify-center text-gray-400 mr-3">
+                <i class="fas fa-user {{ $level > 0 ? 'text-xs' : 'text-sm' }}"></i>
+            </div>
+        @endif
         <div class="flex-1">
             <div class="{{ $level > 0 ? 'bg-gray-50/70 border border-gray-100 rounded-xl p-3' : '' }}">
                 <div class="flex items-center gap-2">
-                    <span class="font-semibold text-gray-800">{{ $comment->name }}</span>
+                    <span class="font-semibold text-gray-800">{{ $comment->user?->name ?? $comment->name }}</span>
                     <span class="text-xs text-gray-400">• {{ $comment->created_at->diffForHumans() }}</span>
                     @if($level > 0)
                         <span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 font-semibold">Balasan</span>
