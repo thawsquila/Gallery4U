@@ -1,4 +1,17 @@
 <!-- Shared Footer (from home.blade.php) -->
+<style>
+  @media (max-width: 640px) {
+    html, body { overflow-x: hidden !important; }
+    footer .grid { grid-template-columns: 1fr !important; gap: 1rem !important; row-gap: 1rem !important; }
+    footer .flex.space-x-4 { display: grid !important; grid-template-columns: repeat(4, minmax(0,1fr)) !important; gap: 0.5rem !important; margin-top: 0.25rem !important; }
+    footer .flex.space-x-4 > a { width: 100% !important; min-width: 0 !important; display: inline-flex !important; justify-content: center !important; align-items: center !important; height: 44px !important; padding: 0 !important; border-radius: 10px !important; }
+    .footer-buttons { flex-wrap: wrap !important; gap: 0.5rem !important; }
+    footer { padding-top: 1.25rem !important; padding-bottom: 1.25rem !important; }
+  }
+  @media (max-width: 480px) {
+    footer .flex.space-x-4 { grid-template-columns: repeat(4, minmax(0,1fr)) !important; gap: 0.5rem !important; }
+  }
+</style>
 <footer id="kontak" class="bg-[#2D343B] text-white py-16">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -26,6 +39,7 @@
           <li><a href="{{ route('guest.berita') }}" class="text-gray-300 hover:text-primary transition-colors">Berita</a></li>
           <li><a href="{{ route('guest.event') }}" class="text-gray-300 hover:text-primary transition-colors">Event</a></li>
           <li><a href="{{ route('guest.galeri') }}" class="text-gray-300 hover:text-primary transition-colors">Galeri</a></li>
+          <li><a href="{{ route('guest.kontak') }}" class="text-gray-300 hover:text-primary transition-colors">Kontak</a></li>
         </ul>
       </div>
 

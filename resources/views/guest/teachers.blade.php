@@ -257,6 +257,7 @@
                         <li><a href="{{ route('guest.berita') }}" class="text-gray-300 hover:text-primary transition-colors">Berita</a></li>
                         <li><a href="{{ route('guest.event') }}" class="text-gray-300 hover:text-primary transition-colors">Event</a></li>
                         <li><a href="{{ route('guest.galeri') }}" class="text-gray-300 hover:text-primary transition-colors">Galeri</a></li>
+                        <li><a href="{{ route('guest.kontak') }}" class="text-gray-300 hover:text-primary transition-colors">Kontak</a></li>
                     </ul>
                 </div>
                 

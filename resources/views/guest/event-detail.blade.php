@@ -19,6 +19,39 @@
             }
         }
     </script>
+  <script>
+    // Mobile hamburger toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      const btn = document.querySelector('.mobile-menu-btn');
+      const menu = document.getElementById('mobile-menu');
+      if (!btn || !menu) return;
+      const [openIcon, closeIcon] = btn.querySelectorAll('svg');
+      const toggle = () => {
+        const isHidden = menu.classList.contains('hidden');
+        menu.classList.toggle('hidden');
+        btn.setAttribute('aria-expanded', String(isHidden));
+        if (openIcon && closeIcon) {
+          openIcon.classList.toggle('hidden');
+          closeIcon.classList.toggle('hidden');
+        }
+        // Prevent background scroll when menu open
+        if (isHidden) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = '';
+        }
+      };
+      btn.addEventListener('click', (e) => { e.preventDefault(); toggle(); });
+      // Close when clicking outside the menu panel
+      document.addEventListener('click', (e) => {
+        if (!menu.classList.contains('hidden')) {
+          const withinMenu = menu.contains(e.target);
+          const withinBtn = btn.contains(e.target);
+          if (!withinMenu && !withinBtn) toggle();
+        }
+      });
+    });
+  </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -63,6 +96,61 @@
           opacity: 1;
           transform: translateX(0);
       }
+
+      /* Keep icon+text together inside meta */
+      .event-meta .meta-item { display: inline-flex; align-items: center; gap: .35rem; white-space: nowrap; }
+      
+      /* Enhanced Mobile Responsiveness */
+      @media (max-width: 640px) {
+        /* Global overflow & animation fixes */
+        html, body { overflow-x: hidden !important; }
+        body { overscroll-behavior-x: none !important; }
+        /* Matikan animasi/transform di mobile agar tidak ada lompatan layout */
+        .animate-fade-in-up { animation: none !important; }
+        .scroll-reveal,
+        .scroll-reveal-left,
+        .scroll-reveal-right { opacity: 1 !important; transform: none !important; transition: none !important; }
+        /* Hindari loncatan akibat hover lift di mobile */
+        .card-hover:hover { transform: none !important; box-shadow: inherit !important; }
+
+        /* Navbar */
+        nav { width: 96% !important; top: 4px !important; left: 50% !important; transform: translateX(-50%) !important; }
+        /* Mobile menu button improvements */
+        .mobile-menu-btn { min-width: 44px !important; min-height: 44px !important; padding: 8px !important; touch-action: manipulation !important; -webkit-tap-highlight-color: transparent !important; }
+        .mobile-menu { animation: slideDown 0.25s ease-out !important; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-8px);} to {opacity:1; transform: translateY(0);} }
+
+        /* Container paddings */
+        .max-w-7xl { padding-left: 0.875rem !important; padding-right: 0.875rem !important; }
+
+        /* Grid -> 1 kolom */
+        .detail-grid, .grid { grid-template-columns: 1fr !important; }
+        /* Pastikan kontainer tidak overflow */
+        .max-w-7xl { max-width: 100% !important; box-sizing: border-box !important; }
+
+        /* Event header meta */
+        .event-meta { flex-wrap: wrap !important; row-gap: .25rem !important; column-gap: .5rem !important; font-size: .9rem !important; justify-content: center !important; text-align: center !important; }
+        .event-meta i { font-size: .95rem !important; margin-right: .35rem !important; }
+        .event-meta .separator-dot { display: none !important; }
+
+        /* Quick info grid */
+        .quick-info { grid-template-columns: 1fr !important; gap: .5rem !important; }
+
+        /* Calendar buttons & share buttons */
+        .calendar-actions button { width: 100% !important; justify-content: center !important; }
+        .share-actions a, .share-actions button { flex: 1 1 48% !important; min-width: 0 !important; text-align: center !important; }
+
+        /* Sidebar cards */
+        .sidebar-card { margin-top: .75rem !important; padding: 1rem !important; }
+
+        /* Other events list spacing */
+        .other-events .space-y-4 > * + * { margin-top: .75rem !important; }
+
+        /* Footer */
+        footer .grid { grid-template-columns: 1fr !important; gap: 1.25rem !important; }
+        footer { padding-top: 1.25rem !important; padding-bottom: 1.25rem !important; }
+        footer, footer * { max-width: 100% !important; box-sizing: border-box !important; }
+      }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -75,6 +163,18 @@
                         <img src="{{ asset('images/favicon.svg') }}" alt="SMKN 4 Logo" class="w-10 h-10 object-contain mr-3" />
                         <span class="font-bold text-xl text-gray-800">Gallery4U</span>
                     </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                  <button type="button" class="mobile-menu-btn inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-controls="mobile-menu" aria-expanded="false">
+                      <span class="sr-only">Open main menu</span>
+                      <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                      </svg>
+                      <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                  </button>
                 </div>
                 <div class="hidden md:flex items-center gap-4">
                   <div class="flex items-center gap-1 bg-white/80 rounded-full px-2 py-1 ring-1 ring-gray-200/70">
@@ -107,6 +207,31 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Mobile menu, show/hide based on menu state -->
+        <div class="mobile-menu hidden md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 bg-white/95 backdrop-blur-xl rounded-b-xl border-t border-gray-200">
+                <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Beranda</a>
+                <a href="{{ route('guest.teachers') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Tenaga Pendidik</a>
+                <a href="{{ route('guest.berita') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Berita</a>
+                <a href="{{ route('guest.event') }}" class="block px-3 py-2 rounded-md text-base font-medium bg-blue-50 text-blue-600">Event</a>
+                <a href="{{ route('guest.galeri') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Galeri</a>
+                <a href="{{ route('guest.kontak') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50">Kontak</a>
+                <div class="border-t border-gray-200 pt-3 mt-3">
+                    @guest
+                    <a href="{{ route('user.login', ['redirect' => request()->getRequestUri()]) }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Login</a>
+                    <a href="{{ route('user.register', ['redirect' => request()->getRequestUri()]) }}" class="block px-3 py-2 rounded-md text-base font-medium bg-gradient-to-br from-[#66B1F2] to-[#4A90E2] text-white text-center mt-2">Daftar</a>
+                    @endguest
+                    @auth
+                    <a href="{{ route('user.profile') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Profil</a>
+                    <form action="{{ route('logout') }}" method="POST" class="mt-1">
+                        @csrf
+                        <button type="submit" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Keluar</button>
+                    </form>
+                    @endauth
+                </div>
+            </div>
+        </div>
     </nav>
 
     <!-- Main Content -->
@@ -131,15 +256,12 @@
                     
                     <!-- Event Header -->
                     <div class="p-8">
-                        <div class="flex items-center text-sm text-gray-500 mb-4">
-                            <i class="fas fa-calendar mr-2"></i>
-                            <span>{{ \Carbon\Carbon::parse($event->tanggal)->format('d F Y') }}</span>
-                            <span class="mx-3">•</span>
-                            <i class="fas fa-clock mr-2"></i>
-                            <span>{{ $event->waktu_mulai ? \Carbon\Carbon::parse($event->waktu_mulai)->format('H:i') : '--:--' }} WIB</span>
-                            <span class="mx-3">•</span>
-                            <i class="fas fa-eye mr-2"></i>
-                            <span>{{ number_format($event->views ?? 0) }} views</span>
+                        <div class="flex items-center text-sm text-gray-500 mb-4 event-meta">
+                            <span class="meta-item"><i class="fas fa-calendar"></i><span>{{ \Carbon\Carbon::parse($event->tanggal)->format('d F Y') }}</span></span>
+                            <span class="mx-3 separator-dot">•</span>
+                            <span class="meta-item"><i class="fas fa-clock"></i><span>{{ $event->waktu_mulai ? \Carbon\Carbon::parse($event->waktu_mulai)->format('H:i') : '--:--' }} WIB</span></span>
+                            <span class="mx-3 separator-dot">•</span>
+                            <span class="meta-item"><i class="fas fa-eye"></i><span>{{ number_format($event->views ?? 0) }} views</span></span>
                         </div>
                         
                         <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">{{ $event->judul }}</h1>
@@ -362,6 +484,7 @@
                         <li><a href="{{ route('guest.berita') }}" class="text-gray-300 hover:text-primary transition-colors">Berita</a></li>
                         <li><a href="{{ route('guest.event') }}" class="text-gray-300 hover:text-primary transition-colors">Event</a></li>
                         <li><a href="{{ route('guest.galeri') }}" class="text-gray-300 hover:text-primary transition-colors">Galeri</a></li>
+                        <li><a href="{{ route('guest.kontak') }}" class="text-gray-300 hover:text-primary transition-colors">Kontak</a></li>
                     </ul>
                 </div>
                 

@@ -99,12 +99,19 @@
                 font-size: 2rem !important;
                 line-height: 1.2 !important;
             }
-            
-            .hero-meta {
-                flex-direction: column !important;
-                gap: 0.5rem !important;
-                text-align: center !important;
+            .hero-section {
+                padding-top: 3.5rem !important;
+                padding-bottom: 1.25rem !important;
             }
+            .hero-meta {
+                flex-direction: row !important;
+                flex-wrap: wrap !important;
+                gap: 0.5rem 0.75rem !important;
+                justify-content: center !important;
+                text-align: center !important;
+                font-size: 0.95rem !important;
+            }
+            .hero-meta .separator-dot { display: none !important; }
             
             /* Main content mobile */
             .max-w-7xl {
@@ -120,21 +127,34 @@
             
             /* Gallery masonry mobile */
             .gallery-masonry {
-                columns: 2 !important;
-                gap: 0.75rem !important;
+                columns: 2 !important; /* tampilkan 2 kolom di HP */
+                column-gap: 0.75rem !important;
+            }
+            .gallery-masonry > .break-inside-avoid {
+                margin-bottom: 0.75rem !important;
             }
             
             /* Like section mobile */
             .like-section {
                 flex-direction: column !important;
-                gap: 1rem !important;
-                align-items: flex-start !important;
+                gap: 0.75rem !important;
+                align-items: stretch !important;
+                padding: 1rem !important;
+                margin-bottom: 0.75rem !important;
             }
             
             .like-stats {
-                flex-direction: column !important;
+                flex-direction: row !important;
+                flex-wrap: wrap !important;
                 gap: 0.5rem !important;
-                align-items: flex-start !important;
+                align-items: center !important;
+            }
+
+            /* Make like button full width on mobile */
+            #like-btn,
+            .like-section a[href*="login"] {
+                width: 100% !important;
+                justify-content: center !important;
             }
             
             /* Share buttons mobile */
@@ -207,14 +227,14 @@
             }
             
             /* Lightbox mobile adjustments */
-            .lightbox-nav {
-                width: 40px !important;
-                height: 40px !important;
-                font-size: 18px !important;
-            }
-            
+            .gallery-lightbox { padding: 0 10px; }
+            .lightbox-image { max-width: 92vw !important; max-height: 70vh !important; }
+            .lightbox-close { top: 10px !important; right: 15px !important; font-size: 28px !important; }
+            .lightbox-nav { width: 40px !important; height: 40px !important; font-size: 18px !important; }
             .lightbox-prev { left: 10px !important; }
             .lightbox-next { right: 10px !important; }
+            #lightbox-download { position: static !important; display: inline-flex !important; margin: 8px auto 0 !important; }
+            #lightbox-counter { margin-top: 6px !important; font-size: 0.9rem !important; }
         }
 
         @media (max-width: 480px) {
@@ -225,7 +245,11 @@
             
             /* Gallery masonry extra small */
             .gallery-masonry {
-                columns: 1 !important;
+                columns: 2 !important;  /* paksa tetap 2 kolom di layar sangat kecil */
+                column-gap: 0.5rem !important;
+            }
+            .gallery-masonry > .break-inside-avoid {
+                margin-bottom: 0.5rem !important;
             }
             
             /* Padding adjustments */
@@ -364,7 +388,7 @@
             <div class="absolute top-20 right-20 w-20 h-20 bg-[#B3D9FF]/15 rounded-full blur-md animate-float delay-200"></div>
         </div>
         
-        <div class="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8 w-full py-16">
+        <div class="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8 w-full py-16 hero-section">
             <div class="max-w-4xl mx-auto">
                 <div class="inline-block bg-gradient-to-r from-[#66B1F2] to-[#4A90E2] px-4 py-2 rounded-full text-sm font-semibold mb-6 shadow-lg">
                     <i class="fas fa-bookmark mr-2"></i>{{ $galeri->kategori }}
@@ -377,11 +401,11 @@
                 </div>
                 <div class="hero-meta flex flex-wrap justify-center items-center gap-4 text-white/90 animate-fade-in-up delay-200 text-base lg:text-lg drop-shadow-lg">
                     <span><i class="far fa-calendar-alt mr-2"></i>{{ $galeri->created_at->format('d M Y') }}</span>
-                    <span>•</span>
+                    <span class="separator-dot">•</span>
                     <span><i class="far fa-images mr-2"></i>{{ $galeri->fotos->count() }} Foto</span>
-                    <span>•</span>
+                    <span class="separator-dot">•</span>
                     <span><i class="far fa-comment mr-2"></i>{{ $galeri->comments->count() }} Komentar</span>
-                    <span>•</span>
+                    <span class="separator-dot">•</span>
                     <span><i class="far fa-heart mr-2"></i><span id="hero-like-count">{{ number_format($galeri->likes_count ?? 0) }}</span> Suka</span>
                 </div>
             </div>
@@ -737,6 +761,7 @@
                         <li><a href="{{ route('guest.berita') }}" class="text-gray-300 hover:text-primary transition-colors">Berita</a></li>
                         <li><a href="{{ route('guest.event') }}" class="text-gray-300 hover:text-primary transition-colors">Event</a></li>
                         <li><a href="{{ route('guest.galeri') }}" class="text-gray-300 hover:text-primary transition-colors">Galeri</a></li>
+                        <li><a href="{{ route('guest.kontak') }}" class="text-gray-300 hover:text-primary transition-colors">Kontak</a></li>
                     </ul>
                 </div>
                 

@@ -212,11 +212,16 @@
         /* Stats cards mobile */
         .stats-container {
             flex-direction: column !important;
-            gap: 1rem !important;
+            gap: 0.75rem !important;
+            align-items: stretch !important;
         }
         
         .stats-card {
-            padding: 1rem 1.5rem !important;
+            padding: 0.85rem 1.25rem !important;
+            width: 100% !important;
+            max-width: 360px !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
         }
         
         /* Main content mobile */
@@ -237,9 +242,33 @@
         }
         
         .berita-meta {
-            flex-direction: column !important;
-            gap: 0.5rem !important;
-            align-items: flex-start !important;
+            flex-direction: row !important;
+            flex-wrap: wrap !important;
+            gap: 0.25rem !important;
+            align-items: center !important;
+            font-size: 0.8rem !important;
+        }
+        
+        .berita-meta i {
+            font-size: 0.85rem !important;
+        }
+        
+        .berita-card .p-6 {
+            padding: 1rem !important;
+        }
+        
+        .berita-card h3 {
+            font-size: 1rem !important;
+        }
+        
+        .berita-card p {
+            font-size: 0.85rem !important;
+        }
+        
+        .berita-card a {
+            width: 100%;
+            justify-content: center;
+            text-align: center;
         }
         
         /* Footer mobile */
@@ -306,7 +335,7 @@
         }
         
         .stats-number {
-            font-size: 1.5rem !important;
+            font-size: 1.4rem !important;
         }
     }
   </style>
@@ -586,6 +615,7 @@
                         <li><a href="{{ route('guest.berita') }}" class="text-gray-300 hover:text-primary transition-colors">Berita</a></li>
                         <li><a href="{{ route('guest.event') }}" class="text-gray-300 hover:text-primary transition-colors">Event</a></li>
                         <li><a href="{{ route('guest.galeri') }}" class="text-gray-300 hover:text-primary transition-colors">Galeri</a></li>
+                        <li><a href="{{ route('guest.kontak') }}" class="text-gray-300 hover:text-primary transition-colors">Kontak</a></li>
                     </ul>
                 </div>
                 

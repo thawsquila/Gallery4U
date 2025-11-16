@@ -1236,6 +1236,7 @@
       Platform galeri digital untuk mendokumentasikan kegiatan, prestasi, dan momen terbaik SMKN 4 Bogor.
       </p>
       
+      
       <!-- Statistics Section - Single Bar Style -->
       <div class="mt-14 max-w-5xl mx-auto">
         <div class="bg-white/95 backdrop-blur-md border border-white/60 rounded-2xl shadow-xl">
@@ -1278,6 +1279,47 @@
     </div>
   </div>
 </section>
+
+<!-- Floating Download Button (right side) -->
+<button id="download-fab" type="button" aria-label="Unduh Aplikasi" class="fixed z-[60] right-4 md:right-6 bottom-6 md:bottom-8 w-14 h-14 md:w-16 md:h-16 rounded-full shadow-[0_12px_30px_-10px_rgba(59,130,246,0.7)] ring-1 ring-white/40 overflow-hidden bg-gradient-to-r from-[#66B1F2] to-[#4A90E2] hover:opacity-95 transition">
+  <img src="{{ asset('images/favicon.svg') }}" alt="4U" class="w-full h-full object-contain p-2">
+  <span class="sr-only">Download Aplikasi</span>
+</button>
+
+<!-- Small floating confirmation container -->
+<div id="download-confirm" class="fixed z-[70] right-4 md:right-6 bottom-24 md:bottom-28 w-[calc(100%-2rem)] max-w-xs bg-white rounded-xl shadow-2xl ring-1 ring-gray-200 p-4 hidden">
+  <p class="text-gray-800 font-semibold mb-2">Download aplikasi Gallery4U?</p>
+  <p class="text-sm text-gray-600 mb-4">File tersedia di Google Drive.</p>
+  <div class="flex items-center justify-end gap-2">
+    <button id="download-no" type="button" class="px-3 py-1.5 rounded-lg text-gray-700 hover:bg-gray-100">Tidak</button>
+    <button id="download-yes" type="button" class="px-4 py-1.5 rounded-lg bg-gradient-to-r from-[#66B1F2] to-[#4A90E2] text-white font-semibold">Ya, Download</button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const fab = document.getElementById('download-fab');
+    const panel = document.getElementById('download-confirm');
+    const yes = document.getElementById('download-yes');
+    const no = document.getElementById('download-no');
+    if (!fab || !panel || !yes || !no) return;
+    const open = () => panel.classList.remove('hidden');
+    const close = () => panel.classList.add('hidden');
+    fab.addEventListener('click', function(e){ e.preventDefault(); open(); });
+    no.addEventListener('click', function(e){ e.preventDefault(); close(); });
+    yes.addEventListener('click', function(){
+      window.open('https://drive.google.com/drive/folders/1r99RhVxl8m-lcP3ELfyefCcVO9lgwzBY?usp=drive_link','_blank','noopener');
+      close();
+    });
+    document.addEventListener('click', function(e){
+      if (!panel.classList.contains('hidden')) {
+        const withinPanel = panel.contains(e.target);
+        const withinFab = fab.contains(e.target);
+        if (!withinPanel && !withinFab) close();
+      }
+    });
+  });
+  </script>
 
 <!-- Modal Detail Jurusan (on-page, no navigation) -->
 <div id="majorModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden">
@@ -2279,7 +2321,7 @@
                     
                     <div class="flex space-x-4">
                         <a href="https://www.facebook.com/p/SMK-NEGERI-4-KOTA-BOGOR-100054636630766/?locale=id_ID" class="bg-primary hover:bg-primary-dark text-white p-3 rounded-lg transition-colors">
-                            <i class="fab fa-facebook-f"></i>
+                            <i class="fab fa-facebook"></i>
                         </a>
                         <a href="https://www.instagram.com/smkn4kotabogor/" class="bg-primary hover:bg-primary-dark text-white p-3 rounded-lg transition-colors">
                             <i class="fab fa-instagram"></i>
@@ -2303,6 +2345,7 @@
                         <li><a href="{{ route('guest.berita') }}" class="text-gray-300 hover:text-primary transition-colors">Berita</a></li>
                         <li><a href="{{ route('guest.event') }}" class="text-gray-300 hover:text-primary transition-colors">Event</a></li>
                         <li><a href="{{ route('guest.galeri') }}" class="text-gray-300 hover:text-primary transition-colors">Galeri</a></li>
+                        <li><a href="{{ route('guest.kontak') }}" class="text-gray-300 hover:text-primary transition-colors">Kontak</a></li>
                     </ul>
                 </div>
                 
@@ -2319,7 +2362,7 @@
                         <button type="button" onclick="openMajor('otomotif')" class="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-gray-200 text-xs font-semibold shadow-md ring-1 ring-white/20 backdrop-blur transition">Otomotif</button>
                     </div>
                 </div>
-                
+
                 <div>
                     <h3 class="text-xl font-bold mb-6">Ikuti Kami</h3>
                     <p class="text-gray-300 mb-4">Dapatkan update terbaru dari SMK Negeri 4</p>

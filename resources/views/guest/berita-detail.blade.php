@@ -58,9 +58,118 @@
             opacity: 1;
             transform: translateX(0);
         }
+
+        @media (max-width: 640px) {
+            /* Disable reveal animations on mobile to prevent layout jumps */
+            .scroll-reveal,
+            .scroll-reveal-left,
+            .scroll-reveal-right {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+            nav {
+                width: 98% !important;
+                top: 4px !important;
+            }
+
+            .max-w-7xl {
+                padding-left: 0.75rem !important;
+                padding-right: 0.75rem !important;
+            }
+
+            .detail-wrapper {
+                padding-top: 1rem !important; /* kurangi py-12 */
+                padding-bottom: 1.25rem !important;
+                margin-top: 110px !important; /* beri jarak aman dari navbar mengambang */
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important; /* rapatkan antar blok */
+            }
+
+            .detail-article img {
+                max-height: 220px;
+            }
+
+            .detail-article-header {
+                padding: 1.1rem !important;
+            }
+
+            .detail-article-header h1 {
+                font-size: 1.5rem !important;
+            }
+
+            .detail-meta {
+                flex-wrap: wrap;
+                row-gap: 0.25rem;
+                column-gap: 0.5rem;
+                font-size: 0.8rem !important;
+            }
+
+            .detail-meta i {
+                font-size: 0.9rem !important;
+            }
+
+            .sidebar-card {
+                margin-top: 0.75rem;
+                padding: 0.875rem !important;
+                width: 100% !important;
+                max-width: none !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                box-shadow: 0 6px 14px rgba(0,0,0,0.08) !important;
+                border-radius: 14px !important;
+            }
+
+            .sidebar-card:last-child {
+                margin-bottom: 0 !important; /* hilangkan space sebelum footer */
+            }
+
+            .sidebar-card h3 {
+                font-size: 1.1rem !important;
+            }
+
+            .sidebar-card a {
+                font-size: 0.9rem !important;
+            }
+
+            /* Related list refinements */
+            .sidebar-card .space-y-4 > * + * {
+                margin-top: 0.75rem !important;
+            }
+            .related-thumb {
+                width: 64px !important;
+                height: 64px !important;
+            }
+            .sidebar-card .text-sm {
+                font-size: 0.875rem !important;
+                line-height: 1.25rem !important;
+            }
+            .sidebar-card .text-xs {
+                font-size: 0.75rem !important;
+            }
+
+            /* Footer spacing & gutters */
+            footer {
+                padding-top: 1rem !important;
+                padding-bottom: 1rem !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                width: 100% !important;
+            }
+            footer > .max-w-7xl {
+                padding-left: 0.75rem !important;
+                padding-right: 0.75rem !important;
+            }
+            footer .grid {
+                gap: 1rem !important;
+            }
+        }
     </style>
 </head>
-<body class="bg-gray-50 scroll-smooth">
+<body class="bg-gray-50 scroll-smooth" style="overflow-x: hidden;">
     <!-- Floating Navbar -->
     <nav class="fixed top-6 left-1/2 transform -translate-x-1/2 w-[95%] md:w-[90%] bg-white/90 shadow-2xl rounded-xl border border-gray-200 z-50 backdrop-blur-xl ring-1 ring-gray-200/60">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -70,6 +179,18 @@
                         <img src="{{ asset('images/favicon.svg') }}" alt="SMKN 4 Logo" class="w-10 h-10 object-contain mr-3" />
                         <span class="font-bold text-xl text-gray-800">Gallery4U</span>
                     </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button type="button" class="mobile-menu-btn inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
                 <div class="hidden md:flex items-center gap-4">
                   <div class="flex items-center gap-1 bg-white/80 rounded-full px-2 py-1 ring-1 ring-gray-200/70">
@@ -102,13 +223,50 @@
                 </div>
             </div>
         </div>
+
+        <!-- Mobile menu, show/hide based on menu state -->
+        <div class="mobile-menu hidden md:hidden fixed top-4 left-1/2 -translate-x-1/2 z-[60] w-[94%]" id="mobile-menu">
+            <div class="bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl ring-1 ring-blue-300/40 overflow-hidden animate-[slideDown_0.25s_ease-out]">
+                <!-- Header -->
+                <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200/70">
+                    <div class="flex items-center">
+                        <img src="{{ asset('images/favicon.svg') }}" alt="SMKN 4 Logo" class="w-8 h-8 object-contain mr-2" />
+                        <span class="font-semibold text-gray-800">Gallery4U</span>
+                    </div>
+                    <button type="button" id="mobile-menu-close" class="inline-flex items-center justify-center w-8 h-8 rounded-md ring-1 ring-gray-300 hover:bg-gray-100">
+                        <svg class="h-5 w-5 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+                <!-- Links -->
+                <div class="py-2">
+                    <a href="/" class="block px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50">Beranda</a>
+                    <a href="{{ route('guest.teachers') }}" class="block px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50">Tenaga Pendidik</a>
+                    <a href="{{ route('guest.berita') }}" class="block px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50">Berita</a>
+                    <a href="{{ route('guest.event') }}" class="block px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50">Event</a>
+                    <a href="{{ route('guest.galeri') }}" class="block px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50">Galeri</a>
+                    <a href="{{ route('guest.kontak') }}" class="block px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50">Kontak</a>
+                    <div class="my-2 border-t border-gray-200"></div>
+                    @guest
+                    <a href="{{ route('user.login', ['redirect' => request()->getRequestUri()]) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Login</a>
+                    <a href="{{ route('user.register', ['redirect' => request()->getRequestUri()]) }}" class="block mx-4 my-2 text-center px-4 py-2 rounded-lg bg-gradient-to-r from-[#66B1F2] to-[#4A90E2] text-white font-semibold">Daftar</a>
+                    @endguest
+                    @auth
+                    <a href="{{ route('user.profile') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil</a>
+                    <form action="{{ route('logout') }}" method="POST" class="mt-1">
+                        @csrf
+                        <button type="submit" class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">Keluar</button>
+                    </form>
+                    @endauth
+                </div>
+            </div>
+        </div>
     </nav>
 
     <!-- Main Content -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" style="margin-top: 100px;">
-        <div class="grid lg:grid-cols-3 gap-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 detail-wrapper" style="margin-top: 100px;">
+        <div class="grid lg:grid-cols-3 gap-12 detail-grid">
             <!-- Article Content -->
-            <div class="lg:col-span-2">
+            <div class="lg:col-span-2 detail-article">
                 <article class="bg-white rounded-xl shadow-lg overflow-hidden scroll-reveal-left">
                     <!-- Featured Image -->
                     <div class="h-64 md:h-80 relative overflow-hidden">
@@ -119,20 +277,20 @@
                                 <i class="fas fa-newspaper text-white text-8xl opacity-30"></i>
                             </div>
                         @endif
-                        <div class="absolute bottom-4 left-4">
+                        <div class="absolute bottom-4 left-4 detail-badge">
                             <span class="bg-primary-light/20 text-white px-3 py-1 rounded-full text-sm font-semibold">{{ $berita->kategori->nama ?? 'Berita' }}</span>
                         </div>
                     </div>
                     
                     <!-- Article Header -->
-                    <div class="p-8">
-                        <div class="flex items-center text-sm text-gray-500 mb-4">
+                    <div class="p-8 detail-article-header">
+                        <div class="flex items-center text-sm text-gray-500 mb-4 detail-meta">
                             <i class="fas fa-calendar mr-2"></i>
                             <span>{{ $berita->created_at->format('d F Y') }}</span>
-                            <span class="mx-3">•</span>
+                            <span class="mx-3 separator-dot">•</span>
                             <i class="fas fa-user mr-2"></i>
                             <span>{{ $berita->petugas?->name ?? 'Admin' }}</span>
-                            <span class="mx-3">•</span>
+                            <span class="mx-3 separator-dot">•</span>
                             <i class="fas fa-eye mr-2"></i>
                             <span>{{ number_format($berita->views ?? 0) }} views</span>
                         </div>
@@ -147,13 +305,13 @@
                         <div class="border-t pt-6 mt-8">
                             <h3 class="text-lg font-semibold text-gray-800 mb-4">Bagikan Artikel</h3>
                             <div class="flex space-x-4">
-                                <a href="#" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                <a target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
                                     <i class="fab fa-facebook-f mr-2"></i>Facebook
                                 </a>
-                                <a href="#" class="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition-colors">
+                                <a target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}&text={{ urlencode($berita->judul) }}" class="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition-colors">
                                     <i class="fab fa-twitter mr-2"></i>Twitter
                                 </a>
-                                <a href="#" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                <a target="_blank" rel="noopener" href="https://api.whatsapp.com/send?text={{ urlencode($berita->judul.' - '.request()->fullUrl()) }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
                                     <i class="fab fa-whatsapp mr-2"></i>WhatsApp
                                 </a>
                             </div>
@@ -249,7 +407,7 @@
             <!-- Sidebar -->
             <div class="lg:col-span-1">
                 <!-- Related Articles -->
-                <div class="bg-white rounded-xl shadow-lg p-6 mb-8 scroll-reveal-right">
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-8 scroll-reveal-right sidebar-card">
                     <h3 class="text-xl font-bold text-gray-800 mb-6">Berita Terkait</h3>
                     <div class="space-y-4">
                         @forelse($related as $relatedPost)
@@ -275,7 +433,7 @@
                 </div>
                 
                 <!-- Quick Links -->
-                <div class="bg-white rounded-xl shadow-lg p-6 scroll-reveal-left">
+                <div class="bg-white rounded-xl shadow-lg p-6 scroll-reveal-left sidebar-card">
                     <h3 class="text-xl font-bold text-gray-800 mb-6">Menu Cepat</h3>
                     <div class="space-y-3">
                         <a href="/#profil" class="flex items-center text-gray-600 hover:text-primary transition-colors">
@@ -341,6 +499,7 @@
                         <li><a href="{{ route('guest.berita') }}" class="text-gray-300 hover:text-primary transition-colors">Berita</a></li>
                         <li><a href="{{ route('guest.event') }}" class="text-gray-300 hover:text-primary transition-colors">Event</a></li>
                         <li><a href="{{ route('guest.galeri') }}" class="text-gray-300 hover:text-primary transition-colors">Galeri</a></li>
+                        <li><a href="{{ route('guest.kontak') }}" class="text-gray-300 hover:text-primary transition-colors">Kontak</a></li>
                     </ul>
                 </div>
                 
@@ -388,6 +547,25 @@
             </div>
         </div>
     </footer>
+
+    <script>
+      (function(){
+        const btn = document.querySelector('.mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const closeBtn = document.getElementById('mobile-menu-close');
+        if (!btn || !menu) return;
+        const icons = btn ? btn.querySelectorAll('svg') : [];
+        function toggle(){
+          menu.classList.toggle('hidden');
+          if (icons.length === 2){
+            icons[0].classList.toggle('hidden');
+            icons[1].classList.toggle('hidden');
+          }
+        }
+        btn.addEventListener('click', toggle);
+        if (closeBtn){ closeBtn.addEventListener('click', toggle); }
+      })();
+    </script>
 
     <!-- Jurusan Detail Modal -->
     <div id="majorModal" class="fixed inset-0 z-[100] hidden">

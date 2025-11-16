@@ -212,8 +212,8 @@
             
             /* Main content mobile */
             .max-w-7xl {
-                padding-left: 1rem !important;
-                padding-right: 1rem !important;
+                padding-left: 0.875rem !important;
+                padding-right: 0.875rem !important;
             }
             
             /* Gallery cards mobile */
@@ -222,24 +222,42 @@
                 gap: 1rem !important;
             }
             
-            /* Filter buttons mobile */
+            /* Filter buttons mobile: make chips horizontally scrollable */
             .filter-buttons {
-                flex-wrap: wrap !important;
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
                 gap: 0.5rem !important;
+                padding-bottom: 0.25rem !important;
+                -ms-overflow-style: none; /* IE/Edge */
+                scrollbar-width: none; /* Firefox */
             }
-            
+            .filter-buttons::-webkit-scrollbar { display: none; }
             .filter-buttons button {
                 font-size: 0.875rem !important;
-                padding: 0.5rem 1rem !important;
+                padding: 0.5rem 0.9rem !important;
+                white-space: nowrap !important;
+                flex: 0 0 auto !important;
             }
             
             /* View switcher mobile */
             .view-switcher {
                 flex-direction: column !important;
                 gap: 0.75rem !important;
+                align-items: center !important;
             }
-            
             .view-switcher > div:first-child {
+                text-align: center !important;
+                width: 100% !important;
+            }
+            .view-switcher .inline-flex {
+                width: 100% !important;
+                max-width: 340px !important;
+                justify-content: space-between !important;
+            }
+            .view-switcher .inline-flex > button {
+                flex: 1 1 0 !important;
+                min-width: 0 !important;
                 text-align: center !important;
             }
             
@@ -757,6 +775,7 @@
                         <li><a href="{{ route('guest.berita') }}" class="text-gray-300 hover:text-primary transition-colors">Berita</a></li>
                         <li><a href="{{ route('guest.event') }}" class="text-gray-300 hover:text-primary transition-colors">Event</a></li>
                         <li><a href="{{ route('guest.galeri') }}" class="text-gray-300 hover:text-primary transition-colors">Galeri</a></li>
+                        <li><a href="{{ route('guest.kontak') }}" class="text-gray-300 hover:text-primary transition-colors">Kontak</a></li>
                     </ul>
                 </div>
                 
