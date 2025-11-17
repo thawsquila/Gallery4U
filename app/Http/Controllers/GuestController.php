@@ -628,6 +628,17 @@ class GuestController extends Controller
         }
     }
 
+    /**
+     * Redirect to direct Google Drive download for the app
+     */
+    public function downloadApp()
+    {
+        // Direct download URL using file ID provided by user
+        $driveId = '1vTFQR9Gkjkd0AntcaB0r32C-qaBqAeaR';
+        $url = 'https://drive.usercontent.google.com/download?id=' . $driveId . '&export=download';
+        return redirect()->away($url);
+    }
+
     public function peta() {
         return view('guest.peta');
     }

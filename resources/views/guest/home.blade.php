@@ -1308,7 +1308,7 @@
     fab.addEventListener('click', function(e){ e.preventDefault(); open(); });
     no.addEventListener('click', function(e){ e.preventDefault(); close(); });
     yes.addEventListener('click', function(){
-      window.open('https://drive.google.com/drive/folders/1r99RhVxl8m-lcP3ELfyefCcVO9lgwzBY?usp=drive_link','_blank','noopener');
+      window.location.href = '{{ route('guest.download.app') }}';
       close();
     });
     document.addEventListener('click', function(e){

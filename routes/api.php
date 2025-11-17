@@ -20,6 +20,8 @@ Route::get('/user', [ApiController::class, 'user'])->middleware('auth:sanctum');
 // Password management
 Route::post('/password/change', [ApiController::class, 'changePassword'])->middleware('auth:sanctum');
 Route::post('/password/reset', [ApiController::class, 'resetPassword']);
+Route::post('/password/forgot', [ApiController::class, 'passwordForgot']);
+Route::post('/password/verify-otp', [ApiController::class, 'verifyPasswordOtp']);
 
 // Direct API routes for mobile app compatibility
 Route::get('/galeri', [GalleryController::class, 'index']);

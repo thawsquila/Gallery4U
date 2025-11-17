@@ -41,6 +41,8 @@ Route::post('/galeri-detail/{id}/comment', [GuestController::class, 'storeGaleri
 Route::post('/galeri-detail/{id}/like', [GuestController::class, 'toggleGaleriLike'])
     ->middleware('auth')
     ->name('guest.galeri.like');
+// Direct app download route
+Route::get('/download-app', [GuestController::class, 'downloadApp'])->name('guest.download.app');
 
 // Authentication Routes (Admin)
 Route::get('/panel-akses', [AuthController::class, 'showLoginForm'])->name('login');

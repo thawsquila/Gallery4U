@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Mail;
+use App\Models\UserOtp;
 
 class ApiController extends Controller
 {
@@ -131,5 +134,105 @@ class ApiController extends Controller
         return response()->json([
             'message' => 'Password updated successfully.'
         ]);
+    }
+
+    public function passwordForgot(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $email = $request->input('email');
+        $user = User::where('email', $email)->first();
+        if (!$user) {
+            return response()->json([
+                'message' => 'Email tidak terdaftar.'
+            ], 422);
+        }
+
+        $otp = UserOtp::generateOtp($email);
+
+        Mail::raw(
+            "Kode reset kata sandi Anda: {$otp->otp_code}\n\nKode berlaku 10 menit.\n\nGallery4U",
+            function ($message) use ($email) {
+                $message->to($email)->subject('Kode Reset Kata Sandi - Gallery4U');
+            }
+        );
+
+        return response()->json([
+            'message' => 'Kami telah mengirim kode ke email Anda.'
+        ]);
+    }
+
+    public function verifyPasswordOtp(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'otp_code' => 'required|string|size:6',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $otp = UserOtp::where('email', $request->email)
+            ->where('otp_code', $request->otp_code)
+            ->first();
+
+        if (!$otp || !$otp->isValid()) {
+            return response()->json([
+                'message' => 'Kode tidak valid atau sudah kedaluwarsa.'
+            ], 422);
+        }
+
+        // Mark OTP as used
+        $otp->verify();
+
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            return response()->json([
+                'message' => 'Email tidak terdaftar.'
+            ], 422);
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+        event(new PasswordReset($user));
+
+        // Optionally cleanup OTPs for this email
+        // UserOtp::where('email', $request->email)->delete();
+
+        return response()->json([
+            'message' => 'Kata sandi berhasil diperbarui.'
+        ]);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function (User $user, string $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->setRememberToken(Str::random(60));
+
+                $user->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        if ($status === Password::PASSWORD_RESET) {
+            return response()->json([
+                'message' => __($status)
+            ]);
+        }
+
+        return response()->json([
+            'message' => __($status)
+        ], 422);
     }
 }
